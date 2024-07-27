@@ -38,7 +38,7 @@ public class SceneTriggerManager : MonoBehaviour
     private void Update()
     {
         // check story node condition, begin story mode
-        if (GameManager.Instance.isInitiated)
+        if (GameManager.Instance.isInitiated && !SceneLoader.Instance.isLoading)
         {
             currentNodes = StoryManager.Instance.StoryTree.GetCurrentNodes();
 

@@ -28,7 +28,7 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] private List<string> _loadedScenes = new List<string>();
     //[SerializeField] private string currentSceneName;
     //[SerializeField] private string nextSceneName;
-    private bool isLoading = false;
+    public bool isLoading = false;
 
     private void Awake()
     {

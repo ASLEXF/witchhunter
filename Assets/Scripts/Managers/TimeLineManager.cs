@@ -28,7 +28,7 @@ public class TimeLineManager : MonoBehaviour
     }
 
     PlayableDirector _playableDirector;
-    public string configFilePath = "Assets/Config/TimelineTrackBindings.json";
+    string configFilePath = "Assets/Config/TimelineTrackBindings.json";
     Dictionary<string, GameObject> bindingTable = new Dictionary<string, GameObject>();
 
     private void Awake()
@@ -60,6 +60,19 @@ public class TimeLineManager : MonoBehaviour
         _playableDirector.stopped += OnTimelineStopped =>
         {
             PlayerController.Instance.enabled = true;
+        };
+
+        Addressables.InitializeAsync().Completed += handle =>
+        {
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                // Now you can safely use Addressables.LoadAssetAsync
+                //LoadPlayableAsset();
+            }
+            else
+            {
+                Debug.LogError("Failed to initialize Addressables.");
+            }
         };
     }
 
@@ -118,7 +131,7 @@ public class TimeLineManager : MonoBehaviour
 
     public void LoadPlayableAsset(string fileName)
     {
-        string file = "Assets/Timelines/" + fileName + ".playable";
+        string file = "Assets/Addressables/Timelines/" + fileName + ".playable";
         Addressables.LoadAssetAsync<PlayableAsset>(file).Completed += handle => OnPlayableAssetLoaded(handle, fileName);
     }
 
@@ -127,7 +140,7 @@ public class TimeLineManager : MonoBehaviour
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
             _playableDirector.playableAsset = handle.Result;
-            PlayTimeLine();
+            GameEvents.Instance.AssetLoaded();
         }
         else
         {
@@ -152,6 +165,8 @@ public class TimeLineManager : MonoBehaviour
             {
                 foreach (var config in configs)
                 {
+                    bool hasFound = false;
+
                     Scene scene = SceneManager.GetSceneByName(config.sceneName);
                     if (!scene.isLoaded)
                     {
@@ -163,25 +178,22 @@ public class TimeLineManager : MonoBehaviour
                         if (rootObject.name == config.gameObjectPath)
                         {
                             bindingTable.Add(config.trackName, rootObject);
+                            hasFound = true;
                             break;
                         }
                         Transform childTransform = rootObject.transform.Find(config.gameObjectPath);
                         if (childTransform != null)
                         {
                             bindingTable.Add(config.trackName, childTransform.gameObject);
+                            hasFound = true;
+                            break;
                         }
                     }
 
-
-                    //GameObject obj = GameObject.Find(config.gameObjectPath);
-                    //if (obj != null)
-                    //{
-                    //    bindingTable.Add(config.trackName, obj);
-                    //}
-                    //else
-                    //{
-                    //    Debug.LogWarning($"GameObject with path {config.gameObjectPath} not found.");
-                    //}
+                    if (!hasFound)
+                    {
+                        Debug.LogWarning($"{config.gameObjectPath} not found!");
+                    }
                 }
             }
             else
@@ -193,47 +205,25 @@ public class TimeLineManager : MonoBehaviour
         {
             Debug.LogError($"Config file not found at {configFilePath}");
         }
+        GameEvents.Instance.OnAssetLoaded += bindTimelineTracks;
     }
 
-    GameObject FindObjectInAllScenes(string name)
-    {
-        GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-
-        foreach (GameObject obj in allObjects)
-        {
-            if (obj.name == name)
-            {
-                return obj;
-            }
-            if (obj.transform.childCount > 0)
-            {
-                GameObject found = FindInChildren(obj.transform, name);
-                if (found != null)
-                {
-                    return found;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    GameObject FindInChildren(Transform parent, string name)
-    {
-        foreach (Transform child in parent)
-        {
-            if (child.name == name)
-            {
-                return child.gameObject;
-            }
-            GameObject found = FindInChildren(child, name);
-            if (found != null)
-            {
-                return found;
-            }
-        }
-        return null;
-    }
+    //GameObject FindInChildren(Transform parent, string name)
+    //{
+    //    foreach (Transform child in parent)
+    //    {
+    //        if (child.name == name)
+    //        {
+    //            return child.gameObject;
+    //        }
+    //        GameObject found = FindInChildren(child, name);
+    //        if (found != null)
+    //        {
+    //            return found;
+    //        }
+    //    }
+    //    return null;
+    //}
 
     void bindTimelineTracks()
     {
@@ -253,5 +243,7 @@ public class TimeLineManager : MonoBehaviour
                 _playableDirector.SetGenericBinding(binding.sourceObject, bindingTable[trackName]);
             }
         }
+
+        PlayTimeLine();
     }
 }

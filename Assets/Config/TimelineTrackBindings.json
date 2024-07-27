@@ -11,9 +11,9 @@
             "gameObjectPath": "Player"
         },
         {
-            "trackName": "Dialogbox Signal",
+            "trackName": "DialogBox Signal",
             "sceneName": "Persistent",
-            "gameObjectPath": "Dialogbox"
+            "gameObjectPath": "DialogBox"
         }
     ],
     "1-2": []

@@ -100,4 +100,15 @@ public class GameEvents : MonoBehaviour
     }
 
     #endregion
+
+    #region Timeline
+
+    public event Action OnAssetLoaded;
+
+    public void AssetLoaded()
+    {
+        if (OnAssetLoaded != null) OnAssetLoaded();
+    }
+
+    #endregion
 }

@@ -18,10 +18,9 @@ MonoBehaviour:
   m_GUID: 422ab638b77c80e4da38f8efa432ddec
   m_SerializeEntries:
   - m_GUID: 39e6f04ab77037d488be71845079dd3b
-    m_Address: Assets/Timelines/Opening.playable
+    m_Address: Assets/Addressables/Timelines/Opening.playable
     m_ReadOnly: 0
-    m_SerializedLabels:
-    - Timeline
+    m_SerializedLabels: []
   - m_GUID: f57e73c9d7dfb0d4fa4e57ed53346f20
     m_Address: Assets/Addressables/StoryScripts/1-1.txt
     m_ReadOnly: 0
