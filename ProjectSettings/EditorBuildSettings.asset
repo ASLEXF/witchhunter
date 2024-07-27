@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Persistent.unity
+    guid: d8e31b1f86a6142459f91ce15a899838
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: 82fb4adc9b466db49be5d60d87ec9342
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: 4a04a3e7bb69a8644b654dc3e36f6fd5
+  - enabled: 1
+    path: Assets/Scenes/Cliff.unity
+    guid: cd2a3b2a1558a754d9053fc43346a52e
+  - enabled: 1
+    path: Assets/Scenes/Forest.unity
+    guid: 2caace273a884d04c8169846f9ea2e79
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: f02b1a2acd75a334d87b358a1a9c3a99, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 91a01df9f44da1245ada7005955f5441, type: 2}

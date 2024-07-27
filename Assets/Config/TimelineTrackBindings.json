@@ -1,0 +1,20 @@
+{
+    "Opening": [
+        {
+            "trackName": "Tree Animation",
+            "sceneName": "Cliff",
+            "gameObjectPath": "Tree"
+        },
+        {
+            "trackName": "Player Animation",
+            "sceneName": "Persistent",
+            "gameObjectPath": "Player"
+        },
+        {
+            "trackName": "Dialogbox Signal",
+            "sceneName": "Persistent",
+            "gameObjectPath": "Dialogbox"
+        }
+    ],
+    "1-2": []
+}
