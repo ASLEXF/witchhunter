@@ -1,4 +1,0 @@
-C:\Users\27976\Desktop\TMP\unity exer1\My 2D Sample2\obj\Debug\Unity.2D.Tilemap.Extras.Editor.csproj.AssemblyReference.cache
-C:\Users\27976\Desktop\TMP\unity exer1\My 2D Sample2\obj\Debug\Unity.2D.Tilemap.Extras.Editor.csproj.CoreCompileInputs.cache
-D:\Github\my2dgame\obj\Debug\Unity.2D.Tilemap.Extras.Editor.csproj.AssemblyReference.cache
-D:\Github\my2dgame\obj\Debug\Unity.2D.Tilemap.Extras.Editor.csproj.CoreCompileInputs.cache
