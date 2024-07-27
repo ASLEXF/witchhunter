@@ -122,7 +122,7 @@ public class ScriptReader : MonoBehaviour
         {
             textAsset = handle.Result;
             ReadScript(textAsset);
-            GameEvents.Instance.TextScriptUpdate();
+            GameEvents.Instance.TextScriptUpdated();
         }
         else
         {

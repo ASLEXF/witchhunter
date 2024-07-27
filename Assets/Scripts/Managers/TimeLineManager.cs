@@ -49,8 +49,8 @@ public class TimeLineManager : MonoBehaviour
     {
         _playableDirector.playableAsset = null;
 
-        GameEvents.Instance.OnDialogBoxStart += PauseTimeline;
-        GameEvents.Instance.OnDialogBoxEnd += PlayTimeLine;
+        GameEvents.Instance.OnDialogBoxStarted += PauseTimeline;
+        GameEvents.Instance.OnDialogBoxEnded += PlayTimeLine;
 
         _playableDirector.played += OnTimelinePlayed =>
         {

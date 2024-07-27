@@ -192,7 +192,7 @@ public class DialogBox : MonoBehaviour
         }
         if (index >= input.Count)
         {
-            GameEvents.Instance.DialogBoxEnd();
+            GameEvents.Instance.DialogBoxEnded();
             gameObject.SetActive(false);
             Debug.Log("DialogBoxEnd");
         }

@@ -91,7 +91,7 @@ public class StoryNode
         if (!StoryManager.Instance.isPlaying)
         {
             StoryManager.Instance.isPlaying = true;
-            GameEvents.Instance.StoryModeStart();
+            GameEvents.Instance.StoryModeStarted();
 
             // dialogbox
             if (txtFile != null)
@@ -108,7 +108,7 @@ public class StoryNode
             if (isMovePosition) PlayerController.Instance.transform.position = playerPosition;
             PlayerController.Instance.enabled = false;
 
-            GameEvents.Instance.OnDialogBoxEnd += () =>
+            GameEvents.Instance.OnDialogBoxEnded += () =>
             {
                 StoryManager.Instance.StoryTree.RemoveNode(this);
                 DialogBox.Instance.Hide();
@@ -116,7 +116,7 @@ public class StoryNode
                 StoryManager.Instance.isPlaying = false;
             };
 
-            GameEvents.Instance.StoryModeEnd();
+            GameEvents.Instance.StoryModeEnded();
         }
     }
 }

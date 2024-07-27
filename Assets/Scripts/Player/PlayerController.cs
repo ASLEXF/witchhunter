@@ -47,8 +47,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        GameEvents.Instance.OnStoryModeStart += InputActionsToStory;
-        GameEvents.Instance.OnStoryModeEnd += ResumeInputActions;
+        GameEvents.Instance.OnStoryModeStarted += InputActionsToStory;
+        GameEvents.Instance.OnStoryModeEnded += ResumeInputActions;
 
         ListenInputEvents();
 
@@ -194,10 +194,10 @@ public class PlayerController : MonoBehaviour
     {
         GameEvents.Instance.OnMenuOpened += InputActionsToMenu;
         GameEvents.Instance.OnMenuClosed += ResumeInputActions;
-        GameEvents.Instance.OnStoryModeStart += InputActionsToStory;
-        GameEvents.Instance.OnStoryModeEnd += ResumeInputActions;
-        GameEvents.Instance.OnExplorationModeStart += InputActionsToExploration;
-        GameEvents.Instance.OnBattleModeStart += InputActionsToBattle;
+        GameEvents.Instance.OnStoryModeStarted += InputActionsToStory;
+        GameEvents.Instance.OnStoryModeEnded += ResumeInputActions;
+        GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
+        GameEvents.Instance.OnBattleModeStarted += InputActionsToBattle;
     }
 
     void ResumeInputActions()

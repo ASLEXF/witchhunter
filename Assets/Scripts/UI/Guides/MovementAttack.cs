@@ -6,19 +6,21 @@ public class MovementAttack : MonoBehaviour
 {
     private void Start()
     {
-        transform.GetChild(0).gameObject.SetActive(false);
+        GameEvents.Instance.OnStoryModeEnded += Show;
+        GameEvents.Instance.OnStoryModeStarted += Hide;
 
-        GameEvents.Instance.OnStoryModeEnd += Show;
-        GameEvents.Instance.OnStoryModeStart += Hide;
+        Hide();
     }
 
     private void Show()
     {
-        transform.GetChild(0).gameObject.SetActive(true);
+        if (transform.childCount > 0)
+            transform.GetChild(0).gameObject.SetActive(true);
     }
 
     private void Hide()
     {
-        transform.GetChild(0).gameObject.SetActive(false);
+        if (transform.childCount > 0)
+            transform.GetChild(0).gameObject.SetActive(false);
     }
 }

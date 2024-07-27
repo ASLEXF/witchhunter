@@ -28,76 +28,40 @@ public class GameEvents : MonoBehaviour
         _instance = this;
     }
 
-    #region Game Mode Change
+    #region Game Mode
 
     public event Action OnMenuOpened;
     public event Action OnMenuClosed;
-    public event Action OnStoryModeStart;
-    public event Action OnStoryModeEnd;
-    public event Action OnExplorationModeStart;
-    public event Action OnBattleModeStart;
+    public event Action OnStoryModeStarted;
+    public event Action OnStoryModeEnded;
+    public event Action OnExplorationModeStarted;
+    public event Action OnBattleModeStarted;
 
-    public void MenuOpened()
-    {
-        if (OnMenuOpened != null)
-            OnMenuOpened();
-    }
+    public void MenuOpened() => OnMenuOpened?.Invoke();
 
-    public void MenuClosed()
-    {
-        if(OnMenuClosed != null)
-            OnMenuClosed();
-    }
+    public void MenuClosed() => OnMenuClosed?.Invoke();
 
-    public void StoryModeStart()
-    {
-        if (OnStoryModeStart != null)
-            OnStoryModeStart();
-    }
+    public void StoryModeStarted() => OnStoryModeStarted?.Invoke();
 
-    public void StoryModeEnd()
-    {
-        if (OnStoryModeEnd != null)
-            OnStoryModeEnd();
-    }
+    public void StoryModeEnded() => OnStoryModeEnded?.Invoke();
 
-    public void ExplorationModeStart()
-    {
-        if (OnExplorationModeStart != null)
-            OnExplorationModeStart();
-    }
+    public void ExplorationModeStarted() => OnExplorationModeStarted?.Invoke();
 
-    public void BattleModeStart()
-    {
-        if (OnBattleModeStart != null)
-            OnBattleModeStart();
-    }
+    public void BattleModeStarted() => OnBattleModeStarted?.Invoke();
 
     #endregion
 
     #region Dialog Box
 
-    public event Action OnTextScriptUpdate;
-    public event Action OnDialogBoxStart;
-    public event Action OnDialogBoxEnd;
+    public event Action OnTextScriptUpdated;
+    public event Action OnDialogBoxStarted;
+    public event Action OnDialogBoxEnded;
 
-    public void TextScriptUpdate()
-    {
-        if (OnTextScriptUpdate != null)
-            OnTextScriptUpdate();
-    }
+    public void TextScriptUpdated() => OnTextScriptUpdated?.Invoke();
 
-    public void DialogBoxStart()
-    {
-        if (OnDialogBoxStart != null)
-            OnDialogBoxStart();
-    }
+    public void DialogBoxStarted() => OnDialogBoxStarted?.Invoke();
 
-    public void DialogBoxEnd()
-    {
-        if (OnDialogBoxEnd != null)
-            OnDialogBoxEnd();
-    }
+    public void DialogBoxEnded() => OnDialogBoxEnded?.Invoke();
 
     #endregion
 
@@ -105,10 +69,7 @@ public class GameEvents : MonoBehaviour
 
     public event Action OnAssetLoaded;
 
-    public void AssetLoaded()
-    {
-        if (OnAssetLoaded != null) OnAssetLoaded();
-    }
+    public void AssetLoaded() => OnAssetLoaded?.Invoke();
 
     #endregion
 }
