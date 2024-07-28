@@ -69,8 +69,6 @@ public class StoryNode
                     Scene scene = SceneManager.GetSceneAt(i);
                     if (scene.IsValid() && scene.buildIndex == dict.Value)
                     {
-                        for (int j = 0; j < SceneManager.sceneCount; j++)
-                            Debug.Log($"scene: {SceneManager.GetSceneAt(j).name}");
                         return true;
                     }
                 }
@@ -91,6 +89,8 @@ public class StoryNode
         if (!StoryManager.Instance.isPlaying)
         {
             StoryManager.Instance.isPlaying = true;
+            StoryManager.Instance.StoryTree.RemoveNode(this);
+
             GameEvents.Instance.StoryModeStarted();
 
             // dialogbox
@@ -107,16 +107,6 @@ public class StoryNode
             PlayerController.Instance.ShowThePlayer();
             if (isMovePosition) PlayerController.Instance.transform.position = playerPosition;
             PlayerController.Instance.enabled = false;
-
-            GameEvents.Instance.OnDialogBoxEnded += () =>
-            {
-                StoryManager.Instance.StoryTree.RemoveNode(this);
-                DialogBox.Instance.Hide();
-                PlayerController.Instance.enabled = true;
-                StoryManager.Instance.isPlaying = false;
-            };
-
-            GameEvents.Instance.StoryModeEnded();
         }
     }
 }
@@ -296,5 +286,12 @@ public class StoryManager : MonoBehaviour
         //        ), 
         //    2
         //);
+    }
+
+    public void EndStoryMode()
+    {
+        PlayerController.Instance.enabled = true;
+        isPlaying = false;
+        GameEvents.Instance.StoryModeEnded();
     }
 }

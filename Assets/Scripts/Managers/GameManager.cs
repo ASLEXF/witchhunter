@@ -30,15 +30,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        GameInitialize();
+        StartCoroutine(GameInitialize());
     }
 
-    void GameInitialize()
+    IEnumerator GameInitialize()
     {
         PlayerController.Instance.HideThePlayer();
         DialogBox.Instance.Hide();
 
-        SceneLoader.Instance.GameSceneInitiate();
+        StartCoroutine(SceneLoader.Instance.GameSceneInitiate());
+
+        yield return null;
 
         isInitiated = true;
     }

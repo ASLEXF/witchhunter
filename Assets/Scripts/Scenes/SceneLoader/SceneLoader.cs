@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -28,7 +29,7 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] private List<string> _loadedScenes = new List<string>();
     //[SerializeField] private string currentSceneName;
     //[SerializeField] private string nextSceneName;
-    public bool isLoading = false;
+    public bool isLoading = true;
 
     private void Awake()
     {
@@ -42,20 +43,24 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public void GameSceneInitiate()
+    public IEnumerator GameSceneInitiate()
     {
-        UnloadCurrentScenes();
+        StartCoroutine(UnloadCurrentScenes());
         LoadScene("Persistent");
         LoadScene("Main Menu");
+
+        yield return null;
+
+        isLoading = false;
     }
 
-    void UnloadCurrentScenes()
+    IEnumerator UnloadCurrentScenes()
     {
         int sceneCount = SceneManager.sceneCount;
 
         for (int i = sceneCount - 1; i >= 0; i--)
         {
-            Scene scene = SceneManager.GetSceneAt(i);
+            UnityEngine.SceneManagement.Scene scene = SceneManager.GetSceneAt(i);
             if (scene.name == "Persistent")
             {
                 _loadedScenes.Add(scene.name);
@@ -64,9 +69,10 @@ public class SceneLoader : MonoBehaviour
             if (scene.isLoaded)
             {
                 AsyncOperation asyncUnload = SceneManager.UnloadSceneAsync(scene);
-                Debug.Log($"Unloaded scene: {scene.name}");
             }
         }
+
+        yield break;
     }
 
     public void LoadScene(string sceneName)

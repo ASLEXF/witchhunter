@@ -828,6 +828,7 @@ MonoBehaviour:
   - Basement
   fadeAnimator: {fileID: 7820990448482501242}
   _loadedScenes: []
+  isLoading: 0
 --- !u!4 &1890363168
 Transform:
   m_ObjectHideFlags: 0
@@ -1099,8 +1100,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 2919237722636817336}
   - {fileID: 419132336169842697}
+  - {fileID: 2919237722636817336}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1153,7 +1154,7 @@ RectTransform:
   - {fileID: 294636358}
   - {fileID: 419132335933736556}
   m_Father: {fileID: 419132336049089255}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1449,7 +1450,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60aea401160af742b5bf7b2b1a060fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configFilePath: Assets/Config/TimelineTrackBindings.json
 --- !u!320 &951317513772391181
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -1493,7 +1493,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 419132336049089255}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

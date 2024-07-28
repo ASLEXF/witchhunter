@@ -4,23 +4,45 @@ using UnityEngine;
 
 public class MovementAttack : MonoBehaviour
 {
+    GameObject panel;
+
+    private void Awake()
+    {
+        panel = transform.GetChild(0).gameObject;
+    }
+
+    private void OnEnable()
+    {
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.OnStoryModeEnded += Show;
+            GameEvents.Instance.OnStoryModeStarted += Hide;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GameEvents.Instance != null)
+        {
+            GameEvents.Instance.OnStoryModeEnded -= Show;
+            GameEvents.Instance.OnStoryModeStarted -= Hide;
+        }
+    }
+
     private void Start()
     {
-        GameEvents.Instance.OnStoryModeEnded += Show;
-        GameEvents.Instance.OnStoryModeStarted += Hide;
-
         Hide();
     }
 
     private void Show()
     {
-        if (transform.childCount > 0)
-            transform.GetChild(0).gameObject.SetActive(true);
+        if (panel != null)
+            panel.SetActive(true);
     }
 
     private void Hide()
     {
-        if (transform.childCount > 0)
-            transform.GetChild(0).gameObject.SetActive(false);
+        if (panel != null)
+            panel.SetActive(false);
     }
 }
