@@ -118,10 +118,9 @@ public class TimeLineManager : MonoBehaviour
         }
     }
 
-    public void WaitDialogBoxFinished()
+    public void WaitDialogBoxEnded()
     {
-        PauseTimeline();
-
+        GameEvents.Instance.OnDialogBoxEnded += () => PlayTimeLine();
     }
 
     public void OnTimelineJump(float time)

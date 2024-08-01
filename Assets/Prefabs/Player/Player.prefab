@@ -1468,6 +1468,7 @@ GameObject:
   - component: {fileID: 1165992582217251714}
   - component: {fileID: 107894358}
   - component: {fileID: 1110450235}
+  - component: {fileID: 9091833883105179149}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1788,6 +1789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 5
   movementSmoothingSpeed: 1
+  canMove: 1
 --- !u!114 &1165992582217251714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1833,6 +1835,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e479a390c334d34448cfd6a309a16810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9091833883105179149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165992582217251770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda79db601252744fb451c5a76886f9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMapName: 
 --- !u!1 &3771290288660424549
 GameObject:
   m_ObjectHideFlags: 0

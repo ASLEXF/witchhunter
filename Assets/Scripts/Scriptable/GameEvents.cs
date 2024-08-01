@@ -13,7 +13,8 @@ public class GameEvents : MonoBehaviour
         {
             if (_instance == null)
             {
-                _instance = new GameEvents();
+                GameObject obj = new GameObject("GameEvents");
+                _instance = obj.AddComponent<GameEvents>();
             }
             return _instance;
         }
@@ -25,7 +26,11 @@ public class GameEvents : MonoBehaviour
         {
             Destroy(_instance);
         }
-        _instance = this;
+        else
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     #region Game Mode

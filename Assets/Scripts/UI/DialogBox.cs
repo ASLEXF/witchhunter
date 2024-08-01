@@ -143,7 +143,7 @@ public class DialogBox : MonoBehaviour
 
     public void OnConfirm(InputAction.CallbackContext value)
     {
-        if(gameObject.activeSelf)
+        if(gameObject != null && gameObject.activeSelf)
         {
             if (value.started)
             {
@@ -168,7 +168,7 @@ public class DialogBox : MonoBehaviour
 
     public void OnSkip(InputAction.CallbackContext value)
     {
-        if(gameObject.activeSelf)
+        if(gameObject != null && gameObject.activeSelf)
         {
             if (value.performed)
             {

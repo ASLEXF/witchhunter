@@ -288,7 +288,7 @@ public class StoryManager : MonoBehaviour
         //);
     }
 
-    public void EndStoryMode()
+    void EndStoryMode()
     {
         PlayerController.Instance.enabled = true;
         isPlaying = false;

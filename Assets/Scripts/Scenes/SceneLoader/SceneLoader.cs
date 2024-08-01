@@ -21,14 +21,12 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
-    public List<string> battleScenes = new List<string>() { "Cliff", "Forest" };
-    public List<string> explorationScenes = new List<string>() { "Village", "Room", "Basement" };
+    public List<string> BattleScenes = new List<string>() { "Cliff", "Forest" };
+    public List<string> ExplorationScenes = new List<string>() { "Village", "Room", "Basement" };
 
     public Animator fadeAnimator;
 
-    [SerializeField] private List<string> _loadedScenes = new List<string>();
-    //[SerializeField] private string currentSceneName;
-    //[SerializeField] private string nextSceneName;
+    public List<string> CurrentScenes = new List<string>();
     public bool isLoading = true;
 
     private void Awake()
@@ -63,7 +61,7 @@ public class SceneLoader : MonoBehaviour
             UnityEngine.SceneManagement.Scene scene = SceneManager.GetSceneAt(i);
             if (scene.name == "Persistent")
             {
-                _loadedScenes.Add(scene.name);
+                CurrentScenes.Add(scene.name);
                 continue;
             }
             if (scene.isLoaded)
@@ -77,35 +75,35 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        if (_loadedScenes.Contains(sceneName)) { return; }
-        else if (_loadedScenes.Count > 1)
+        if (CurrentScenes.Contains(sceneName)) { return; }
+        else if (CurrentScenes.Count > 1)
         {
-            SceneManager.UnloadSceneAsync(_loadedScenes[1]);
+            SceneManager.UnloadSceneAsync(CurrentScenes[1]);
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-            _loadedScenes.Remove(_loadedScenes[1]);
-            _loadedScenes.Add(sceneName);
+            CurrentScenes.Remove(CurrentScenes[1]);
+            CurrentScenes.Add(sceneName);
         }
         else
         {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-            _loadedScenes.Add(sceneName);
+            CurrentScenes.Add(sceneName);
         }
     }
 
     public void LoadSceneSlowFadeIn(string sceneName)
     {
-        if(_loadedScenes.Contains(sceneName)) { return; }
-        else if(_loadedScenes.Count > 1)
+        if(CurrentScenes.Contains(sceneName)) { return; }
+        else if(CurrentScenes.Count > 1)
         {
-            SceneManager.UnloadSceneAsync(_loadedScenes[1]);
+            SceneManager.UnloadSceneAsync(CurrentScenes[1]);
             StartCoroutine(loadSceneSlowFadeIn(sceneName));
-            _loadedScenes.Remove(_loadedScenes[1]);
-            _loadedScenes.Add(sceneName);
+            CurrentScenes.Remove(CurrentScenes[1]);
+            CurrentScenes.Add(sceneName);
         }
         else
         {
             StartCoroutine(loadSceneSlowFadeIn(sceneName));
-            _loadedScenes.Add(sceneName);
+            CurrentScenes.Add(sceneName);
         }
     }
 

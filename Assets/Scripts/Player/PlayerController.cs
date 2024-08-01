@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -42,17 +43,6 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        _playerInput = GetComponent<PlayerInput>();
-    }
-
-    private void Start()
-    {
-        GameEvents.Instance.OnStoryModeStarted += InputActionsToStory;
-        GameEvents.Instance.OnStoryModeEnded += ResumeInputActions;
-
-        ListenInputEvents();
-
-        SetDefaultInputMap();
     }
 
     void Update()
@@ -156,76 +146,6 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Input System
-
-    [SerializeField] PlayerInput _playerInput;
-    [SerializeField] Actions _actions;
-    string _formerActionMapName;
-
-    void SetDefaultInputMap()
-    {
-        _playerInput.SwitchCurrentActionMap("Menu");
-    }
-
-    void ListenSceneLoaded()
-    {
-        SceneManager.sceneLoaded += (scene, mode) => 
-        {
-            foreach (string sceneName in SceneLoader.Instance.explorationScenes)
-            {
-                if (scene.name == sceneName)
-                {
-                    InputActionsToExploration();
-                    return;
-                }
-            }
-
-            foreach (string sceneName in SceneLoader.Instance.battleScenes)
-            {
-                if (scene.name == sceneName)
-                {
-                    InputActionsToBattle();
-                    return;
-                }
-            }
-        };
-    }
-
-    void ListenInputEvents()
-    {
-        GameEvents.Instance.OnMenuOpened += InputActionsToMenu;
-        GameEvents.Instance.OnMenuClosed += ResumeInputActions;
-        GameEvents.Instance.OnStoryModeStarted += InputActionsToStory;
-        GameEvents.Instance.OnStoryModeEnded += ResumeInputActions;
-        GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
-        GameEvents.Instance.OnBattleModeStarted += InputActionsToBattle;
-    }
-
-    void ResumeInputActions()
-    {
-        _playerInput.SwitchCurrentActionMap(_formerActionMapName);
-    }
-
-    public void InputActionsToMenu()
-    {
-        _formerActionMapName = _playerInput.currentActionMap.name;
-        _playerInput.SwitchCurrentActionMap("Menu");
-    }
-
-    public void InputActionsToStory()
-    {
-        _formerActionMapName = _playerInput.currentActionMap.name;
-        _playerInput.SwitchCurrentActionMap("Story");
-    }
-
-    public void InputActionsToExploration()
-    {
-        _playerInput.SwitchCurrentActionMap("Exploration");
-    }
-
-    public void InputActionsToBattle()
-    {
-        _playerInput.SwitchCurrentActionMap("Battle");
-    }
 
     public void OnMovement(InputAction.CallbackContext value)
     {
