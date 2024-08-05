@@ -41,8 +41,8 @@ public class Movement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            isBeingPushed = false; // 玩家停止推动NPC
-            rb.velocity = Vector3.zero; // 碰撞结束时立即停止NPC的移动
+            isBeingPushed = false;
+            rb.velocity = Vector3.zero;
         }
     }
 }
