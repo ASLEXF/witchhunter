@@ -14825,20 +14825,24 @@ PrefabInstance:
       value: Wolf
       objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164525, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5167781006044164525, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
-      value: 0.48529413
+      value: 0.5802469
       objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164525, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
-      value: 0.108695656
+      value: 0.081967205
       objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164525, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.1724138
+      value: 1.3965517
       objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164525, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.79310346
+      value: 1.0517242
       objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164527, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_RootOrder
@@ -14846,11 +14850,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164527, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.09
+      value: -1.95
       objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164527, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.04
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164527, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14886,3 +14890,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
+--- !u!1 &5167781005879701434 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5167781006044164523, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
+  m_PrefabInstance: {fileID: 5167781005879701433}
+  m_PrefabAsset: {fileID: 0}
+--- !u!68 &5167781005879701435
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5167781005879701434}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 0.10347736, y: 0.30451286}
+  - {x: -0.42398453, y: 0.063819885}
+  - {x: 0.11054993, y: -0.20782089}
+  - {x: 0.62991333, y: 0.070201874}
+  - {x: 0.11320925, y: 0.3012942}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
