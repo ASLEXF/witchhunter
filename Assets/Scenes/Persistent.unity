@@ -712,12 +712,20 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_Points.Array.data[0].x
+      value: -0.062314615
+      objectReference: {fileID: 0}
+    - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_Points.Array.data[0].y
+      value: 0.13232034
+      objectReference: {fileID: 0}
+    - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Points.Array.data[1].x
-      value: -0.036891937
+      value: -0.01342392
       objectReference: {fileID: 0}
     - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Points.Array.data[1].y
-      value: 0.31027985
+      value: 0.16752148
       objectReference: {fileID: 0}
     - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Points.Array.data[2].x
@@ -729,11 +737,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Points.Array.data[3].x
-      value: -0.010548592
+      value: -0.018370628
       objectReference: {fileID: 0}
     - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Points.Array.data[3].y
-      value: -0.13092446
+      value: -0.08007836
       objectReference: {fileID: 0}
     - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Points.Array.data[4].x
@@ -745,11 +753,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Points.Array.data[5].x
-      value: -0.05264759
+      value: -0.033091545
       objectReference: {fileID: 0}
     - target: {fileID: 779500078, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Points.Array.data[5].y
-      value: 0.3074653
+      value: 0.16470695
       objectReference: {fileID: 0}
     - target: {fileID: 1165992582217251712, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_RootOrder

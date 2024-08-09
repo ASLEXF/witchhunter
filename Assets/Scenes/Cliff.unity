@@ -945,8 +945,9 @@ GameObject:
   m_Component:
   - component: {fileID: 718353687}
   - component: {fileID: 718353688}
+  - component: {fileID: 718353689}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Visual Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1017,6 +1018,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &718353689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718353686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a6d5c6d4c0a954b90c9823f8fbacbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distance: 12
+  lineNum: 6
+  range: 72
 --- !u!1 &827326893
 GameObject:
   m_ObjectHideFlags: 0
@@ -14911,12 +14927,25 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: 0.10347736, y: 0.30451286}
+  - {x: 0.09551418, y: 0.16117752}
   - {x: -0.42398453, y: 0.063819885}
-  - {x: 0.11054993, y: -0.20782089}
+  - {x: 0.11292267, y: -0.112914085}
   - {x: 0.62991333, y: 0.070201874}
-  - {x: 0.11320925, y: 0.3012942}
+  - {x: 0.10365343, y: 0.15795791}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &5167781005879701436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5167781005879701434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02cf27c70c4811345b7fdc799479d15a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  facePosition: {x: 1, y: 1}
