@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class VisualRange : MonoBehaviour
 {
-    [SerializeField] public float distance = 12.0f;
-    [SerializeField][Range(2, 12)] public int lineNum = 2;
+    [SerializeField] public float distance = 12.0f;  // TODO: maxRange
+    [SerializeField][Range(2, 12)] public int lineNum = 6;
     [SerializeField][Range(90, 180)] public float range = 72.0f;
 
     Vector2 basePosition;
@@ -146,4 +146,14 @@ public class VisualRange : MonoBehaviour
         line.startWidth = 0.05f;
         line.endWidth = 0.05f;
     }
+
+private void getCollidedPoints()
+{}
+
+private void genCollider()
+{}
+
+private void display()
+{}
+
 }
