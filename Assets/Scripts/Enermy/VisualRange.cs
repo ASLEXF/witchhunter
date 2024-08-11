@@ -20,7 +20,7 @@ public class VisualRange : MonoBehaviour
     List<LineRenderer> lineRenderers = new List<LineRenderer>();
     List<LineRenderer> edges = new List<LineRenderer>();
 
-    private void Start()
+    private void Awake()
     {
         collider = GetComponent<PolygonCollider2D>();
     }

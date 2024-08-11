@@ -5,12 +5,29 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     public Vector2 facePosition = new Vector2(-1, 1);
-    public bool isAlert = false;
-    public bool isTracking = false;
     public Vector2 targetPosition;
 
+    Vector2 originalPosition;
+
+    // behavior
+    public bool isAlert = false;
+    public bool isTracking = false;
+
+    // distance
+    public bool isOrbit = false;
+
+    // preference
+    [SerializeField][Range(0, 1)] float moveClosePref = 0.7f;
+    [SerializeField][Range(0, 1)] float moveAwayPref = 0.1f;
+    [SerializeField][Range(0, 1)] float attackPref = 0.2f;
+    [SerializeField][Range(0, 1)] float waitPref = 0f;
+
     [SerializeField] float searchTime = 12.0f;
-    
+
+    private void Start()
+    {
+        originalPosition = transform.position;
+    }
 
     private void Update()
     {
@@ -22,14 +39,21 @@ public class NPCController : MonoBehaviour
             }
             else
             {
-                // moving
+                // preference: move, wait
                 // find path
+                // orbit range
+                // preference: move, attack, wait
             }
         }
         else
         {
             // wandering
         }
+    }
+
+    private void findPath(Vector2 position)
+    {
+
     }
 
     public IEnumerator move()
