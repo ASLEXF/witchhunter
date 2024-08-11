@@ -1,159 +1,195 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class VisualRange : MonoBehaviour
 {
-    [SerializeField] public float distance = 12.0f;  // TODO: maxRange
-    [SerializeField][Range(2, 12)] public int lineNum = 6;
-    [SerializeField][Range(90, 180)] public float range = 72.0f;
+    [SerializeField][Range(5, 25)] public float distance = 12.0f;
+    [SerializeField][Range(8, 48)] public int lineNum = 24;
+    [SerializeField][Range(90, 180)] public float range = 90.0f;
 
     Vector2 basePosition;
     Vector2 facePosition;  // rotate
+    bool isAlert;
+    PolygonCollider2D collider;
+
+    List<Vector2> points = new List<Vector2>();
 
     List<LineRenderer> lineRenderers = new List<LineRenderer>();
     List<LineRenderer> edges = new List<LineRenderer>();
 
+    private void Start()
+    {
+        collider = GetComponent<PolygonCollider2D>();
+    }
+
     private void Update()
     {
+        syncValues();
+
+        addPoints();
+
+        genCollider();
+
+        //displayColliderRegion();
+    }
+
+    private void syncValues()
+    {
         basePosition = transform.position;
-        facePosition = transform.GetComponentInParent<NPCController>().facePosition;
+        facePosition = transform.GetComponentInParent<NPCController>().facePosition.normalized;
+        isAlert = transform.GetComponentInParent<NPCController>().isAlert;
 
         //if (facePosition.x * facePosition.y < 0)
         //{
         //    range = 180.0f - range;
         //}
-
-        if (lineNum < lineRenderers.Count)
-        {
-            int count = 0;
-            for (; count < lineNum; count++)
-            {
-                LineRenderer line = lineRenderers[count];
-
-                setLine(line, count);
-            }
-            for (; count < lineRenderers.Count;)
-            {
-                LineRenderer line = lineRenderers[count - 1];
-                lineRenderers.Remove(line);
-                Destroy(line.gameObject);
-            }
-        }
-        else
-        {
-            int count = 0;
-            for (; count < lineRenderers.Count; count++)
-            {
-                LineRenderer line = lineRenderers[count];
-
-                setLine(line, count);
-            }
-            for (; count < lineNum; count++)
-            {
-                GameObject lineObj = new GameObject($"Visial Range Line {count + 1}");
-                lineObj.layer = 5;
-                lineObj.transform.SetParent(transform);
-                LineRenderer line = lineObj.AddComponent<LineRenderer>();
-                line.sortingLayerName = "UI";
-
-                setLine(line, count);
-
-                lineRenderers.Add(line);
-            }
-        }
-
-        // edges
-        if (lineNum - 1 < edges.Count)
-        {
-            int count = 0;
-            for (; count < lineNum - 1; count++)
-            {
-                LineRenderer line = edges[count];
-
-                line.positionCount = 2;
-                line.SetPosition(0, lineRenderers[count].GetPosition(1));
-                line.SetPosition(1, lineRenderers[count + 1].GetPosition(1));
-                line.startColor = Color.blue;
-                line.endColor = Color.blue;
-                line.startWidth = 0.05f;
-                line.endWidth = 0.05f;
-            }
-            for (; count < edges.Count;)
-            {
-                LineRenderer line = edges[count - 1];
-                edges.Remove(line);
-                Destroy(line.gameObject);
-            }
-        }
-        else
-        {
-            int count = 0;
-            for (; count < edges.Count; count++)
-            {
-                LineRenderer line = edges[count];
-
-                line.positionCount = 2;
-                line.SetPosition(0, lineRenderers[count].GetPosition(1));
-                line.SetPosition(1, lineRenderers[count + 1].GetPosition(1));
-                line.startColor = Color.blue;
-                line.endColor = Color.blue;
-                line.startWidth = 0.05f;
-                line.endWidth = 0.05f;
-            }
-            for (; count < lineNum - 1; count++)
-            {
-                GameObject lineObj = new GameObject($"Visial Range Edge {count + 1}");
-                lineObj.layer = 5;
-                lineObj.transform.SetParent(transform);
-                LineRenderer line = lineObj.AddComponent<LineRenderer>();
-
-                line.sortingLayerName = "UI";
-                line.positionCount = 2;
-                line.SetPosition(0, lineRenderers[count].GetPosition(1));
-                line.SetPosition(1, lineRenderers[count + 1].GetPosition(1));
-                line.startColor = Color.blue;
-                line.endColor = Color.blue;
-                line.startWidth = 0.05f;
-                line.endWidth = 0.05f;
-
-                edges.Add(line);
-            }
-        }
     }
 
-    private void setLine(LineRenderer line, int n)
+    private void addPoints()
     {
-        line.positionCount = 2;
-        line.SetPosition(0, basePosition);
-        if (range == 180 && (n == 0 || n == lineNum - 1))
+        if (lineNum < points.Count)
         {
-            if (n == 0)
+            int count = 0;
+            for (; count < lineNum; count++)
             {
-                line.SetPosition(1, basePosition + new Vector2(0, distance));
+                points.Add(getCollidedPoint(range / 2 - range / (lineNum - 1) * count));
             }
-            else if (n == lineNum - 1)
+            for (; count < points.Count;)
             {
-                line.SetPosition(1, basePosition - new Vector2(0, distance));
+                points.RemoveAt(count);
             }
         }
         else
         {
-            line.SetPosition(1, basePosition + (new Vector2(1, Mathf.Tan((range / 2 - range / (lineNum - 1) * n) / 180.0f * Mathf.PI)) * facePosition).normalized * distance);
+            int count = 0;
+            for (; count < points.Count; count++)
+            {
+                points[count] = getCollidedPoint(range / 2 - range / (lineNum - 1) * count);
+            }
+            for (; count < lineNum; count++)
+            {
+                points.Add(getCollidedPoint(range / 2 - range / (lineNum - 1) * count));
+            }
         }
-        line.startColor = Color.blue;
-        line.endColor = Color.blue;
-        line.startWidth = 0.05f;
-        line.endWidth = 0.05f;
     }
 
-private void getCollidedPoints()
-{}
+    private Vector2 getCollidedPoint(float angle)
+    {
+        Vector2 direction;
+        if (angle == 90.0f)
+        {
+            direction = new Vector2(0, 1);
+        }
+        else if (angle == -90.0f)
+        {
+            direction = new Vector2(0, -1);
+        }
+        else
+        {
+            direction = (new Vector2(1, Mathf.Tan(angle / 180.0f * Mathf.PI)) * facePosition).normalized;
+        }
 
-private void genCollider()
-{}
+        Vector2 point = new Vector2();
 
-private void display()
-{}
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.layerMask = LayerMask.GetMask("Default");
+        filter.useTriggers = false;
+        filter.useLayerMask = false;
+        filter.useDepth = false;
+        filter.useNormalAngle = false;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(basePosition, direction, distance, filter.layerMask);
 
+        //Debug.DrawRay(basePosition, direction * distance, Color.blue);  // debug
+
+        foreach (RaycastHit2D hit in hits)
+        {
+            //Debug.Log("Hit: " + hit.collider.name);
+            if (hit.collider.CompareTag("Player"))
+            {
+                continue;
+            }
+            else if (hit.collider.CompareTag("NPC"))
+            {
+                continue;
+            }
+            // add ignored tags
+            else
+            {
+                point = hit.point;
+                break;
+            }
+        }
+
+        if (point.Equals(Vector2.zero))
+        {
+            point = basePosition + direction * distance;
+        }
+
+        return point;
+    }
+
+    private void genCollider()
+    {
+        List<Vector2> colliderPoints = new List<Vector2>();
+
+        colliderPoints.Add(new Vector2(0, 0));
+        foreach (Vector2 point in points)
+        {
+            colliderPoints.Add(transform.InverseTransformPoint(point));
+        }
+
+        collider.points = colliderPoints.ToArray();
+    }
+
+    private void displayColliderRegion()
+    {
+        Color color;
+        if (isAlert)
+        {
+            color = Color.red;
+        }
+        else
+        {
+            color = Color.green;
+        }
+        
+        for (int i = 0; i < points.Count - 1; i++)
+        {
+            Debug.DrawLine(points[i], points[i + 1], color);
+        }
+
+        Debug.DrawLine(basePosition, points[0], color);
+        Debug.DrawLine(basePosition, points[points.Count - 1], color);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (transform.GetComponentInParent<NPCController>().isTracking)
+            {
+                StopCoroutine(transform.GetComponentInParent<NPCController>().track());
+            }
+            transform.GetComponentInParent<NPCController>().isAlert = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            transform.GetComponentInParent<NPCController>().targetPosition = collision.transform.position;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            StartCoroutine(transform.GetComponentInParent<NPCController>().track());
+        }
+    }
 }

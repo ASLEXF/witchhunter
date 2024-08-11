@@ -29,7 +29,6 @@ public class GameEvents : MonoBehaviour
         else
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
