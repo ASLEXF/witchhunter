@@ -8,7 +8,7 @@
         {
             "trackName": "Player Animation",
             "sceneName": "Persistent",
-            "gameObjectPath": "Player"
+            "gameObjectPath": "Animator"
         },
         {
             "trackName": "DialogBox Signal",

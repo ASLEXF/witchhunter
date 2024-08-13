@@ -10,11 +10,12 @@ TagManager:
   - DropItem
   - Interactive
   - Tree
+  - Cover
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

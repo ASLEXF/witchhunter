@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Movement : MonoBehaviour
 {
     public float moveSpeed = 3f;
@@ -7,17 +8,14 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb;
     private bool isBeingPushed = false;
 
-    void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody component not found!");
-        }
-        else
-        {
-            rb.isKinematic = false;
-        }
+    }
+
+    void Start()
+    {
+        rb.isKinematic = false;
     }
 
     void FixedUpdate()

@@ -25,6 +25,8 @@ public class WolfStats : ScriptableObject
     public ApproachMethod approachMethod = ApproachMethod.straight;
 
     [Range(0, 1)] public float normal_moveClose = 0.8f;
+    [Range(0, 1)] public float normal_moveAway = 0;
+    [Range(0, 1)] public float normal_attack = 0;
     [Range(0, 1)] public float normal_wait = 0.2f;
 
     [Range(0, 1)] public float moveRange_moveClose = 0.4f;
@@ -49,7 +51,7 @@ public class WolfStats : ScriptableObject
 
     private void OnValidate()
     {
-        normalize(normal_moveClose, normal_wait);
+        normalize(normal_moveClose, normal_moveAway, normal_attack, normal_wait);
         normalize(moveRange_moveClose, moveRange_moveAway, moveRange_attack, moveRange_wait);
         normalize(longRange_moveClose, longRange_moveAway, longRange_attack, longRange_wait);
         normalize(closeRange_moveClose, closeRange_moveAway, closeRange_attack, closeRange_wait);

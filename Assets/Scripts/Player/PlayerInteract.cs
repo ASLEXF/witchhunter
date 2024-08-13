@@ -86,7 +86,7 @@ public class PlayerInteract : MonoBehaviour
 
     void OnTriggerEnter2D(UnityEngine.Collider2D collision)
     {
-        Debug.Log($"player collide with {collision.gameObject.name}");
+        //Debug.Log($"player collide with {collision.gameObject.name}");
         if (collision.CompareTag("DropItem"))
         {
             DropItemColliders.Add(collision);

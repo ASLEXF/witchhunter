@@ -1,19 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
+[RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(MeshRenderer))]
+[RequireComponent(typeof(MeshFilter))]
 public class VisualRange : MonoBehaviour
 {
     [SerializeField][Range(5, 25)] public float distance = 12.0f;
     [SerializeField][Range(8, 48)] public int lineNum = 24;
     [SerializeField][Range(90, 180)] public float range = 90.0f;
 
-    Vector2 basePosition;
     Vector2 facePosition;  // rotate
+    Vector2 posToPlayer;  // rotate
     bool isAlert;
     PolygonCollider2D collider;
+    MeshRenderer meshRenderer;
+    MeshFilter meshFilter;
 
     List<Vector2> points = new List<Vector2>();
 
@@ -23,6 +25,8 @@ public class VisualRange : MonoBehaviour
     private void Awake()
     {
         collider = GetComponent<PolygonCollider2D>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshFilter = GetComponent<MeshFilter>();
     }
 
     private void Update()
@@ -33,19 +37,14 @@ public class VisualRange : MonoBehaviour
 
         genCollider();
 
-        //displayColliderRegion();
+        displayColliderRegion();
     }
 
     private void syncValues()
     {
-        basePosition = transform.position;
-        facePosition = transform.GetComponentInParent<NPCController>().facePosition.normalized;
+        //facePosition = transform.GetComponentInParent<NPCController>().facePosition;
         isAlert = transform.GetComponentInParent<NPCController>().isAlert;
-
-        //if (facePosition.x * facePosition.y < 0)
-        //{
-        //    range = 180.0f - range;
-        //}
+        posToPlayer = transform.GetComponentInParent<NPCController>().posToPlayer;
     }
 
     private void addPoints()
@@ -89,29 +88,35 @@ public class VisualRange : MonoBehaviour
         }
         else
         {
-            direction = (new Vector2(1, Mathf.Tan(angle / 180.0f * Mathf.PI)) * facePosition).normalized;
+            direction = (new Matrix2x2(Mathf.Atan2(posToPlayer.y, posToPlayer.x)) * new Vector2(1, Mathf.Tan(angle / 180.0f * Mathf.PI))).normalized;
         }
 
         Vector2 point = new Vector2();
 
-        ContactFilter2D filter = new ContactFilter2D();
-        filter.layerMask = LayerMask.GetMask("Default");
-        filter.useTriggers = false;
-        filter.useLayerMask = false;
-        filter.useDepth = false;
-        filter.useNormalAngle = false;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(basePosition, direction, distance, filter.layerMask);
-
-        //Debug.DrawRay(basePosition, direction * distance, Color.blue);  // debug
+        //ContactFilter2D filter = new ContactFilter2D();
+        //filter.layerMask = LayerMask.GetMask("Player");
+        //filter.useTriggers = false;
+        //filter.useLayerMask = false;
+        //filter.useDepth = false;
+        //filter.useNormalAngle = false;
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, distance, LayerMask.GetMask("Default"));
 
         foreach (RaycastHit2D hit in hits)
         {
-            //Debug.Log("Hit: " + hit.collider.name);
+            if (hit.collider.isTrigger)
+            {
+                continue;
+            }
+
             if (hit.collider.CompareTag("Player"))
             {
                 continue;
             }
             else if (hit.collider.CompareTag("NPC"))
+            {
+                continue;
+            }
+            else if (hit.collider.CompareTag("Enermy"))
             {
                 continue;
             }
@@ -125,7 +130,7 @@ public class VisualRange : MonoBehaviour
 
         if (point.Equals(Vector2.zero))
         {
-            point = basePosition + direction * distance;
+            point = new Vector2(transform.position.x, transform.position.y) + direction * distance;
         }
 
         return point;
@@ -146,50 +151,69 @@ public class VisualRange : MonoBehaviour
 
     private void displayColliderRegion()
     {
-        Color color;
-        if (isAlert)
+        Mesh mesh = new Mesh();
+
+        Vector3[] vertices = new Vector3[collider.points.Length];
+        for (int i = 0; i < points.Count; i++)
         {
-            color = Color.red;
-        }
-        else
-        {
-            color = Color.green;
-        }
-        
-        for (int i = 0; i < points.Count - 1; i++)
-        {
-            Debug.DrawLine(points[i], points[i + 1], color);
+            vertices[i] = collider.points[i];
         }
 
-        Debug.DrawLine(basePosition, points[0], color);
-        Debug.DrawLine(basePosition, points[points.Count - 1], color);
+        Triangulator triangulator = new Triangulator(collider.points);
+        int[] indices = triangulator.Triangulate();
+
+        mesh.vertices = vertices;
+        mesh.triangles = indices;
+        mesh.RecalculateNormals();
+        mesh.RecalculateBounds();
+
+        meshFilter.mesh = mesh;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.CompareTag("Player"))
+        if (collider.CompareTag("Player"))
         {
-            if (transform.GetComponentInParent<NPCController>().isTracking)
-            {
-                StopCoroutine(transform.GetComponentInParent<NPCController>().track());
-            }
+            transform.GetComponentInParent<NPCController>().isTracking = false;
             transform.GetComponentInParent<NPCController>().isAlert = true;
         }
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collider)
     {
-        if (collision.CompareTag("Player"))
+        if (collider.CompareTag("Player"))
         {
-            transform.GetComponentInParent<NPCController>().targetPosition = collision.transform.position;
+            transform.GetComponentInParent<NPCController>().targetPosition = getColliderCenter(collider);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private Vector2 getColliderCenter(Collider2D collider)
     {
-        if (collision.CompareTag("Player"))
+        PolygonCollider2D polygonCollider = collider as PolygonCollider2D;
+
+        Vector2[] points = polygonCollider.points;
+
+        Vector2[] worldPoints = new Vector2[points.Length];
+        for (int i = 0; i < points.Length; i++)
         {
-            StartCoroutine(transform.GetComponentInParent<NPCController>().track());
+            worldPoints[i] = polygonCollider.transform.TransformPoint(points[i]);
+        }
+
+        Vector2 center = Vector2.zero;
+        foreach (var point in worldPoints)
+        {
+            center += point;
+        }
+        center /= points.Length;
+
+        return center;
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.CompareTag("Player"))
+        {
+            transform.GetComponentInParent<NPCController>().isTracking = true;
         }
     }
 }

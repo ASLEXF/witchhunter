@@ -3,31 +3,27 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator))]
 public class PlayerAttack : MonoBehaviour
 {
-    private Animator animator;
-    private Rigidbody2D rb;
-    private PlayerController playerController;
-    private Vector3 attackDirection;
+    Animator animator;
+    Rigidbody2D rb;
+    Vector3 attackDirection;
 
     public GameObject col;
-
-    public WeaponBase currentWeapon;
 
     public float moveDuration = 0f;
     public float moveSpeed = 0f;
     private float moveDistance = 0f;
     private float elapsedTime = 0f;
 
-    private int attackCounter = 1;
+    private int attackCounter = 0;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
-        playerController = GetComponent<PlayerController>();
-        
-        currentWeapon = GetComponent<WeaponBase>();
+        //rb = PlayerController.Instance.GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -46,33 +42,33 @@ public class PlayerAttack : MonoBehaviour
 
             elapsedTime += Time.deltaTime;
 
-            float t = Mathf.Clamp01(elapsedTime / moveDuration);
+            //float t = Mathf.Clamp01(elapsedTime / moveDuration);
 
-            rb.MovePosition(transform.position + attackDirection * moveSpeed * Time.deltaTime);
+            //rb.MovePosition(transform.position + attackDirection * moveSpeed * Time.deltaTime);
 
-            if (t >= 1f)
-            {
-                moveDuration = 0f;
-                moveSpeed = 0f;
-                flag = true;
-            }
+            //if (t >= 1f)
+            //{
+            //    moveDuration = 0f;
+            //    moveSpeed = 0f;
+            //    flag = true;
+            //}
         }
     }
 
     public void AttackEndHandler()
     {
-        if (attackCounter < 2)
+        if (attackCounter < 1)
         {
             attackCounter++;
         }
         else
         {
-            attackCounter = 1;
+            attackCounter = 0;
         }
 
         animator.SetInteger("Counter", attackCounter);
 
-        DisableAttackCollider();
+        DisableAttackTrigger();
     }
 
     #region Movement
@@ -91,13 +87,19 @@ public class PlayerAttack : MonoBehaviour
             moveSpeed = 15f;
         }
     }
+
+    private void canMove()
+    {
+        PlayerController.Instance.canMove = true;
+    }
+
     #endregion
 
-    #region Collider
+    #region Trigger
 
-    void EnableAttackCollider() => col.SetActive(true);
+    void EnableAttackTrigger() => col.SetActive(true);
 
-    void DisableAttackCollider() => col.SetActive(false);
+    void DisableAttackTrigger() => col.SetActive(false);
 
     #endregion
 
@@ -109,17 +111,18 @@ public class PlayerAttack : MonoBehaviour
 
     #region Weapon
 
-    private WeaponBase GetWeapon(int index)
-    {
-        WeaponBase weapon = null;
-        return weapon;
-    }
+    //private WeaponBase GetWeapon(int index)
+    //{
+    //    WeaponBase weapon = null;
+    //    return weapon;
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enermy"))
         {
-            collision.GetComponent<Health>().TakeDamage(2);  // TODO
+            //collision.GetComponent<Health>().TakeDamage(2);  // TODO
+            Debug.Log("hit enermy");
         }
     }
 

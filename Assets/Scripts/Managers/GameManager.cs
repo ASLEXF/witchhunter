@@ -47,18 +47,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // 检测鼠标左键点击
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+        //// 检测鼠标左键点击
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-            if (hit.collider != null)
-            {
-                // 输出被点击对象的名称到控制台
-                Debug.Log("Clicked on: " + hit.transform.name);
-            }
-        }
+        //    if (hit.collider != null)
+        //    {
+        //        // 输出被点击对象的名称到控制台
+        //        Debug.Log("Clicked on: " + hit.transform.name);
+        //    }
+        //}
     }
 
 }

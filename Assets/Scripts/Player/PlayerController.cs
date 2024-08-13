@@ -1,13 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
     private static PlayerController _instance;
@@ -31,18 +25,18 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        else if (_instance != this)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
         }
+        else
+        {
+            _instance = this;
+        }
 
         _rb = GetComponent<Rigidbody2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _animator = GetComponent<Animator>();
+        _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        _animator = transform.GetChild(0).GetComponent<Animator>();
     }
 
     void Update()
@@ -178,20 +172,6 @@ public class PlayerController : MonoBehaviour
         {
             
         }
-    }
-
-    #endregion
-
-    #region Animation
-    void CanMove() => canMove = true;
-
-    #endregion
-
-    #region Item
-
-    public void GetItem(int ItemID)
-    {
-
     }
 
     #endregion

@@ -265,7 +265,7 @@ public class StoryManager : MonoBehaviour
                 "1-1", 
                 new Dictionary<string, int>() { { "CurrentSceneName", 3 } },
                 true,
-                new Vector2(16.05f, -7f)
+                new Vector2(-4.09f, 1.89f)
                 ), 
             0
         );
