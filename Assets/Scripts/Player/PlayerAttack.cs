@@ -9,7 +9,9 @@ public class PlayerAttack : MonoBehaviour
 {
     Animator animator;
     Rigidbody2D rb;
+
     Vector3 attackDirection;
+    Coroutine attackResetter;
 
     public GameObject col;
 
@@ -60,15 +62,25 @@ public class PlayerAttack : MonoBehaviour
         if (attackCounter < 1)
         {
             attackCounter++;
+            if (attackResetter != null) StopCoroutine(attackResetter);
+            attackResetter = StartCoroutine(resetAttackCounter());
         }
         else
         {
             attackCounter = 0;
+            if (attackResetter != null) StopCoroutine(attackResetter);
         }
 
-        animator.SetInteger("Counter", attackCounter);
+        animator.SetInteger("SwordCounter", attackCounter);
 
         DisableAttackTrigger();
+    }
+
+    IEnumerator resetAttackCounter()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        attackCounter = 0;
     }
 
     #region Movement
@@ -91,6 +103,11 @@ public class PlayerAttack : MonoBehaviour
     private void canMove()
     {
         PlayerController.Instance.canMove = true;
+    }
+
+    private void stopMovement()
+    {
+        PlayerController.Instance.canMove = false;
     }
 
     #endregion

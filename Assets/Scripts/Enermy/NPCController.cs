@@ -6,6 +6,8 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     Rigidbody2D rb;
+    Animator animator;
+    SpriteRenderer spriteRenderer;
 
     //public Matrix2x2 facePosition = new Matrix2x2(Mathf.PI);
     public Vector2 targetPosition;
@@ -24,7 +26,9 @@ public class NPCController : MonoBehaviour
     public bool isCloseRange = false;
     public bool isClosestRange = false;
 
-    public float moveSpeed = 5.0f;
+    public float walkSpeed = 5.0f;
+    public float runSpeed = 5.0f;
+    public float jumpSpeed = 5.0f;
 
     // preference
     [SerializeField] WolfStats stats;
@@ -36,6 +40,8 @@ public class NPCController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = transform.GetChild(0).GetComponent<Animator>();
+        spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -47,9 +53,19 @@ public class NPCController : MonoBehaviour
     private void Update()
     {
         posToPlayer = (targetPosition - new Vector2(transform.position.x, transform.position.y)).normalized;
+
         if (targetPosition != Vector2.zero)
         {
             Debug.DrawLine(transform.position, targetPosition);
+        }
+
+        if (posToPlayer.x > 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
         }
 
         //if (isTracking)
@@ -170,8 +186,9 @@ public class NPCController : MonoBehaviour
                 {
                     while (Time.time < startTime + decisionInterval)
                     {
-                        Vector3 movement = posToPlayer * moveSpeed * Time.deltaTime;
+                        Vector3 movement = posToPlayer * runSpeed * Time.deltaTime;
                         rb.MovePosition(transform.position + movement);
+                        animator.SetBool("IsWalking", true);
 
                         yield return null;
                     }
@@ -199,8 +216,9 @@ public class NPCController : MonoBehaviour
         float startTime = Time.time;
         while (Time.time < startTime + decisionInterval)
         {
-            Vector3 movement = posToPlayer * moveSpeed * Time.deltaTime * new Vector2(-1, -1);
+            Vector3 movement = posToPlayer * runSpeed * Time.deltaTime * new Vector2(-1, -1);
             rb.MovePosition(transform.position + movement);
+            animator.SetBool("IsWalking", true);
 
             yield return null;
         }
@@ -209,16 +227,19 @@ public class NPCController : MonoBehaviour
     private void attack()
     {
         Debug.Log($"{gameObject.name} attack");
+        animator.SetTrigger(Animator.StringToHash("Bite"));
     }
 
     private void wait()
     {
         Debug.Log($"{gameObject.name} wait");
+        animator.SetBool("IsWalking", false);
     }
 
     private void wander()
     {
         Debug.Log($"{gameObject.name} wander");
+        animator.SetBool("IsWalking", true);
     }
 
     public IEnumerator track()

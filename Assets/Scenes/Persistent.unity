@@ -751,15 +751,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1165992582217251717, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: Acceleration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165992582217251717, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: Deceleration
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 1165992582217251770, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1165992582217251770, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
-      propertyPath: m_Layer
-      value: 0
+    - target: {fileID: 5429148038890004899, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1165992582217251714, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
 --- !u!1 &1212592089
 GameObject:

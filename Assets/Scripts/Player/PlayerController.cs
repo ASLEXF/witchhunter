@@ -62,6 +62,10 @@ public class PlayerController : MonoBehaviour
             TurnThePlayer();
             MoveThePlayer();
         }
+        else
+        {
+            _rb.velocity = Vector2.zero;
+        }
     }
 
     #region Display
@@ -113,10 +117,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Movement
-    [SerializeField] private float movementSpeed = 5.0f;
+    [SerializeField] private float currentSpeed = 0;
+    [SerializeField] private float minSpeed = 2.0f;
+    [SerializeField] private float maxSpeed = 5.0f;
     [SerializeField] private float movementSmoothingSpeed = 1.0f;
     public bool canMove = true;
-    Vector3 _rawInputMovement;
+    Vector2 _rawInputMovement;
+    Vector2 _frameVelocity;
+    public float Acceleration = 1.2f;
+    public float Deceleration = 0.6f;
 
     void TurnThePlayer()
     {
@@ -133,8 +142,20 @@ public class PlayerController : MonoBehaviour
 
     void MoveThePlayer()
     {
-        Vector3 movement = _rawInputMovement * movementSpeed * Time.deltaTime;
-        _rb.MovePosition(transform.position + movement);
+        //Vector3 movement = _rawInputMovement * maxSpeed * Time.deltaTime;
+        //_rb.MovePosition(transform.position + movement);
+        if (_rawInputMovement.magnitude == 0)
+        {
+            currentSpeed = Mathf.MoveTowards(currentSpeed, minSpeed, Deceleration * Time.fixedDeltaTime);
+        }
+        else
+        {
+            currentSpeed = Mathf.MoveTowards(currentSpeed, maxSpeed, Acceleration * Time.fixedDeltaTime);
+        }
+        
+        _frameVelocity.x = currentSpeed * _rawInputMovement.normalized.x;
+        _frameVelocity.y = currentSpeed * _rawInputMovement.normalized.y;
+        _rb.velocity = _frameVelocity;
     }
 
     #endregion
@@ -143,9 +164,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMovement(InputAction.CallbackContext value)
     {
-        Vector2 inputMovement = value.ReadValue<Vector2>();
-        _rawInputMovement = new Vector3(inputMovement.x, inputMovement.y, 0);
-        //smoothInputMovement = Vector3.Lerp(smoothInputMovement, rawInputMovement, Time.deltaTime * movementSmoothingSpeed);
+        _rawInputMovement = value.ReadValue<Vector2>();
     }
 
     public void OnAttack(InputAction.CallbackContext value)
@@ -153,7 +172,7 @@ public class PlayerController : MonoBehaviour
         if (value.started)
         {
             canMove = false;
-            _animator.SetTrigger(Animator.StringToHash("Attack"));
+            _animator.SetTrigger(Animator.StringToHash("SwordAttack"));
         }
     }
 
