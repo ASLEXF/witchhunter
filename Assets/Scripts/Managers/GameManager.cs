@@ -61,4 +61,14 @@ public class GameManager : MonoBehaviour
         //}
     }
 
+    public void StartExplorationMode()
+    {
+        GameEvents.Instance.ExplorationModeStarted();
+    }
+
+    public void StartBattleMopde()
+    {
+        GameEvents.Instance.BattleModeStarted();
+    }
+
 }

@@ -42,7 +42,6 @@ public class PlayerInputMapHandler : MonoBehaviour
 
     private void CheckCurrentScene()
     {
-        Debug.Log($"check current scene {SceneLoader.Instance.CurrentScenes[1]}");
         foreach (string sceneName in SceneLoader.Instance.ExplorationScenes)
         {
             if (SceneLoader.Instance.CurrentScenes[1] == sceneName)
@@ -89,9 +88,9 @@ public class PlayerInputMapHandler : MonoBehaviour
     private void OnDestroy()
     {
         GameEvents.Instance.OnMenuOpened -= InputActionsToMenu;
-        GameEvents.Instance.OnMenuClosed -= CheckCurrentScene;
+        //GameEvents.Instance.OnMenuClosed -= CheckCurrentScene;
         GameEvents.Instance.OnStoryModeStarted -= InputActionsToStory;
-        GameEvents.Instance.OnStoryModeEnded -= CheckCurrentScene;
+        //GameEvents.Instance.OnStoryModeEnded -= CheckCurrentScene;
         GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
         GameEvents.Instance.OnBattleModeStarted -= InputActionsToBattle;
     }

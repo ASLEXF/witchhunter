@@ -35,6 +35,12 @@ public class SceneTriggerManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        GameEvents.Instance.OnStoryModeEnded += checkCurrentScene;
+        GameEvents.Instance.OnMenuClosed += checkCurrentScene;
+    }
+
     private void Update()
     {
         // check story node condition, begin story mode
@@ -47,8 +53,29 @@ public class SceneTriggerManager : MonoBehaviour
                 if (node.CheckConditiion())
                 {
                     node.Play();
-                    break;
+                    continue;
                 }
+            }
+        }
+    }
+
+    void checkCurrentScene()
+    {
+        foreach (string sceneName in SceneLoader.Instance.ExplorationScenes)
+        {
+            if (SceneLoader.Instance.CurrentScenes[1] == sceneName)
+            {
+                GameManager.Instance.StartExplorationMode();
+                return;
+            }
+        }
+
+        foreach (string sceneName in SceneLoader.Instance.BattleScenes)
+        {
+            if (SceneLoader.Instance.CurrentScenes[1] == sceneName)
+            {
+                GameManager.Instance.StartBattleMopde();
+                return;
             }
         }
     }

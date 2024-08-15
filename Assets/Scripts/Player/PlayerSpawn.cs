@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerSpawn : MonoBehaviour
 {
     GameObject spawnPoint;
+    PlayerHealth playerHealth;
 
     private void Awake()
     {
@@ -25,5 +26,7 @@ public class PlayerSpawn : MonoBehaviour
         {
             PlayerController.Instance.transform.position = spawnPoint.transform.position;
         }
+
+        playerHealth.revive();
     }
 }
