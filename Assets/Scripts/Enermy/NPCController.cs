@@ -31,7 +31,7 @@ public class NPCController : MonoBehaviour
     public float jumpSpeed = 5.0f;
 
     // preference
-    [SerializeField] WolfStats stats;
+    [SerializeField] public WolfStats stats;
     [SerializeField] float searchTime = 12.0f;
     [SerializeField] List<float> prefs;
 

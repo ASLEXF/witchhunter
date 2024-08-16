@@ -6,23 +6,23 @@ public class PlayerHealth : MonoBehaviour
 {
     PlayerSpawn playerSpawn;
 
-    int maxHealth = 5;
-
-    private void Awake()
-    {
-        playerSpawn = GetComponent<PlayerSpawn>();
-    }
+    [SerializeField] int maxHealth = 5;
 
     public int MaxHealth
     {
         get { return maxHealth; }
     }
 
-    int currentHealth = 5;
+    [SerializeField] int currentHealth = 5;
 
     public int CurrentHealth
     {
         get { return currentHealth; }
+    }
+
+    private void Awake()
+    {
+        playerSpawn = GetComponent<PlayerSpawn>();
     }
 
     private void Update()
@@ -31,6 +31,11 @@ public class PlayerHealth : MonoBehaviour
         {
             die();
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
     }
 
     void die()

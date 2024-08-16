@@ -15,6 +15,9 @@ public enum ApproachMethod
 [CreateAssetMenu]
 public class WolfStats : ScriptableObject
 {
+    [Header("Damage")]
+    public int biteDamage = 1;
+
     [Header("Movement")]
     public float speed = 6;
     public float MaxSpeed = 14;

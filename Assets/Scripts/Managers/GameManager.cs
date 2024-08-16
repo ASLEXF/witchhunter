@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         GameEvents.Instance.ExplorationModeStarted();
     }
 
-    public void StartBattleMopde()
+    public void StartBattleMode()
     {
         GameEvents.Instance.BattleModeStarted();
     }

@@ -174,8 +174,11 @@ public class VisualRange : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            transform.GetComponentInParent<NPCController>().isTracking = false;
-            transform.GetComponentInParent<NPCController>().isAlert = true;
+            if (collider.name == "Player")
+            {
+                transform.GetComponentInParent<NPCController>().isTracking = false;
+                transform.GetComponentInParent<NPCController>().isAlert = true;
+            }
         }
     }
 
@@ -183,7 +186,8 @@ public class VisualRange : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            transform.GetComponentInParent<NPCController>().targetPosition = getColliderCenter(collider);
+            if (collider.name == "Player")
+                transform.parent.GetComponentInParent<NPCController>().targetPosition = getColliderCenter(collider);
         }
     }
 

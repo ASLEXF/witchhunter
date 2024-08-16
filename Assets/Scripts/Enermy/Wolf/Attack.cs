@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    public int attackDamage = 2;
+    [SerializeField] GameObject biteTrigger;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void EnableBiteTrigger()
     {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            collision.GetComponent<Health>().TakeDamage(attackDamage);
-        }
+        biteTrigger.SetActive(true);
+    }
+
+    public void DisableBiteTrigger()
+    {
+        biteTrigger.SetActive(false);
     }
 }

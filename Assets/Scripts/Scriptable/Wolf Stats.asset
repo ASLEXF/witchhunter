@@ -12,11 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a18d113684dc3e419588d84973f89ac, type: 3}
   m_Name: Wolf Stats
   m_EditorClassIdentifier: 
+  biteDamage: 1
   speed: 6
   MaxSpeed: 14
   Acceleration: 120
   GroundDeceleration: 60
+  approachMethod: 0
   normal_moveClose: 0.8
+  normal_moveAway: 0
+  normal_attack: 0
   normal_wait: 0.2
   moveRange_moveClose: 0.4
   moveRange_moveAway: 0.1

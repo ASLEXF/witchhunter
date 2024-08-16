@@ -40,6 +40,7 @@ public class PlayerInputMapHandler : MonoBehaviour
         playerInput.SwitchCurrentActionMap("Menu");
     }
 
+    // TODO: 这段应该不需要的
     private void CheckCurrentScene()
     {
         foreach (string sceneName in SceneLoader.Instance.ExplorationScenes)

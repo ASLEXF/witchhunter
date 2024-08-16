@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
         {
             if (_instance == null)
             {
+                Debug.LogWarning("Player Controller null");
                 GameObject singletonObject = new GameObject("PlayerController");
                 _instance = singletonObject.AddComponent<PlayerController>();
             }

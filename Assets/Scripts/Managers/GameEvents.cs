@@ -13,6 +13,7 @@ public class GameEvents : MonoBehaviour
         {
             if (_instance == null)
             {
+                Debug.LogWarning("game events null");
                 GameObject obj = new GameObject("GameEvents");
                 _instance = obj.AddComponent<GameEvents>();
             }
@@ -74,6 +75,14 @@ public class GameEvents : MonoBehaviour
     public event Action OnAssetLoaded;
 
     public void AssetLoaded() => OnAssetLoaded?.Invoke();
+
+    #endregion
+
+    #region Player Status
+
+    public event Action OnPlayerHealthChanged;
+
+    public void PlayerHealthChanged() => OnPlayerHealthChanged?.Invoke();
 
     #endregion
 }

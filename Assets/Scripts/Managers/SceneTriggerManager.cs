@@ -74,7 +74,7 @@ public class SceneTriggerManager : MonoBehaviour
         {
             if (SceneLoader.Instance.CurrentScenes[1] == sceneName)
             {
-                GameManager.Instance.StartBattleMopde();
+                GameManager.Instance.StartBattleMode();
                 return;
             }
         }

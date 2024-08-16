@@ -10,6 +10,7 @@ public class PlayerSpawn : MonoBehaviour
     private void Awake()
     {
         spawnPoint = GameObject.Find("SpawnPoint");
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Start()

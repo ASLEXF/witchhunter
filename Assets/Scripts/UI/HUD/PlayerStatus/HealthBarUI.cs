@@ -13,7 +13,7 @@ public class HealthBarUI : MonoBehaviour
 
     private void Awake()
     {
-        playerHealth = GetComponent<PlayerHealth>();
+        playerHealth = PlayerController.Instance.transform.GetChild(1).GetComponent<PlayerHealth>();
     }
 
     private void Start()
@@ -23,6 +23,8 @@ public class HealthBarUI : MonoBehaviour
         GameEvents.Instance.OnBattleModeStarted += showHealthBar;
         GameEvents.Instance.OnExplorationModeStarted += hideHealthBar;
         GameEvents.Instance.OnStoryModeStarted += hideHealthBar;
+
+        GameEvents.Instance.OnPlayerHealthChanged += showHealthBar;
     }
 
     private void showHealthBar()
@@ -38,6 +40,11 @@ public class HealthBarUI : MonoBehaviour
             hearts[i].GetComponent<Image>().sprite = greyHeart;
             hearts[i].SetActive(true);
         }
+
+        for (int i = playerHealth.CurrentHealth;i < hearts.Length; i++)
+        {
+            hearts[i].SetActive(false);
+        }
     }
 
     private void hideHealthBar()
@@ -46,5 +53,13 @@ public class HealthBarUI : MonoBehaviour
         {
             hearts[i].SetActive(false);
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnBattleModeStarted -= showHealthBar;
+        GameEvents.Instance.OnExplorationModeStarted -= hideHealthBar;
+        GameEvents.Instance.OnStoryModeStarted -= hideHealthBar;
+        GameEvents.Instance.OnPlayerHealthChanged -= showHealthBar;
     }
 }

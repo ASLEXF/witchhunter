@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(Animator))]
 public class PlayerAttack : MonoBehaviour
 {
     Animator animator;

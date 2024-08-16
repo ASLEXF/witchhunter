@@ -20604,6 +20604,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1837631275}
     m_Modifications:
+    - target: {fileID: 1355352185875051129, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5167781006044164523, guid: 4cbd1912f39589c498d6036d1a1a0892, type: 3}
       propertyPath: m_Name
       value: Wolf
