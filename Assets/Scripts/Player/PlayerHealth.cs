@@ -59,6 +59,7 @@ public class PlayerHealth : MonoBehaviour
     public void revive()
     {
         currentHealth = maxHealth;
+        GameEvents.Instance.PlayerHealthChanged();
     }
 
     public void addMaxHealth()

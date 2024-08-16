@@ -31,17 +31,19 @@ public class HealthBarUI : MonoBehaviour
     {
         for (int i = 0; i < playerHealth.CurrentHealth; i++)
         {
+            hearts[i].GetComponent<Animator>().enabled = true;
             hearts[i].GetComponent<Image>().sprite = redHeart;
             hearts[i].SetActive(true);
         }
 
         for (int i = playerHealth.CurrentHealth; i < playerHealth.MaxHealth; i++)
         {
+            hearts[i].GetComponent<Animator>().enabled = false;
             hearts[i].GetComponent<Image>().sprite = greyHeart;
             hearts[i].SetActive(true);
         }
 
-        for (int i = playerHealth.CurrentHealth;i < hearts.Length; i++)
+        for (int i = playerHealth.MaxHealth; i < hearts.Length; i++)
         {
             hearts[i].SetActive(false);
         }
