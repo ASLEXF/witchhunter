@@ -12,7 +12,8 @@ public class PlayerAttack : MonoBehaviour
     Vector3 attackDirection;
     Coroutine attackResetter;
 
-    public GameObject col;
+    public GameObject SwordAttack1;
+    public GameObject SwordAttack2;
 
     public float moveDuration = 0f;
     public float moveSpeed = 0f;
@@ -37,7 +38,7 @@ public class PlayerAttack : MonoBehaviour
             if (flag)
             {
                 elapsedTime = 0f;
-                attackDirection = PositionLine.Instance.GetAttackDirection();
+                attackDirection = PositionLine.Instance.GetClickDirection();
                 flag = false;
             }
 
@@ -72,7 +73,7 @@ public class PlayerAttack : MonoBehaviour
 
         animator.SetInteger("SwordCounter", attackCounter);
 
-        DisableAttackTrigger();
+        //DisableAttackTrigger();
     }
 
     IEnumerator resetAttackCounter()
@@ -113,9 +114,11 @@ public class PlayerAttack : MonoBehaviour
 
     #region Trigger
 
-    void EnableAttackTrigger() => col.SetActive(true);
+    void EnableSwordAttack1Trigger() => SwordAttack1.SetActive(true);
+    void EnableSwordAttack2Trigger() => SwordAttack2.SetActive(true);
 
-    void DisableAttackTrigger() => col.SetActive(false);
+    void DisableSwordAttack1Trigger() => SwordAttack1.SetActive(false);
+    void DisableSwordAttack2Trigger() => SwordAttack2.SetActive(false);
 
     #endregion
 
@@ -137,8 +140,10 @@ public class PlayerAttack : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enermy"))
         {
-            //collision.GetComponent<Health>().TakeDamage(2);  // TODO
-            Debug.Log("hit enermy");
+            if (collision.name == "Animator")
+            {
+                collision.transform.parent.GetChild(1).GetComponent<NPCHealth>().TakeDamage(1);
+            }
         }
     }
 

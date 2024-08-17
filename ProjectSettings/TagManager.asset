@@ -9,8 +9,8 @@ TagManager:
   - NPC
   - DropItem
   - Interactive
-  - Tree
   - Cover
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

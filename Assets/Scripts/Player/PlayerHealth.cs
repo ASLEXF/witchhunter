@@ -36,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        GameEvents.Instance.PlayerHealthChanged();
     }
 
     void die()
@@ -48,6 +49,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth < maxHealth)
         {
             currentHealth++;
+            GameEvents.Instance.PlayerHealthChanged();
         }
     }
 

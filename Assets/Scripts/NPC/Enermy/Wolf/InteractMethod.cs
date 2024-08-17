@@ -2,38 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interact : MonoBehaviour
+public class InteractMethod : MonoBehaviour
 {
-    private int status = 0;
+    private NPCStatus status;
 
 
 
     private void Awake()
     {
-        
+        status = GetComponent<NPCStatus>();
     }
 
-    public void interact()
+    public void Interact()
     {
-        switch(this.status)
+        switch(status)
         {
-            case 0:
+            case NPCStatus.Alive:
+                Talk();
                 break;
-            case 1:
+            case NPCStatus.Dead:
                 GetNPCItem();
                 break;
-            case 2:
+            case NPCStatus.DeadEmpty:
                 PickUpBody();
-                break;
-            default:
-                Debug.Log("status wrong" + this.status);
                 break;
         }
     }
 
+    private void Talk()
+    {
+
+    }
+
     private void GetNPCItem()
     {
-        this.status = 2;
+        
     }
 
     private void PickUpBody()

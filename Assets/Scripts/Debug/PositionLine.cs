@@ -70,7 +70,7 @@ public class PositionLine : MonoBehaviour
     //    _lineRenderer2.endWidth = 0.05f;
     //}
 
-    public Vector3 GetAttackDirection()
+    public Vector3 GetClickDirection()
     {
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 position = transform.position;
@@ -95,6 +95,26 @@ public class PositionLine : MonoBehaviour
         {
             //Debug.Log(" Û±ÍŒª÷√£∫…œ ");
             return new Vector3(0, 1, 0);
+        }
+    }
+
+    public Vector2 GetAttackPosition(Vector2 posToPlayer, Vector2 statsPosition)
+    {
+        if (posToPlayer.y < slope * posToPlayer.x && posToPlayer.y <= -slope * posToPlayer.x)
+        {
+            return new Vector2(0, 0.5f * statsPosition.x + statsPosition.y);
+        }
+        else if (posToPlayer.y <= slope * posToPlayer.x && posToPlayer.y > -slope * posToPlayer.x)
+        {
+            return new Vector2(-statsPosition.x, statsPosition.y);
+        }
+        else if (posToPlayer.y >= slope * posToPlayer.x && posToPlayer.y < -slope * posToPlayer.x)
+        {
+            return new Vector2(statsPosition.x, statsPosition.y);
+        }
+        else
+        {
+            return new Vector2(0, -0.5f * statsPosition.x + statsPosition.y);
         }
     }
 }

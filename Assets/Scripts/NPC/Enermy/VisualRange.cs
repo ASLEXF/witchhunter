@@ -43,8 +43,8 @@ public class VisualRange : MonoBehaviour
     private void syncValues()
     {
         //facePosition = transform.GetComponentInParent<NPCController>().facePosition;
-        isAlert = transform.GetComponentInParent<NPCController>().isAlert;
-        posToPlayer = transform.GetComponentInParent<NPCController>().posToPlayer;
+        isAlert = transform.parent.GetComponentInParent<NPCController>().isAlert;
+        posToPlayer = transform.parent.GetComponentInParent<NPCController>().posToPlayer;
     }
 
     private void addPoints()
@@ -187,7 +187,11 @@ public class VisualRange : MonoBehaviour
         if (collider.CompareTag("Player"))
         {
             if (collider.name == "Player")
+            {
+                transform.GetComponentInParent<NPCController>().isTracking = false;
+                transform.GetComponentInParent<NPCController>().isAlert = true;
                 transform.parent.GetComponentInParent<NPCController>().targetPosition = getColliderCenter(collider);
+            }
         }
     }
 

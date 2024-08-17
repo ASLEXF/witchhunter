@@ -93,14 +93,21 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.26666668
-    functionName: EnableAttackTrigger
+    functionName: EnableSwordAttack1Trigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.33333334
+    functionName: AttackEndHandler
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.35
-    functionName: AttackEndHandler
+    functionName: DisableSwordAttack1Trigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

@@ -14,7 +14,6 @@ public class NPCController : MonoBehaviour
     [SerializeField] public Vector2 posToPlayer;
 
     Vector2 originalPosition;
-    float decisionInterval = 0.5f;
 
     // behavior
     public bool isAlert = false;
@@ -26,16 +25,11 @@ public class NPCController : MonoBehaviour
     public bool isCloseRange = false;
     public bool isClosestRange = false;
 
-    public float walkSpeed = 5.0f;
-    public float runSpeed = 5.0f;
-    public float jumpSpeed = 5.0f;
-
     // preference
     [SerializeField] public WolfStats stats;
-    [SerializeField] float searchTime = 12.0f;
     [SerializeField] List<float> prefs;
 
-    bool isFlip = false;
+    public bool isFlip = false;
 
     private void Awake()
     {
@@ -47,7 +41,7 @@ public class NPCController : MonoBehaviour
     private void Start()
     {
         originalPosition = transform.position;
-        InvokeRepeating("decideBehavior", 2f, decisionInterval);
+        InvokeRepeating("decideBehavior", 2f, stats.decisionInterval);
     }
 
     private void Update()
@@ -62,10 +56,12 @@ public class NPCController : MonoBehaviour
         if (posToPlayer.x > 0)
         {
             spriteRenderer.flipX = true;
+            isFlip = true;
         }
         else
         {
             spriteRenderer.flipX = false;
+            isFlip = false;
         }
 
         //if (isTracking)
@@ -91,7 +87,7 @@ public class NPCController : MonoBehaviour
         {
             if (isTracking)
             {
-                // tracking
+                StartCoroutine(track());
             }
             else
             {
@@ -118,7 +114,7 @@ public class NPCController : MonoBehaviour
         }
         else
         {
-            wander();
+            StartCoroutine(wander());
         }
     }
 
@@ -184,9 +180,9 @@ public class NPCController : MonoBehaviour
         {
             case ApproachMethod.straight:
                 {
-                    while (Time.time < startTime + decisionInterval)
+                    while (Time.time < startTime + stats.decisionInterval)
                     {
-                        Vector3 movement = posToPlayer * runSpeed * Time.deltaTime;
+                        Vector3 movement = posToPlayer * stats.runSpeed * Time.deltaTime;
                         rb.MovePosition(transform.position + movement);
                         animator.SetBool("IsWalking", true);
 
@@ -214,9 +210,9 @@ public class NPCController : MonoBehaviour
     private IEnumerator stayOff()
     {
         float startTime = Time.time;
-        while (Time.time < startTime + decisionInterval)
+        while (Time.time < startTime + stats.decisionInterval)
         {
-            Vector3 movement = posToPlayer * runSpeed * Time.deltaTime * new Vector2(-1, -1);
+            Vector3 movement = posToPlayer * stats.runSpeed * Time.deltaTime * new Vector2(-1, -1);
             rb.MovePosition(transform.position + movement);
             animator.SetBool("IsWalking", true);
 
@@ -236,17 +232,48 @@ public class NPCController : MonoBehaviour
         animator.SetBool("IsWalking", false);
     }
 
-    private void wander()
+    private IEnumerator wander()
     {
         Debug.Log($"{gameObject.name} wander");
-        animator.SetBool("IsWalking", true);
+
+        float startTime = Time.time;
+        float randomX = Random.value - 0.5f;
+
+        if (randomX < 0.2)
+        {
+            wait();
+
+            yield break;
+        }
+
+        float randomY = Random.value - 0.5f;
+        Vector2 randomDirection = new Vector2( randomX, randomY).normalized;
+        Vector2 directionToOriginalPosition = (originalPosition - transform.position.ToVector2()).normalized;
+
+        float currentDistance = (transform.position.ToVector2() - originalPosition).magnitude;
+
+        Vector2 direction = ((stats.wanderDistance - currentDistance) * randomDirection + currentDistance * directionToOriginalPosition).normalized;
+
+        float waitTime = Random.value / 2;
+        while (Time.time < startTime + stats.decisionInterval)
+        {
+            Vector3 deltaMovement = direction * stats.runSpeed * Time.deltaTime;
+            rb.MovePosition(transform.position + deltaMovement);
+            animator.SetBool("IsWalking", true);
+
+            yield return null;
+        }
+
+        yield return null;
+
+        animator.SetBool("IsWalking", false);
     }
 
     public IEnumerator track()
     {
         isTracking = true;
 
-        yield return new WaitForSeconds(searchTime);
+        yield return new WaitForSeconds(stats.searchTime);
 
         isAlert = false;
         isTracking = false;

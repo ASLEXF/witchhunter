@@ -9,7 +9,7 @@ public class PlayerSpawn : MonoBehaviour
 
     private void Awake()
     {
-        spawnPoint = GameObject.Find("SpawnPoint");
+        spawnPoint = GameObject.FindWithTag("SpawnPoint");
         playerHealth = GetComponent<PlayerHealth>();
     }
 
