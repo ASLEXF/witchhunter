@@ -117,4 +117,9 @@ public class PositionLine : MonoBehaviour
             return new Vector2(0, -0.5f * statsPosition.x + statsPosition.y);
         }
     }
+
+    public Vector2 GetTurnPosition(Vector2 relativePosition)
+    {
+
+    }
 }

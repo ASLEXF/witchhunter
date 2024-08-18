@@ -33,7 +33,8 @@ public class NPCHealth : MonoBehaviour
 
     public void Die()
     {
-        Destroy(gameObject.transform.parent.gameObject);
+        Debug.Log("NPC DIE");
+        //Destroy(gameObject.transform.parent.gameObject, 0.1f);
         //transform.parent.gameObject.SetActive(false);
     }
 

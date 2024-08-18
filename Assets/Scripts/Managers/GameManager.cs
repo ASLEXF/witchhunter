@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     {
         get
         {
+            if (_instance == null)
+            {
+                Debug.LogWarning("game manager not found!");
+            }
             return _instance;
         }
     }

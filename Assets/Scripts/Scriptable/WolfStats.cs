@@ -27,14 +27,18 @@ public class WolfStats : ScriptableObject
     public float walkSpeed = 3;
     public float runSpeed = 6;
     public float MaxSpeed = 14;
-    public float Acceleration = 120;
-    public float GroundDeceleration = 60;
-    public float wanderDistance = 5;
+    public float Acceleration = 12;
+    //public float GroundDeceleration = 60;
 
     [Header("Behavior Preferences")]
     public float decisionInterval = 0.5f;
     public ApproachMethod approachMethod = ApproachMethod.straight;
-    public float searchTime = 6;
+    public float trackTime = 6;
+
+    [Header("Behavior Preferences - Wander")]
+    public float wanderTime = 2;
+    public float wanderRadius = 5;
+    public float minDisatnce = 0.2f;
 
     [Header("Behavior Preferences - Normal")]
     [Range(0, 1)] public float normal_moveClose = 0.9f;

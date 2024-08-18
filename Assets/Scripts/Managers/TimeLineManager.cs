@@ -6,9 +6,9 @@ using UnityEngine.Playables;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using System.IO;
-using Newtonsoft.Json;
 using static UnityEngine.EventSystems.EventTrigger;
 using UnityEngine.SceneManagement;
+using Newtonsoft.Json;
 
 public class TimeLineManager : MonoBehaviour
 {

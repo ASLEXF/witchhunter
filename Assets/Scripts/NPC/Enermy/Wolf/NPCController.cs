@@ -1,13 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class NPCController : MonoBehaviour
 {
     Rigidbody2D rb;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    NavMeshAgent agent;
 
     //public Matrix2x2 facePosition = new Matrix2x2(Mathf.PI);
     public Vector2 targetPosition;
@@ -16,8 +21,10 @@ public class NPCController : MonoBehaviour
     Vector2 originalPosition;
 
     // behavior
+    float decisionInterval;
     public bool isAlert = false;
     public bool isTracking = false;
+    public bool isWandering = false;
 
     // distance
     public bool isMoveRange = false;
@@ -36,12 +43,16 @@ public class NPCController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = transform.GetChild(0).GetComponent<Animator>();
         spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     private void Start()
     {
         originalPosition = transform.position;
-        InvokeRepeating("decideBehavior", 2f, stats.decisionInterval);
+        decisionInterval = stats.decisionInterval;
+
+        InitializeNavMeshAgent();
+        InvokeRepeating("decideBehavior", 2f, decisionInterval);
     }
 
     private void Update()
@@ -81,26 +92,43 @@ public class NPCController : MonoBehaviour
         //}
     }
 
+    private void InitializeNavMeshAgent()
+    {
+        agent.speed = stats.walkSpeed;
+        agent.angularSpeed = 0;
+        agent.acceleration = stats.Acceleration;
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+    }
+
+    private Coroutine trackCoroutine = null;
+    private Coroutine approachCoroutine = null;
+    private Coroutine stayOffCoroutine = null;
+    private Coroutine wanderCoroutine = null;
+
     private void decideBehavior()
     {
+        if (isWandering || isTracking) return;
+        Debug.Log($"stop coroutines at {Time.time}");
+        StopAllCoroutines();
         if (isAlert)
         {
             if (isTracking)
             {
-                StartCoroutine(track());
+                trackCoroutine = StartCoroutine(track());
             }
             else
             {
                 initializePrefs();
 
-                float value = Random.value;
+                float value = UnityEngine.Random.value;
                 if (0 <= value && value < prefs[0])
                 {
-                    StartCoroutine(approach());
+                    approachCoroutine = StartCoroutine(approach());
                 }
                 else if (prefs[0] <= value && value < prefs[1])
                 {
-                    StartCoroutine(stayOff());
+                    stayOffCoroutine = StartCoroutine(stayOff());
                 }
                 else if (prefs[1] <= value && value < prefs[2])
                 {
@@ -114,7 +142,7 @@ public class NPCController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(wander());
+            wanderCoroutine = StartCoroutine(wander()); 
         }
     }
 
@@ -180,7 +208,7 @@ public class NPCController : MonoBehaviour
         {
             case ApproachMethod.straight:
                 {
-                    while (Time.time < startTime + stats.decisionInterval)
+                    while (Time.time < startTime + decisionInterval)
                     {
                         Vector3 movement = posToPlayer * stats.runSpeed * Time.deltaTime;
                         rb.MovePosition(transform.position + movement);
@@ -204,13 +232,14 @@ public class NPCController : MonoBehaviour
                 }
         }
 
+        approachCoroutine = null;
         //yield break;
     }
 
     private IEnumerator stayOff()
     {
         float startTime = Time.time;
-        while (Time.time < startTime + stats.decisionInterval)
+        while (Time.time < startTime + decisionInterval)
         {
             Vector3 movement = posToPlayer * stats.runSpeed * Time.deltaTime * new Vector2(-1, -1);
             rb.MovePosition(transform.position + movement);
@@ -218,6 +247,9 @@ public class NPCController : MonoBehaviour
 
             yield return null;
         }
+
+        animator.SetBool("IsWalking", false);
+        stayOffCoroutine = null;
     }
 
     private void attack()
@@ -230,53 +262,94 @@ public class NPCController : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} wait");
         animator.SetBool("IsWalking", false);
+        wanderCoroutine = null;
     }
 
     private IEnumerator wander()
     {
         Debug.Log($"{gameObject.name} wander");
-
+        isWandering = true;
+        agent.enabled = true;
+        agent.speed = stats.walkSpeed;
         float startTime = Time.time;
-        float randomX = Random.value - 0.5f;
-
-        if (randomX < 0.2)
+        
+        Vector2 randomDirection = UnityEngine.Random.insideUnitSphere.ToVector2() * stats.wanderRadius;
+        randomDirection += originalPosition;
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomDirection, out hit, stats.wanderRadius, NavMesh.AllAreas);
+        if (Vector2.Distance(originalPosition, hit.position.ToVector2()) >= stats.minDisatnce)
         {
-            wait();
-
-            yield break;
+            Debug.Log($"{gameObject.name} wander walk {hit.position.ToVector2()}");
+            animator.SetBool("IsWalking", true);
+            agent.SetDestination(hit.position.ToVector2());
+            posToPlayer = hit.position.ToVector2();
         }
 
-        float randomY = Random.value - 0.5f;
-        Vector2 randomDirection = new Vector2( randomX, randomY).normalized;
-        Vector2 directionToOriginalPosition = (originalPosition - transform.position.ToVector2()).normalized;
-
-        float currentDistance = (transform.position.ToVector2() - originalPosition).magnitude;
-
-        Vector2 direction = ((stats.wanderDistance - currentDistance) * randomDirection + currentDistance * directionToOriginalPosition).normalized;
-
-        float waitTime = Random.value / 2;
-        while (Time.time < startTime + stats.decisionInterval)
+        while (Time.time < startTime + stats.wanderTime)
         {
-            Vector3 deltaMovement = direction * stats.runSpeed * Time.deltaTime;
-            rb.MovePosition(transform.position + deltaMovement);
-            animator.SetBool("IsWalking", true);
-
+            if (Mathf.Approximately(transform.position.x, hit.position.ToVector2().x) && Mathf.Approximately(transform.position.y, hit.position.ToVector2().y))
+                {
+                wait();
+            }
+            if (isAlert)
+            {
+                agent.enabled = false;
+                break;
+            }
             yield return null;
         }
 
-        yield return null;
-
+        agent.enabled = false;
         animator.SetBool("IsWalking", false);
+        wanderCoroutine = null;
+        isWandering = false;
     }
 
-    public IEnumerator track()
+    private IEnumerator track()
     {
-        isTracking = true;
+        Debug.Log($"{gameObject.name} track");
+        agent.enabled = true;
+        agent.speed = stats.runSpeed;
+        float startTime = Time.time;
 
-        yield return new WaitForSeconds(stats.searchTime);
+        agent.SetDestination(targetPosition);
+        animator.SetBool("IsWalking", true);
 
-        isAlert = false;
+        while (Time.time < startTime + stats.trackTime)
+        {
+            if (isAlert)
+            {
+                agent.enabled = false;
+                break;
+            }
+            yield return null;
+        }
+
+        if (isTracking)
+        {
+            isAlert = false;
+            isTracking = false;
+        }
+        
+        agent.enabled = false;
+        animator.SetBool("IsWalking", false);
+        trackCoroutine = null;
+    }
+
+    public void Alert()
+    {
+        isAlert = true;
         isTracking = false;
+        isWandering = false;
+        agent.enabled = false;
+        decisionInterval = stats.decisionInterval;
+    }
+
+    private void setPositionAndSprite(Vector2 targetPostion)
+    {
+        agent.SetDestination(targetPostion);
+
+
     }
 
     private void OnDestroy()
