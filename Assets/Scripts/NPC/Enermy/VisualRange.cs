@@ -1,18 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshFilter))]
 public class VisualRange : MonoBehaviour
 {
+    NPCController controller;
+
     [SerializeField][Range(5, 25)] public float distance = 12.0f;
     [SerializeField][Range(8, 48)] public int lineNum = 24;
     [SerializeField][Range(90, 180)] public float range = 90.0f;
 
     Vector2 facePosition;  // rotate
     Vector2 posToPlayer;  // rotate
-    bool isAlert;
+
     PolygonCollider2D collider;
     MeshRenderer meshRenderer;
     MeshFilter meshFilter;
@@ -24,6 +27,7 @@ public class VisualRange : MonoBehaviour
 
     private void Awake()
     {
+        controller = transform.parent.GetComponentInParent<NPCController>();
         collider = GetComponent<PolygonCollider2D>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshFilter = GetComponent<MeshFilter>();
@@ -43,8 +47,7 @@ public class VisualRange : MonoBehaviour
     private void syncValues()
     {
         //facePosition = transform.GetComponentInParent<NPCController>().facePosition;
-        isAlert = transform.parent.GetComponentInParent<NPCController>().isAlert;
-        posToPlayer = transform.parent.GetComponentInParent<NPCController>().posToPlayer;
+        posToPlayer = controller.posToPlayer;
     }
 
     private void addPoints()
@@ -176,7 +179,7 @@ public class VisualRange : MonoBehaviour
         {
             if (collider.name == "Player")
             {
-                transform.parent.GetComponentInParent<NPCController>().Alert();
+                controller.Alert();
             }
         }
     }
@@ -187,7 +190,11 @@ public class VisualRange : MonoBehaviour
         {
             if (collider.name == "Player")
             {
-                transform.parent.GetComponentInParent<NPCController>().targetPosition = getColliderCenter(collider);
+                if (!controller.seePlayer)
+                {
+                    controller.Alert();
+                }
+                controller.targetPosition = getColliderCenter(collider);
             }
         }
     }
@@ -196,7 +203,7 @@ public class VisualRange : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            transform.GetComponentInParent<NPCController>().isTracking = true;
+            controller.Track();
         }
     }
 

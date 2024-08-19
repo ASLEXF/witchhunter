@@ -136,16 +136,5 @@ public class PlayerAttack : MonoBehaviour
     //    return weapon;
     //}
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enermy"))
-        {
-            if (collision.name == "Animator")
-            {
-                collision.transform.parent.GetChild(1).GetComponent<NPCHealth>().TakeDamage(1);
-            }
-        }
-    }
-
     #endregion
 }

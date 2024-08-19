@@ -71,21 +71,25 @@ public class PlayerController : MonoBehaviour
 
     #region Display
 
+    Renderer[] renderers;
+    Collider2D[] colliders;
+    Rigidbody2D[] rigidbodies;
+
     public void HideThePlayer()
     {
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        renderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in renderers)
         {
             renderer.enabled = false;
         }
 
-        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        colliders = GetComponentsInChildren<Collider2D>();
         foreach (Collider2D collider in colliders)
         {
             collider.enabled = false;
         }
 
-        Rigidbody2D[] rigidbodies = GetComponentsInChildren<Rigidbody2D>();
+        rigidbodies = GetComponentsInChildren<Rigidbody2D>();
         foreach (Rigidbody2D rb in rigidbodies)
         {
             rb.simulated = false;
@@ -96,19 +100,16 @@ public class PlayerController : MonoBehaviour
 
     public void ShowThePlayer()
     {
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in renderers)
         {
             renderer.enabled = true;
         }
 
-        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
         foreach (Collider2D collider in colliders)
         {
             collider.enabled = true;
         }
 
-        Rigidbody2D[] rigidbodies = GetComponentsInChildren<Rigidbody2D>();
         foreach (Rigidbody2D rb in rigidbodies)
         {
             rb.simulated = true;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NPCHealth : MonoBehaviour
 {
+    NPCController controller;
+
     [SerializeField] int maxHealth = 4;
 
     [SerializeField] int currentHealth = 4;
@@ -18,6 +20,11 @@ public class NPCHealth : MonoBehaviour
         get { return currentHealth; }
     }
 
+    private void Awake()
+    {
+        controller = transform.GetComponentInParent<NPCController>();
+    }
+
     private void Update()
     {
         if (currentHealth <= 0)
@@ -26,9 +33,10 @@ public class NPCHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Transform source)
     {
         currentHealth -= damage;
+        controller.Alert(source);
     }
 
     public void Die()

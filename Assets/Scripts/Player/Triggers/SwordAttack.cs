@@ -17,8 +17,7 @@ public class SwordAttack : MonoBehaviour
         {
             if (collision.name == "Animator")
             {
-                collision.gameObject.transform.parent.GetChild(1).GetComponent<NPCHealth>().TakeDamage(damage);
-                GameEvents.Instance.PlayerHealthChanged();
+                collision.gameObject.transform.parent.GetChild(1).GetComponent<NPCHealth>().TakeDamage(damage, gameObject.transform.parent.parent.GetChild(0));
             }
         }
     }

@@ -20,15 +20,16 @@ MonoBehaviour:
   runSpeed: 6
   MaxSpeed: 14
   Acceleration: 120
-  GroundDeceleration: 60
-  wanderDistance: 2
   decisionInterval: 0.5
   approachMethod: 0
-  searchTime: 6
-  normal_moveClose: 0.9
+  trackTime: 20
+  wanderTime: 2
+  wanderRadius: 5
+  minDisatnce: 0.2
+  normal_moveClose: 0.9090909
   normal_moveAway: 0
   normal_attack: 0
-  normal_wait: 0.100000024
+  normal_wait: 0.09090912
   moveRange_moveClose: 0.4
   moveRange_moveAway: 0.1
   moveRange_attack: 0.3

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,9 +23,11 @@ public class NPCController : MonoBehaviour
 
     // behavior
     float decisionInterval;
-    public bool isAlert = false;
-    public bool isTracking = false;
+    public bool seePlayer = false;
+
+    // status
     public bool isWandering = false;
+    public bool isTracking = false;
 
     // distance
     public bool isMoveRange = false;
@@ -57,22 +60,24 @@ public class NPCController : MonoBehaviour
 
     private void Update()
     {
-        posToPlayer = (targetPosition - new Vector2(transform.position.x, transform.position.y)).normalized;
-
         if (targetPosition != Vector2.zero)
         {
+            posToPlayer = (targetPosition - new Vector2(transform.position.x, transform.position.y)).normalized;
             Debug.DrawLine(transform.position, targetPosition);
-        }
-
-        if (posToPlayer.x > 0)
-        {
-            spriteRenderer.flipX = true;
-            isFlip = true;
+            if (posToPlayer.x > 0)
+            {
+                spriteRenderer.flipX = true;
+                isFlip = true;
+            }
+            else
+            {
+                spriteRenderer.flipX = false;
+                isFlip = false;
+            }
         }
         else
         {
-            spriteRenderer.flipX = false;
-            isFlip = false;
+            updateSprite();
         }
 
         //if (isTracking)
@@ -101,48 +106,36 @@ public class NPCController : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
-    private Coroutine trackCoroutine = null;
-    private Coroutine approachCoroutine = null;
-    private Coroutine stayOffCoroutine = null;
-    private Coroutine wanderCoroutine = null;
-
     private void decideBehavior()
     {
         if (isWandering || isTracking) return;
         Debug.Log($"stop coroutines at {Time.time}");
         StopAllCoroutines();
-        if (isAlert)
+        if (seePlayer)
         {
-            if (isTracking)
+            initializePrefs();
+
+            float value = UnityEngine.Random.value;
+            if (0 <= value && value < prefs[0])
             {
-                trackCoroutine = StartCoroutine(track());
+                StartCoroutine(approach());
+            }
+            else if (prefs[0] <= value && value < prefs[1])
+            {
+                StartCoroutine(stayOff());
+            }
+            else if (prefs[1] <= value && value < prefs[2])
+            {
+                attack();
             }
             else
             {
-                initializePrefs();
-
-                float value = UnityEngine.Random.value;
-                if (0 <= value && value < prefs[0])
-                {
-                    approachCoroutine = StartCoroutine(approach());
-                }
-                else if (prefs[0] <= value && value < prefs[1])
-                {
-                    stayOffCoroutine = StartCoroutine(stayOff());
-                }
-                else if (prefs[1] <= value && value < prefs[2])
-                {
-                    attack();
-                }
-                else
-                {
-                    wait();
-                }
+                wait();
             }
         }
         else
         {
-            wanderCoroutine = StartCoroutine(wander()); 
+            StartCoroutine(wander()); 
         }
     }
 
@@ -232,7 +225,7 @@ public class NPCController : MonoBehaviour
                 }
         }
 
-        approachCoroutine = null;
+        //approachCoroutine = null;
         //yield break;
     }
 
@@ -249,7 +242,7 @@ public class NPCController : MonoBehaviour
         }
 
         animator.SetBool("IsWalking", false);
-        stayOffCoroutine = null;
+        //stayOffCoroutine = null;
     }
 
     private void attack()
@@ -262,12 +255,13 @@ public class NPCController : MonoBehaviour
     {
         Debug.Log($"{gameObject.name} wait");
         animator.SetBool("IsWalking", false);
-        wanderCoroutine = null;
+        //wanderCoroutine = null;
     }
 
     private IEnumerator wander()
     {
         Debug.Log($"{gameObject.name} wander");
+        targetPosition = Vector2.zero;
         isWandering = true;
         agent.enabled = true;
         agent.speed = stats.walkSpeed;
@@ -279,10 +273,9 @@ public class NPCController : MonoBehaviour
         NavMesh.SamplePosition(randomDirection, out hit, stats.wanderRadius, NavMesh.AllAreas);
         if (Vector2.Distance(originalPosition, hit.position.ToVector2()) >= stats.minDisatnce)
         {
-            Debug.Log($"{gameObject.name} wander walk {hit.position.ToVector2()}");
             animator.SetBool("IsWalking", true);
             agent.SetDestination(hit.position.ToVector2());
-            posToPlayer = hit.position.ToVector2();
+            posToPlayer = (hit.position.ToVector2() - transform.position.ToVector2()).normalized;
         }
 
         while (Time.time < startTime + stats.wanderTime)
@@ -291,7 +284,7 @@ public class NPCController : MonoBehaviour
                 {
                 wait();
             }
-            if (isAlert)
+            if (seePlayer)
             {
                 agent.enabled = false;
                 break;
@@ -301,55 +294,82 @@ public class NPCController : MonoBehaviour
 
         agent.enabled = false;
         animator.SetBool("IsWalking", false);
-        wanderCoroutine = null;
+        //wanderCoroutine = null;
         isWandering = false;
     }
 
-    private IEnumerator track()
+    public void Track()
+    {
+        seePlayer = false;
+        isWandering = false;
+        isTracking = true;
+        decisionInterval = stats.decisionInterval;
+        
+        StartCoroutine(track(targetPosition, stats.trackTime));
+        
+    }
+
+    private IEnumerator track(Vector2 targetPosition, float time)
     {
         Debug.Log($"{gameObject.name} track");
+
+        float startTime = Time.time;
         agent.enabled = true;
         agent.speed = stats.runSpeed;
-        float startTime = Time.time;
-
         agent.SetDestination(targetPosition);
+
         animator.SetBool("IsWalking", true);
 
-        while (Time.time < startTime + stats.trackTime)
+        while (Time.time < startTime + time)
         {
-            if (isAlert)
+            if (seePlayer)
             {
-                agent.enabled = false;
+                break;
+            }
+            if (Mathf.Approximately(targetPosition.x, transform.position.x) && Mathf.Approximately(targetPosition.x, transform.position.x))
+            {
                 break;
             }
             yield return null;
         }
 
-        if (isTracking)
-        {
-            isAlert = false;
-            isTracking = false;
-        }
-        
+        isTracking = false;
         agent.enabled = false;
+
         animator.SetBool("IsWalking", false);
-        trackCoroutine = null;
     }
 
-    public void Alert()
+    public void Alert(Transform source = null)
     {
-        isAlert = true;
+        // TODO: 对背后攻击、远程攻击的处理
+        //if (source != null && targetPosition == Vector2.zero)
+        //{
+        //    if (Vector2.Distance(transform.position, source.position) > 5.0f)
+        //    {
+        //        posToPlayer = (source.position - transform.position).normalized;
+        //    }
+        //    else
+        //    {
+        //        targetPosition = source.position;
+        //    }
+        //}
+        seePlayer = true;
         isTracking = false;
         isWandering = false;
         agent.enabled = false;
         decisionInterval = stats.decisionInterval;
     }
 
-    private void setPositionAndSprite(Vector2 targetPostion)
+    private void updateSprite()
     {
-        agent.SetDestination(targetPostion);
-
-
+        if (rb.velocity.x > 0)
+        {
+            isFlip = true;
+        }
+        else if (rb.velocity.x < 0)
+        {
+            isFlip = false;
+        }
     }
 
     private void OnDestroy()
