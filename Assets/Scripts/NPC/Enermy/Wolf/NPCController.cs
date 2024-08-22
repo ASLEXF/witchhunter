@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions.Comparers;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -22,7 +23,6 @@ public class NPCController : MonoBehaviour
     Vector2 originalPosition;
 
     // behavior
-    float decisionInterval;
     public bool seePlayer = false;
 
     // status
@@ -39,6 +39,7 @@ public class NPCController : MonoBehaviour
     [SerializeField] public WolfStats stats;
     [SerializeField] List<float> prefs;
 
+    private float startTime;
     public bool isFlip = false;
 
     private void Awake()
@@ -51,11 +52,10 @@ public class NPCController : MonoBehaviour
 
     private void Start()
     {
+        startTime = Time.time;
         originalPosition = transform.position;
-        decisionInterval = stats.decisionInterval;
 
         InitializeNavMeshAgent();
-        InvokeRepeating("decideBehavior", 2f, decisionInterval);
     }
 
     private void Update()
@@ -78,6 +78,14 @@ public class NPCController : MonoBehaviour
         else
         {
             updateSprite();
+        }
+
+        spriteRenderer.flipX = isFlip;
+
+        if (Time.time >= startTime + stats.decisionInterval)
+        {
+            decideBehavior();
+            startTime = Time.time;
         }
 
         //if (isTracking)
@@ -126,7 +134,7 @@ public class NPCController : MonoBehaviour
             }
             else if (prefs[1] <= value && value < prefs[2])
             {
-                attack();
+                StartCoroutine(attack());
             }
             else
             {
@@ -201,11 +209,10 @@ public class NPCController : MonoBehaviour
         {
             case ApproachMethod.straight:
                 {
-                    while (Time.time < startTime + decisionInterval)
+                    while (Time.time < startTime + stats.decisionInterval)
                     {
-                        Vector3 movement = posToPlayer * stats.runSpeed * Time.deltaTime;
-                        rb.MovePosition(transform.position + movement);
                         animator.SetBool("IsWalking", true);
+                        agent.SetDestination(targetPosition);
 
                         yield return null;
                     }
@@ -224,15 +231,12 @@ public class NPCController : MonoBehaviour
                     break;
                 }
         }
-
-        //approachCoroutine = null;
-        //yield break;
     }
 
     private IEnumerator stayOff()
     {
         float startTime = Time.time;
-        while (Time.time < startTime + decisionInterval)
+        while (Time.time < startTime + stats.decisionInterval)
         {
             Vector3 movement = posToPlayer * stats.runSpeed * Time.deltaTime * new Vector2(-1, -1);
             rb.MovePosition(transform.position + movement);
@@ -245,10 +249,12 @@ public class NPCController : MonoBehaviour
         //stayOffCoroutine = null;
     }
 
-    private void attack()
+    private IEnumerator attack()
     {
         Debug.Log($"{gameObject.name} attack");
         animator.SetTrigger(Animator.StringToHash("Bite"));
+
+        yield return null;
     }
 
     private void wait()
@@ -263,7 +269,6 @@ public class NPCController : MonoBehaviour
         Debug.Log($"{gameObject.name} wander");
         targetPosition = Vector2.zero;
         isWandering = true;
-        agent.enabled = true;
         agent.speed = stats.walkSpeed;
         float startTime = Time.time;
         
@@ -286,13 +291,11 @@ public class NPCController : MonoBehaviour
             }
             if (seePlayer)
             {
-                agent.enabled = false;
                 break;
             }
             yield return null;
         }
 
-        agent.enabled = false;
         animator.SetBool("IsWalking", false);
         //wanderCoroutine = null;
         isWandering = false;
@@ -303,7 +306,6 @@ public class NPCController : MonoBehaviour
         seePlayer = false;
         isWandering = false;
         isTracking = true;
-        decisionInterval = stats.decisionInterval;
         
         StartCoroutine(track(targetPosition, stats.trackTime));
         
@@ -314,7 +316,6 @@ public class NPCController : MonoBehaviour
         Debug.Log($"{gameObject.name} track");
 
         float startTime = Time.time;
-        agent.enabled = true;
         agent.speed = stats.runSpeed;
         agent.SetDestination(targetPosition);
 
@@ -326,7 +327,7 @@ public class NPCController : MonoBehaviour
             {
                 break;
             }
-            if (Mathf.Approximately(targetPosition.x, transform.position.x) && Mathf.Approximately(targetPosition.x, transform.position.x))
+            if (FloatCompare.IsApproximately(targetPosition.x, transform.position.x, 0.2f) && FloatCompare.IsApproximately(targetPosition.x, transform.position.x, 0.2f))
             {
                 break;
             }
@@ -334,7 +335,6 @@ public class NPCController : MonoBehaviour
         }
 
         isTracking = false;
-        agent.enabled = false;
 
         animator.SetBool("IsWalking", false);
     }
@@ -356,17 +356,15 @@ public class NPCController : MonoBehaviour
         seePlayer = true;
         isTracking = false;
         isWandering = false;
-        agent.enabled = false;
-        decisionInterval = stats.decisionInterval;
     }
 
     private void updateSprite()
     {
-        if (rb.velocity.x > 0)
+        if (agent.velocity.x > 0)
         {
             isFlip = true;
         }
-        else if (rb.velocity.x < 0)
+        else if (agent.velocity.x < 0)
         {
             isFlip = false;
         }

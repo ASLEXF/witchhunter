@@ -70,6 +70,38 @@ public class PositionLine : MonoBehaviour
     //    _lineRenderer2.endWidth = 0.05f;
     //}
 
+    public Vector2 GetFacePosition()
+    {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
+
+        return new Vector2(horizontalInput, verticalInput);
+    }
+
+    public Vector3 GetPosition(Vector2 vector)
+    {
+        if (vector.y < slope * vector.x && vector.y <= -slope * vector.x)
+        {
+            //Debug.Log("鼠标位置：下 ");
+            return new Vector3(0, -1, 0);
+        }
+        else if (vector.y <= slope * vector.x && vector.y > -slope * vector.x)
+        {
+            //Debug.Log("鼠标位置：右 ");
+            return new Vector3(1, 0, 0);
+        }
+        else if (vector.y >= slope * vector.x && vector.y < -slope * vector.x)
+        {
+            //Debug.Log("鼠标位置：左 ");
+            return new Vector3(-1, 0, 0);
+        }
+        else
+        {
+            //Debug.Log("鼠标位置：上 ");
+            return new Vector3(0, 1, 0);
+        }
+    }
+
     public Vector3 GetClickDirection()
     {
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

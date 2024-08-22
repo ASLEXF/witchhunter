@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     PlayerSpawn playerSpawn;
+    Animator animator;
+
+    public bool isInvincible = false;
 
     [SerializeField] int maxHealth = 5;
 
@@ -23,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
     private void Awake()
     {
         playerSpawn = GetComponent<PlayerSpawn>();
+        animator = transform.parent.GetChild(0).GetComponent<Animator>();
     }
 
     private void Update()
@@ -35,8 +39,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        GameEvents.Instance.PlayerHealthChanged();
+        if (!isInvincible) {
+            currentHealth -= damage;
+            GameEvents.Instance.PlayerHealthChanged();
+        }
     }
 
     void die()

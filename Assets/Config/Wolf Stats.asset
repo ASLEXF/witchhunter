@@ -20,7 +20,7 @@ MonoBehaviour:
   runSpeed: 6
   MaxSpeed: 14
   Acceleration: 120
-  decisionInterval: 0.5
+  decisionInterval: 1
   approachMethod: 0
   trackTime: 20
   wanderTime: 2
