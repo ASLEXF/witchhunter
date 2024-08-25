@@ -86,7 +86,7 @@ public class ScriptReader : MonoBehaviour
         "ANIMATED TRANSITION",
         "MATCH CUT",
         "AUDIO TRANSITION",
-    };  // only support first 4 methods
+    };  // not supported
     private readonly string[] luglines =
     {
         "INT",

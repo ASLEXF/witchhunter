@@ -117,7 +117,7 @@ public class NPCController : MonoBehaviour
     private void decideBehavior()
     {
         if (isWandering || isTracking) return;
-        Debug.Log($"stop coroutines at {Time.time}");
+        //Debug.Log($"stop coroutines at {Time.time}");
         StopAllCoroutines();
         if (seePlayer)
         {
@@ -251,7 +251,7 @@ public class NPCController : MonoBehaviour
 
     private IEnumerator attack()
     {
-        Debug.Log($"{gameObject.name} attack");
+        //Debug.Log($"{gameObject.name} attack");
         animator.SetTrigger(Animator.StringToHash("Bite"));
 
         yield return null;
@@ -259,14 +259,14 @@ public class NPCController : MonoBehaviour
 
     private void wait()
     {
-        Debug.Log($"{gameObject.name} wait");
+        //Debug.Log($"{gameObject.name} wait");
         animator.SetBool("IsWalking", false);
         //wanderCoroutine = null;
     }
 
     private IEnumerator wander()
     {
-        Debug.Log($"{gameObject.name} wander");
+        //Debug.Log($"{gameObject.name} wander");
         targetPosition = Vector2.zero;
         isWandering = true;
         agent.speed = stats.walkSpeed;
@@ -313,7 +313,7 @@ public class NPCController : MonoBehaviour
 
     private IEnumerator track(Vector2 targetPosition, float time)
     {
-        Debug.Log($"{gameObject.name} track");
+        //Debug.Log($"{gameObject.name} track");
 
         float startTime = Time.time;
         agent.speed = stats.runSpeed;

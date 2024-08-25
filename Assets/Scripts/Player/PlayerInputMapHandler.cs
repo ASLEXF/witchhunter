@@ -29,9 +29,9 @@ public class PlayerInputMapHandler : MonoBehaviour
     void ListenInputEvents()
     {
         GameEvents.Instance.OnMenuOpened += InputActionsToMenu;
-        GameEvents.Instance.OnMenuClosed += CheckCurrentScene;
+        //GameEvents.Instance.OnMenuClosed += CheckCurrentScene;
         GameEvents.Instance.OnStoryModeStarted += InputActionsToStory;
-        GameEvents.Instance.OnStoryModeEnded += CheckCurrentScene;
+        //GameEvents.Instance.OnStoryModeEnded += CheckCurrentScene;
         GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
         GameEvents.Instance.OnBattleModeStarted += InputActionsToBattle;
     }
@@ -41,26 +41,26 @@ public class PlayerInputMapHandler : MonoBehaviour
     }
 
     // TODO: 这段应该不需要的
-    private void CheckCurrentScene()
-    {
-        foreach (string sceneName in SceneLoader.Instance.ExplorationScenes)
-        {
-            if (SceneLoader.Instance.CurrentScenes[1] == sceneName)
-            {
-                InputActionsToExploration();
-                return;
-            }
-        }
+    //private void CheckCurrentScene()
+    //{
+    //    foreach (string sceneName in SceneLoader.Instance.ExplorationScenes)
+    //    {
+    //        if (SceneLoader.Instance.CurrentScenes[1] == sceneName)
+    //        {
+    //            InputActionsToExploration();
+    //            return;
+    //        }
+    //    }
 
-        foreach (string sceneName in SceneLoader.Instance.BattleScenes)
-        {
-            if (SceneLoader.Instance.CurrentScenes[1] == sceneName)
-            {
-                InputActionsToBattle();
-                return;
-            }
-        }
-    }
+    //    foreach (string sceneName in SceneLoader.Instance.BattleScenes)
+    //    {
+    //        if (SceneLoader.Instance.CurrentScenes[1] == sceneName)
+    //        {
+    //            InputActionsToBattle();
+    //            return;
+    //        }
+    //    }
+    //}
 
     public void InputActionsToMenu()
     {

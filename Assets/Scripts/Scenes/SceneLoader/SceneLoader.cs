@@ -33,6 +33,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (_instance != null && _instance != this)
         {
+            Debug.LogWarning("destroy sceneLoader");
             Destroy(gameObject);
         }
         else
@@ -44,7 +45,6 @@ public class SceneLoader : MonoBehaviour
     public IEnumerator GameSceneInitiate()
     {
         StartCoroutine(UnloadCurrentScenes());
-        LoadScene("Persistent");
         LoadScene("Main Menu");
 
         yield return null;

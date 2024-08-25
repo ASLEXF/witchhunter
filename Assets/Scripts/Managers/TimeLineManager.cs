@@ -52,15 +52,15 @@ public class TimeLineManager : MonoBehaviour
         GameEvents.Instance.OnDialogBoxStarted += PauseTimeline;
         GameEvents.Instance.OnDialogBoxEnded += PlayTimeLine;
 
-        _playableDirector.played += OnTimelinePlayed =>
-        {
-            PlayerController.Instance.enabled = false;
-        };
+        //_playableDirector.played += OnTimelinePlayed =>
+        //{
+        //    PlayerController.Instance.enabled = false;
+        //};
 
-        _playableDirector.stopped += OnTimelineStopped =>
-        {
-            PlayerController.Instance.enabled = true;
-        };
+        //_playableDirector.stopped += OnTimelineStopped =>
+        //{
+        //    PlayerController.Instance.enabled = true;
+        //};
 
         Addressables.InitializeAsync().Completed += handle =>
         {

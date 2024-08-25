@@ -20,7 +20,7 @@ public class SceneTriggerManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private List<StoryNode> currentNodes;
+    
     
 
     private void Awake()
@@ -43,20 +43,7 @@ public class SceneTriggerManager : MonoBehaviour
 
     private void Update()
     {
-        // check story node condition, begin story mode
-        if (GameManager.Instance.isInitiated && !SceneLoader.Instance.isLoading)
-        {
-            currentNodes = StoryManager.Instance.StoryTree.GetCurrentNodes();
-
-            foreach (StoryNode node in currentNodes)
-            {
-                if (node.CheckConditiion())
-                {
-                    node.Play();
-                    continue;
-                }
-            }
-        }
+        
     }
 
     void checkCurrentScene()

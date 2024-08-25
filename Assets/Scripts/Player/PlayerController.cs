@@ -28,14 +28,15 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
+        //if (_instance != null && _instance != this)
+        //{
+        //    Destroy(gameObject);
+        //}
+        //else
+        //{
+        //    _instance = this;
+        //}
+        _instance = this;
 
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
