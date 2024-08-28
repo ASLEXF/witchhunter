@@ -33,49 +33,56 @@ public class NPCChecker : MonoBehaviour
             Destroy(gameObject);
         }
 
-        _playerInteract = GetComponent<PlayerInteract>();
+        //_playerInteract = GetComponent<PlayerInteract>();
     }
 
-    public List<int> GetInteractableNPC()
-    {
-        Dictionary<string, int> NPCTable = new Dictionary<string, int>() 
-        {
-            {"The Witch of TRUTH", 0},
-            {"Mayor", 1},
-            {"Healer", 2},
-            {"Woodcutter", 3},
-            {"Peasant", 4},
-            {"Boy", 5},
-            {"Merchant", 6},
-            {"passerby", 7},
+    //public List<int> GetInteractableNPC()
+    //{
+    //    Dictionary<string, int> NPCTable = new Dictionary<string, int>() 
+    //    {
+    //        {"The Witch of TRUTH", 0},
+    //        {"Mayor", 1},
+    //        {"Healer", 2},
+    //        {"Woodcutter", 3},
+    //        {"Peasant", 4},
+    //        {"Boy", 5},
+    //        {"Merchant", 6},
+    //        {"passerby", 7},
 
-            {"hunter of the witch", 11},
-            {"The Witch of VENEER", 12},
-            {"young witch", 13}
-        };
+    //        {"hunter of the witch", 11},
+    //        {"The Witch of VENEER", 12},
+    //        {"young witch", 13}
+    //    };
 
-        List<int> result = new List<int>();
+    //    List<int> result = new List<int>();
 
-        foreach(Collider2D collider2d in _playerInteract.NPCColliders)
-        {
-            foreach(KeyValuePair<string, int> pair in  NPCTable)
-            {
-                if(collider2d.gameObject.name == pair.Key)
-                {
-                    result.Add(pair.Value);
-                }
-            }
-        }
+    //    foreach(Collider2D collider2d in _playerInteract.NPCColliders)
+    //    {
+    //        foreach(KeyValuePair<string, int> pair in  NPCTable)
+    //        {
+    //            if(collider2d.gameObject.name == pair.Key)
+    //            {
+    //                result.Add(pair.Value);
+    //            }
+    //        }
+    //    }
 
-        return result;
-    }
+    //    return result;
+    //}
 
     public int GetEnermyAliveNum()
     {
         GameObject[] enermies = GameObject.FindGameObjectsWithTag("Enermy");
+        int result = enermies.Length;
 
-        Debug.Log($"found enermy num {enermies.Length}");
+        for (int i = 0; i < enermies.Length; i++)
+        {
+            if (enermies[i].transform.GetChild(1).GetComponent<NPCStatusEffect>().Dead)
+                result--;
+        }
 
-        return enermies.Length;
+        Debug.Log($"found enermy num {enermies.Length} alive {result}");
+
+        return result;
     }
 }

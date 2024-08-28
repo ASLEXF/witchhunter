@@ -69,25 +69,28 @@ public class StoryManager : MonoBehaviour
         StoryTree = new StoryTree();
         StoryTree.AddNode(
             new StoryNode(
-                "prologue 1",
-                "Cliff",
-                "Opening",
-                "1-1", 
-                new Dictionary<string, int>() { { "CurrentSceneName", 3 } },
-                true,
-                new Vector2(-4.09f, 1.89f)
+                    "prologue 1",
+                    "Cliff",
+                    "Opening",
+                    "1-1", 
+                    new Dictionary<string, int>() { { "CurrentSceneName", 3 } },
+                    true,
+                    new Vector2(-4.09f, 1.89f)
                 ), 
             0
         );
-        //StoryTree.AddNode(
-        //    new StoryNode(
-        //        "prologue 1-2", 
-        //        "Cliff", 
-        //        "1-2", 
-        //        new Dictionary<string, int>() { { "enermyNum", 0 } }
-        //        ), 
-        //    1
-        //);
+        StoryTree.AddNode(
+            new StoryNode(
+                    "prologue 1-2",
+                    "Cliff",
+                    "1_2",
+                    "1-2",
+                    new Dictionary<string, int>() { { "EnermyNumEquals", 0 } },
+                    true,
+                    new Vector2(8.72f, -3.23f)
+                ),
+            1
+        );
         //StoryTree.AddNode(
         //    new StoryNode(
         //        "prologue 1-3", 

@@ -1,0 +1,72 @@
+{
+    "Wolf": [
+        {
+            "status": 0,
+            "isInteractable": false
+        },
+        {
+            "status": 1,
+            "isInteractable": true
+        },
+        {
+            "status": 2,
+            "isInteractable": true
+        }
+    ],
+    "Failure": [
+        {
+            "status": 0,
+            "isInteractable": false
+        },
+        {
+            "status": 1,
+            "isInteractable": true
+        },
+        {
+            "status": 2,
+            "isInteractable": true
+        }
+    ],
+    "Hollow": [
+        {
+            "status": 0,
+            "isInteractable": false
+        },
+        {
+            "status": 1,
+            "isInteractable": true
+        },
+        {
+            "status": 2,
+            "isInteractable": false
+        }
+    ],
+    "Knight": [
+        {
+            "status": 0,
+            "isInteractable": true
+        },
+        {
+            "status": 1,
+            "isInteractable": true
+        },
+        {
+            "status": 2,
+            "isInteractable": false
+        }
+    ],
+    "Mayor": [
+        {
+            "status": 0,
+            "isInteractable": true
+        },
+        {
+            "status": 1,
+            "isInteractable": true
+        },
+        {
+            "status": 2,
+            "isInteractable": false
+        }
+    ],
+}

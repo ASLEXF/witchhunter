@@ -4,89 +4,92 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    [SerializeField] private float interactRange = 2.0f;
     private Vector3 UIOffset = new Vector3(0f, 0.5f, 0f); // UI 元素相对角色的偏移量
     public UIInteract DropItemUI, NPCUI, InteractiveUI;
 
-    private Collider2D currentCollider;
-    private List<Collider2D> DropItemColliders = new List<Collider2D>();
-    public List<Collider2D> NPCColliders = new List<Collider2D>();
-    private List<Collider2D> InteractiveColliders = new List<Collider2D>();
+    Collider2D currentCollider;
+    [SerializeField] private List<Collider2D> DropItemColliders = new List<Collider2D>();
+    [SerializeField] public List<Collider2D> NPCColliders = new List<Collider2D>();
+    [SerializeField] private List<Collider2D> InteractiveColliders = new List<Collider2D>();
+
+    private void Start()
+    {
+        GameEvents.Instance.OnInteractableUpdated += updateColliders;
+    }
 
     private void Update()
     {
-        if(DropItemColliders.Count > 0)
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Interact();
+        }
+    }
+
+    private void updateColliders()
+    {
+        if (DropItemColliders.Count > 0)
         {
             currentCollider = DropItemColliders[0];
-            ShowDropItemUI(currentCollider);
-            HideNPCUI();
-            HideInteractiveUI();
+            ShowUI(DropItemUI);
+            HideUI(NPCUI);
+            HideUI(InteractiveUI);
         }
-        else if(NPCColliders.Count > 0)
+        else if (NPCColliders.Count > 0)
         {
             currentCollider = NPCColliders[0];
-            ShowNPCUI(currentCollider);
-            HideDropItemUI();
-            HideInteractiveUI();
+            ShowUI(NPCUI);
+            HideUI(DropItemUI);
+            HideUI(InteractiveUI);
         }
-        else if(InteractiveColliders.Count > 0)
+        else if (InteractiveColliders.Count > 0)
         {
             currentCollider = InteractiveColliders[0];
-            ShowInteractiveUI(currentCollider);
-            HideDropItemUI();
-            HideNPCUI();
+            ShowUI(InteractiveUI);
+            HideUI(DropItemUI);
+            HideUI(NPCUI);
         }
         else
         {
-            HideDropItemUI();
-            HideNPCUI();
-            HideInteractiveUI();
+            HideUI(DropItemUI);
+            HideUI(DropItemUI);
+            HideUI(NPCUI);
         }
     }
 
-    private void ShowDropItemUI(UnityEngine.Collider2D collision)
+    void ShowUI(UIInteract uIInteract)
     {
-        DropItemUI.Show();
-        Transform panelTransform = NPCUI.transform.Find("Collect");
-        panelTransform.position = Camera.main.WorldToScreenPoint(collision.transform.position + UIOffset);
+        if (uIInteract == null)
+        {
+            Debug.LogError("Interactive UI Panel is not assigned.");
+            return;
+        }
+
+        uIInteract.Show();
+        uIInteract.transform.position = currentCollider.transform.position + UIOffset;
     }
 
-    private void HideDropItemUI() => DropItemUI.Hide();
-
-    private void ShowNPCUI(UnityEngine.Collider2D collision)
+    void HideUI(UIInteract uIInteract)
     {
-        NPCUI.Show();
-        Transform panelTransform = NPCUI.transform.Find("Talk");
-        panelTransform.position = Camera.main.WorldToScreenPoint(collision.transform.position + UIOffset);
+        uIInteract.Hide();
     }
-
-    private void HideNPCUI() => NPCUI.Hide();
-
-    private void ShowInteractiveUI(UnityEngine.Collider2D collision)
-    {
-        InteractiveUI.Show();
-        Transform panelTransform = NPCUI.transform.Find("Intertact");
-        panelTransform.position = Camera.main.WorldToScreenPoint(collision.transform.position + UIOffset);
-    }
-
-    private void HideInteractiveUI() => InteractiveUI.Hide();
 
     public void Interact()
     {
-        if(currentCollider != null)
+        if (currentCollider != null)
         {
-            GameObject gameObject = currentCollider.transform.parent.gameObject;
-            //Interaction script =  gameObject.GetComponent<Interaction>();
-            //if(script != null)
-            //{
-            //    script.Interact();
-            //}
+            Debug.Log($"gameObject {currentCollider.gameObject}");
+            GameObject gameObject = currentCollider.gameObject;
+            NPCInteract script = gameObject.GetComponent<NPCInteract>();
+            if (script != null)
+            {
+                script.Interacted();
+            }
+            GameEvents.Instance.InteractableUpdated();
         }
     }
 
-    void OnTriggerEnter2D(UnityEngine.Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        //Debug.Log($"player collide with {collision.gameObject.name}");
         if (collision.CompareTag("DropItem"))
         {
             DropItemColliders.Add(collision);
@@ -99,9 +102,12 @@ public class PlayerInteract : MonoBehaviour
         {
             InteractiveColliders.Add(collision);
         }
+        else return;
+
+        GameEvents.Instance.InteractableUpdated();
     }
 
-    void OnTriggerExit2D(UnityEngine.Collider2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.CompareTag("DropItem"))
         {
@@ -115,5 +121,13 @@ public class PlayerInteract : MonoBehaviour
         {
             InteractiveColliders.Remove(collision);
         }
+        else return;
+
+        GameEvents.Instance.InteractableUpdated();
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnInteractableUpdated -= updateColliders;
     }
 }

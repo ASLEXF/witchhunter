@@ -8,21 +8,16 @@ public class PlayerAttacked : MonoBehaviour
 {
     Animator animator;
     PlayerHealth playerHealth;
-    BoxCollider2D collider;
+    BoxCollider2D _collider;
 
-    // getPush
+    // knockback
     Vector3 _position;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
         playerHealth = transform.parent.GetChild(1).GetComponent<PlayerHealth>();
-        collider = GetComponent<BoxCollider2D>();
-    }
-
-    void Update()
-    {
-        
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     public void GetAttacked(int damage, float force, PolygonCollider2D collider)
@@ -39,7 +34,7 @@ public class PlayerAttacked : MonoBehaviour
         }
     }
 
-    private void getPush()
+    private void knockback()
     {
         if (_position != Vector3.zero)
         {

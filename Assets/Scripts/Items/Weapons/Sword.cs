@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    int damage = 2;
-    public int attackNumber = 2;
+    //int damage = 2;
+    //public int attackNumber = 2;
 }

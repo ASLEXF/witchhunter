@@ -86,4 +86,12 @@ public class GameEvents : MonoBehaviour
     public void PlayerHealthChanged() => OnPlayerHealthChanged?.Invoke();
 
     #endregion
+
+    #region Interact
+
+    public event Action OnInteractableUpdated;
+
+    public void InteractableUpdated() => OnInteractableUpdated?.Invoke();
+
+    #endregion
 }

@@ -49,13 +49,16 @@ public class StoryNode
         {
             if (dict.Key == "EnermyNumLessThan")
             {
-                if (NPCChecker.Instance.GetEnermyAliveNum() < dict.Value)
-                    return true;
+                return NPCChecker.Instance.GetEnermyAliveNum() < dict.Value;
+            }
+            else if (dict.Key == "EnermyNumEquals")
+            {
+                return NPCChecker.Instance.GetEnermyAliveNum() == dict.Value;
             }
             else if (dict.Key == "CloseToNPC")
             {
-                if (NPCChecker.Instance.GetInteractableNPC().Contains(dict.Value))
-                    return true;
+                //if (NPCChecker.Instance.GetInteractableNPC().Contains(dict.Value))
+                //    return true;
             }
             else if (dict.Key == "CurrentSceneName")
             {

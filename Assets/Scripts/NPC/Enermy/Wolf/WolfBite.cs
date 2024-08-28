@@ -25,7 +25,7 @@ public class WolfBite : MonoBehaviour
         {
             if (collision.name == "Animator")
             { 
-                collision.gameObject.transform.parent.GetChild(0).GetComponent<PlayerAttacked>().GetAttacked(damage,  force, NPCCollider);
+                collision.GetComponent<PlayerAttacked>().GetAttacked(damage, force, NPCCollider);
             }
         }
     }

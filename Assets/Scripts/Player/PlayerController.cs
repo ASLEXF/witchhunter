@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float currentSpeed = 0;
     [SerializeField] private float minSpeed = 2.0f;
     [SerializeField] private float maxSpeed = 5.0f;
-    [SerializeField] private float movementSmoothingSpeed = 1.0f;
+    //[SerializeField] private float movementSmoothingSpeed = 1.0f;
     public bool canMove = true;
     Vector2 _rawInputMovement;
     Vector2 _frameVelocity;
