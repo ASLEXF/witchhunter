@@ -1,0 +1,56 @@
+{
+    "Wolf":[
+        {
+            "itemID": 1,
+            "min": 0,
+            "max": 2
+        },
+        {
+            "itemID": 2,
+            "min": 0,
+            "max": 2
+        }
+    ],
+    "Failure": [
+        {
+            "itemID": 3,
+            "min": 0,
+            "max": 1
+        },
+        {
+            "itemID": 4,
+            "min": 0,
+            "max": 1
+        }
+    ],
+    "Hollow": [
+        {
+            "itemID": 4,
+            "min": 0,
+            "max": 2
+        }
+    ],
+    "Success":
+    [
+        {
+            "itemID": 1,
+            "min": 1,
+            "max": 2
+        },
+        {
+            "itemID": 2,
+            "min": 2,
+            "max": 4
+        },
+        {
+            "itemID": 3,
+            "min": 1,
+            "max": 1
+        },
+        {
+            "itemID": 4,
+            "min": 1,
+            "max": 2
+        }
+    ]
+}

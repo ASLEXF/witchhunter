@@ -14,6 +14,7 @@ public class PlayerAttack : MonoBehaviour
 
     public GameObject SwordAttack1;
     public GameObject SwordAttack2;
+    public GameObject SwordChargeAttack;
 
     public float moveDuration = 0f;
     public float moveSpeed = 0f;
@@ -55,6 +56,52 @@ public class PlayerAttack : MonoBehaviour
             //    flag = true;
             //}
         }
+    }
+
+    private void MeetChargingTime()
+    {
+        // while meeting minimun charging time for charging movements
+        animator.SetTrigger(Animator.StringToHash("MeetChargingTime"));
+    }
+
+    public void AttackL()
+    {
+        animator.SetTrigger(Animator.StringToHash("SwordAttack"));
+    }
+
+    public void ChargingAttackL()
+    {
+        animator.SetTrigger(Animator.StringToHash("SwordCharging"));
+    }
+
+    public void ChargeAttackL(float chargingTime)
+    {
+        animator.SetTrigger(Animator.StringToHash("SwordChargeAttack"));
+    }
+
+    public void StopChargingL()
+    {
+        //animator.SetBool(Animator.StringToHash("SwordCharging"), false);
+    }
+
+    public void AttackR()
+    {
+        //animator.SetTrigger(Animator.StringToHash("Support"));
+    }
+
+    public void ChargingAttackR()
+    {
+        animator.SetTrigger(Animator.StringToHash("BowCharging"));
+    }
+
+    public void ChargeAttackR(float chargingTime)
+    {
+        animator.SetTrigger(Animator.StringToHash("BowShoot"));
+    }
+
+    public void StopChargingR()
+    {
+        //animator.SetBool(Animator.StringToHash("BowCharging"), false);
     }
 
     public void AttackEndHandler()
@@ -116,9 +163,12 @@ public class PlayerAttack : MonoBehaviour
 
     void EnableSwordAttack1Trigger() => SwordAttack1.SetActive(true);
     void EnableSwordAttack2Trigger() => SwordAttack2.SetActive(true);
+    void EnableSwordChargeAttackTrigger() => SwordChargeAttack.SetActive(true);
 
     void DisableSwordAttack1Trigger() => SwordAttack1.SetActive(false);
     void DisableSwordAttack2Trigger() => SwordAttack2.SetActive(false);
+    void DisableSwordChargeAttackTrigger() => SwordChargeAttack.SetActive(false);
+
 
     #endregion
 

@@ -251,7 +251,7 @@ public class NPCController : MonoBehaviour
         while (Time.time < startTime + stats.decisionInterval)
         {
             Vector3 movement = posToPlayer * direction * stats.runSpeed * Time.deltaTime;
-            Debug.Log($"{movement}");
+            //Debug.Log($"{movement}");
             rb.MovePosition(transform.position + movement);
 
             yield return null;
@@ -270,7 +270,7 @@ public class NPCController : MonoBehaviour
 
     private void wait()
     {
-        Debug.Log($"{gameObject.name} wait");
+        //Debug.Log($"{gameObject.name} wait");
         animator.SetBool("IsWalking", false);
         //wanderCoroutine = null;
     }

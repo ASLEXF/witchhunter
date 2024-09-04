@@ -17,22 +17,21 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 422ab638b77c80e4da38f8efa432ddec
   m_SerializeEntries:
-  - m_GUID: 39e6f04ab77037d488be71845079dd3b
-    m_Address: Assets/Addressables/Timelines/Opening.playable
+  - m_GUID: bd49876661662e340bfd6d8ad59e67b9
+    m_Address: Assets/Addressables/StoryScripts
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: f57e73c9d7dfb0d4fa4e57ed53346f20
-    m_Address: Assets/Addressables/StoryScripts/1-1.txt
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2cade99675b8d154d8b019ce6623a357
+    m_Address: Assets/Addressables/Icons
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: aeb214c11a85c694a91e1eaa9ede8ecb
-    m_Address: Assets/Addressables/StoryScripts/1-2.txt
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06f083aa7e57c724aa7078f0b2753e28
+    m_Address: Assets/Addressables/Timelines
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: 30f1c77e9285eea4ab3aa7f4b67cafd0
-    m_Address: Assets/Addressables/StoryScripts/1-3.txt
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 62768b3d0ffa53647a441fe6d3ec86b1, type: 2}
   m_SchemaSet:

@@ -73,12 +73,13 @@ public class NPCChecker : MonoBehaviour
     public int GetEnermyAliveNum()
     {
         GameObject[] enermies = GameObject.FindGameObjectsWithTag("Enermy");
-        int result = enermies.Length;
+        int result = 0;
 
         for (int i = 0; i < enermies.Length; i++)
         {
-            if (enermies[i].transform.GetChild(1).GetComponent<NPCStatusEffect>().Dead)
-                result--;
+            if (enermies[i].name == "Animator") continue;
+            if (enermies[i].transform.GetChild(1).GetComponent<NPCStatusEffect>().Alive)
+                result++;
         }
 
         Debug.Log($"found enermy num {enermies.Length} alive {result}");

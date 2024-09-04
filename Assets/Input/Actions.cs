@@ -344,7 +344,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""AttackL"",
                     ""type"": ""Button"",
                     ""id"": ""226f934d-0c14-47f6-9316-7ecd462d3b5c"",
                     ""expectedControlType"": ""Button"",
@@ -353,7 +353,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Support"",
+                    ""name"": ""AttackR"",
                     ""type"": ""Button"",
                     ""id"": ""ff97b4f2-2ece-4b7f-9e7e-cd306bb66304"",
                     ""expectedControlType"": ""Button"",
@@ -443,7 +443,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""AttackL"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -454,7 +454,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Support"",
+                    ""action"": ""AttackR"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -534,8 +534,8 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         // Battle
         m_Battle = asset.FindActionMap("Battle", throwIfNotFound: true);
         m_Battle_Movement = m_Battle.FindAction("Movement", throwIfNotFound: true);
-        m_Battle_Attack = m_Battle.FindAction("Attack", throwIfNotFound: true);
-        m_Battle_Support = m_Battle.FindAction("Support", throwIfNotFound: true);
+        m_Battle_AttackL = m_Battle.FindAction("AttackL", throwIfNotFound: true);
+        m_Battle_AttackR = m_Battle.FindAction("AttackR", throwIfNotFound: true);
         m_Battle_WeaponSwitch = m_Battle.FindAction("WeaponSwitch", throwIfNotFound: true);
         m_Battle_Interact = m_Battle.FindAction("Interact", throwIfNotFound: true);
     }
@@ -770,8 +770,8 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Battle;
     private List<IBattleActions> m_BattleActionsCallbackInterfaces = new List<IBattleActions>();
     private readonly InputAction m_Battle_Movement;
-    private readonly InputAction m_Battle_Attack;
-    private readonly InputAction m_Battle_Support;
+    private readonly InputAction m_Battle_AttackL;
+    private readonly InputAction m_Battle_AttackR;
     private readonly InputAction m_Battle_WeaponSwitch;
     private readonly InputAction m_Battle_Interact;
     public struct BattleActions
@@ -779,8 +779,8 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         private @Actions m_Wrapper;
         public BattleActions(@Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Battle_Movement;
-        public InputAction @Attack => m_Wrapper.m_Battle_Attack;
-        public InputAction @Support => m_Wrapper.m_Battle_Support;
+        public InputAction @AttackL => m_Wrapper.m_Battle_AttackL;
+        public InputAction @AttackR => m_Wrapper.m_Battle_AttackR;
         public InputAction @WeaponSwitch => m_Wrapper.m_Battle_WeaponSwitch;
         public InputAction @Interact => m_Wrapper.m_Battle_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Battle; }
@@ -795,12 +795,12 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
-            @Support.started += instance.OnSupport;
-            @Support.performed += instance.OnSupport;
-            @Support.canceled += instance.OnSupport;
+            @AttackL.started += instance.OnAttackL;
+            @AttackL.performed += instance.OnAttackL;
+            @AttackL.canceled += instance.OnAttackL;
+            @AttackR.started += instance.OnAttackR;
+            @AttackR.performed += instance.OnAttackR;
+            @AttackR.canceled += instance.OnAttackR;
             @WeaponSwitch.started += instance.OnWeaponSwitch;
             @WeaponSwitch.performed += instance.OnWeaponSwitch;
             @WeaponSwitch.canceled += instance.OnWeaponSwitch;
@@ -814,12 +814,12 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
-            @Support.started -= instance.OnSupport;
-            @Support.performed -= instance.OnSupport;
-            @Support.canceled -= instance.OnSupport;
+            @AttackL.started -= instance.OnAttackL;
+            @AttackL.performed -= instance.OnAttackL;
+            @AttackL.canceled -= instance.OnAttackL;
+            @AttackR.started -= instance.OnAttackR;
+            @AttackR.performed -= instance.OnAttackR;
+            @AttackR.canceled -= instance.OnAttackR;
             @WeaponSwitch.started -= instance.OnWeaponSwitch;
             @WeaponSwitch.performed -= instance.OnWeaponSwitch;
             @WeaponSwitch.canceled -= instance.OnWeaponSwitch;
@@ -862,8 +862,8 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     public interface IBattleActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
-        void OnSupport(InputAction.CallbackContext context);
+        void OnAttackL(InputAction.CallbackContext context);
+        void OnAttackR(InputAction.CallbackContext context);
         void OnWeaponSwitch(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
     }

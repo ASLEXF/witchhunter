@@ -73,9 +73,9 @@ public class GameEvents : MonoBehaviour
 
     #region Timeline
 
-    public event Action OnAssetLoaded;
+    public event Action OnPlayableAssetLoaded;
 
-    public void AssetLoaded() => OnAssetLoaded?.Invoke();
+    public void PlayableAssetLoaded() => OnPlayableAssetLoaded?.Invoke();
 
     #endregion
 

@@ -14,7 +14,38 @@
             "trackName": "DialogBox Signal",
             "sceneName": "Persistent",
             "gameObjectPath": "DialogBox"
+        },
+        {
+            "trackName": "Story Manager Signal",
+            "sceneName": "Persistent",
+            "gameObjectPath": "StoryManager"
+        },
+        {
+            "trackName": "Guide UI Signal",
+            "sceneName": "Cliff",
+            "gameObjectPath": "UI"
         }
     ],
-    "1-2": []
+    "1_2": [
+        {
+            "trackName": "Player Animation",
+            "sceneName": "Persistent",
+            "gameObjectPath": "Animator"
+        },
+        {
+            "trackName": "DialogBox Signal",
+            "sceneName": "Persistent",
+            "gameObjectPath": "DialogBox"
+        },
+        {
+            "trackName": "Story Manager Signal",
+            "sceneName": "Persistent",
+            "gameObjectPath": "StoryManager"
+        },
+        {
+            "trackName": "Guide UI Signal",
+            "sceneName": "Cliff",
+            "gameObjectPath": "UI"
+        }
+    ]
 }

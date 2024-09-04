@@ -322,7 +322,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Attack",
+                    "name": "AttackL",
                     "type": "Button",
                     "id": "226f934d-0c14-47f6-9316-7ecd462d3b5c",
                     "expectedControlType": "Button",
@@ -331,7 +331,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Support",
+                    "name": "AttackR",
                     "type": "Button",
                     "id": "ff97b4f2-2ece-4b7f-9e7e-cd306bb66304",
                     "expectedControlType": "Button",
@@ -421,7 +421,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Attack",
+                    "action": "AttackL",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -432,7 +432,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Support",
+                    "action": "AttackR",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

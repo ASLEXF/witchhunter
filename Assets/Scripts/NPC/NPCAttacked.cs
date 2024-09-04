@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(Animator))]
@@ -50,6 +51,8 @@ public class NPCAttacked : MonoBehaviour
 
     private void getStunned()
     {
+        controller.StopAllCoroutines();
+        controller.GetComponent<NavMeshAgent>().ResetPath();
         statusEffect.Stunned = true;
     }
 

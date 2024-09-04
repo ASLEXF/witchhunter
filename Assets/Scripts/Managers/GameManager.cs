@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
         }
         else if (_instance != this)
         {
+            Debug.LogWarning("game manager destroyed");
             Destroy(gameObject);
         }
     }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SImpleController : MonoBehaviour
+public class SimpleController : MonoBehaviour
 {
     Rigidbody2D rb;
 

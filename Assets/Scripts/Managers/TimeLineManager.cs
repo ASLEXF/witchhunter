@@ -131,20 +131,18 @@ public class TimeLineManager : MonoBehaviour
     public void LoadPlayableAsset(string fileName)
     {
         string file = "Assets/Addressables/Timelines/" + fileName + ".playable";
-        Addressables.LoadAssetAsync<PlayableAsset>(file).Completed += handle => OnPlayableAssetLoaded(handle, fileName);
-    }
-
-    void OnPlayableAssetLoaded(AsyncOperationHandle<PlayableAsset> handle, string fileName)
-    {
-        if (handle.Status == AsyncOperationStatus.Succeeded)
+        Addressables.LoadAssetAsync<PlayableAsset>(file).Completed += handle =>
         {
-            _playableDirector.playableAsset = handle.Result;
-            GameEvents.Instance.AssetLoaded();
-        }
-        else
-        {
-            Debug.LogError("Addressables PlayableAsset not found: " + fileName);
-        }
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                _playableDirector.playableAsset = handle.Result;
+                GameEvents.Instance.PlayableAssetLoaded();
+            }
+            else
+            {
+                Debug.LogError("Addressables PlayableAsset not found: " + fileName);
+            }
+        };
     }
 
     public void LoadBindingTable(string timeLineFileName)
@@ -162,6 +160,7 @@ public class TimeLineManager : MonoBehaviour
 
             if (timelines.TryGetValue(timeLineFileName, out List<BindingConfigEntry> configs))
             {
+                bindingTable.Clear();
                 foreach (var config in configs)
                 {
                     bool hasFound = false;
@@ -204,7 +203,7 @@ public class TimeLineManager : MonoBehaviour
         {
             Debug.LogError($"Config file not found at {configFilePath}");
         }
-        GameEvents.Instance.OnAssetLoaded += bindTimelineTracks;
+        GameEvents.Instance.OnPlayableAssetLoaded += bindTimelineTracks;
     }
 
     //GameObject FindInChildren(Transform parent, string name)

@@ -1,5 +1,7 @@
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -25,6 +27,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
     Animator _animator;
+    PlayerAttack _attack;
+    PlayerInteract _interact;
 
     void Awake()
     {
@@ -41,6 +45,13 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _animator = transform.GetChild(0).GetComponent<Animator>();
+        _attack = transform.GetChild(0).GetComponent<PlayerAttack>();
+        playerInput = GetComponent<PlayerInput>();
+    }
+
+    private void Start()
+    {
+        initializeInputHolding();
     }
 
     void Update()
@@ -49,12 +60,7 @@ public class PlayerController : MonoBehaviour
         float verticalInput = Input.GetAxisRaw("Vertical");
         _animator.SetBool(Animator.StringToHash("IsMoving"), Mathf.Abs(horizontalInput) > 0f || Mathf.Abs(verticalInput) > 0f);
 
-        //// debug
-        //Vector3 startPos = transform.position;
-        //Vector3 endPos = transform.position + new Vector3(100, 100, 100);
-        //Color lineColor = Color.red;
-        //float duration = 5.0f;
-        //Debug.DrawLine(startPos, endPos, lineColor, duration);
+
     }
 
     private void FixedUpdate()
@@ -122,6 +128,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Movement
+
     [SerializeField] private float currentSpeed = 0;
     [SerializeField] private float minSpeed = 2.0f;
     [SerializeField] private float maxSpeed = 5.0f;
@@ -167,34 +174,147 @@ public class PlayerController : MonoBehaviour
 
     #region Input System
 
+    bool isChargingL, isChargingR = false;
+    bool isChargingCompletedL, isChargingCompletedR = false;
+    float chargingTimeL, chargingTimeR;
+
+    float longPressDuration = 0.3f;
+    float maxChargingTime = 1.0f;
+    float pressStartTime;
+
+    PlayerInput playerInput;
+    InputAction attackActionL, attackActionR;
+
+    Coroutine CheckIsLongPressingCoroutineL, CheckIsChargingCoroutineL;
+    Coroutine CheckIsLongPressingCoroutineR, CheckIsChargingCoroutineR;
+
+    void initializeInputHolding()
+    {
+        attackActionL = playerInput.actions.FindActionMap("Battle").FindAction("AttackL");
+        attackActionL.started += OnAttackLStarted => {
+            if (CheckIsLongPressingCoroutineR != null) StopCoroutine(CheckIsLongPressingCoroutineR);
+            if (CheckIsChargingCoroutineR != null) StopCoroutine(CheckIsChargingCoroutineR);
+            pressStartTime = Time.time;
+            CheckIsLongPressingCoroutineL = StartCoroutine(CheckIsLongPressingL());
+        };
+        attackActionL.canceled += OnAttackLCanceled => {
+            if (!isChargingCompletedL)
+            {
+                // canceled while charging not completed
+                StopCoroutine(CheckIsLongPressingCoroutineL);
+                if (CheckIsChargingCoroutineL != null) StopCoroutine(CheckIsChargingCoroutineL);
+                if (isChargingL)
+                {
+                    _attack.ChargeAttackL(Time.time - chargingTimeL);
+                    isChargingL = false;
+                }
+                else
+                {
+                    _attack.AttackL();
+                }
+            }
+            else
+            {
+                isChargingCompletedL = false;
+            }
+        };
+
+        attackActionR = playerInput.actions.FindActionMap("Battle").FindAction("AttackR");
+        attackActionR.started += OnAttackRStarted =>
+        {
+            if (CheckIsLongPressingCoroutineL != null)  StopCoroutine(CheckIsLongPressingCoroutineL);
+            if (CheckIsChargingCoroutineL != null) StopCoroutine(CheckIsChargingCoroutineL);
+            pressStartTime = Time.time;
+            CheckIsLongPressingCoroutineR = StartCoroutine(CheckIsLongPressingR());
+        };
+        attackActionR.canceled += OnAttackRCanceled =>
+        {
+            if (!isChargingCompletedR)
+            {
+                // canceled while charging not completed
+                StopCoroutine(CheckIsLongPressingCoroutineR);
+                if (CheckIsChargingCoroutineR != null) StopCoroutine(CheckIsChargingCoroutineR);
+                if (isChargingR)
+                {
+                    _attack.ChargeAttackR(Time.time - chargingTimeR);
+                    isChargingR = false;
+                }
+                else
+                {
+                    _attack.AttackR();
+                }
+            }
+            else
+            {
+                isChargingCompletedR = false;
+            }
+        };
+    }
+
+    IEnumerator CheckIsLongPressingL()
+    {
+        yield return new WaitForSeconds(longPressDuration);
+        isChargingL = true;
+        _attack.ChargingAttackL();
+        if (maxChargingTime > 0)
+            CheckIsChargingCoroutineL = StartCoroutine(CheckIsChargingStopL());
+    }
+
+    IEnumerator CheckIsChargingStopL()
+    {
+        chargingTimeL = Time.time;
+        yield return new WaitForSeconds(maxChargingTime);
+        isChargingL = false;
+        isChargingCompletedL = true;
+        _attack.ChargeAttackL(maxChargingTime);
+    }
+
+    IEnumerator CheckIsLongPressingR()
+    {
+        yield return new WaitForSeconds(longPressDuration);
+        isChargingR = true;
+        _attack.ChargingAttackR();
+        if (maxChargingTime > 0)
+            CheckIsChargingCoroutineR = StartCoroutine(CheckIsChargingStopR());
+    }
+
+    IEnumerator CheckIsChargingStopR()
+    {
+        chargingTimeR = Time.time;
+        yield return new WaitForSeconds(maxChargingTime);
+        isChargingR = false;
+        isChargingCompletedR = true;
+        _attack.ChargeAttackR(maxChargingTime);
+    }
+
     public void OnMovement(InputAction.CallbackContext value)
     {
         _rawInputMovement = value.ReadValue<Vector2>();
     }
 
-    public void OnAttack(InputAction.CallbackContext value)
-    {
-        if (value.started)
-        {
-            canMove = false;
-            _animator.SetTrigger(Animator.StringToHash("SwordAttack"));
-        }
-    }
+    //public void OnAttack(InputAction.CallbackContext value)
+    //{
+    //    if (value.started)
+    //    {
+    //        canMove = false;
+    //        _attack.Attack();
+    //    }
+    //}
 
-    public void OnSupport(InputAction.CallbackContext value)
-    {
-        if (value.started)
-        {
-            canMove = false;
-            _animator.SetTrigger(Animator.StringToHash("Support"));
-        }
-    }
+    //public void OnSupport(InputAction.CallbackContext value)
+    //{
+    //    if (value.started)
+    //    {
+    //        canMove = false;
+    //        _attack.Support();
+    //    }
+    //}
 
     public void OnInteract(InputAction.CallbackContext value)
     {
         if (value.started)
         {
-            
+            _interact.Interact();
         }
     }
 

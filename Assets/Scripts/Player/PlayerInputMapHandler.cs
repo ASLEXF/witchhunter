@@ -86,13 +86,13 @@ public class PlayerInputMapHandler : MonoBehaviour
         Debug.Log("player input: battle");
     }
 
-    //private void OnDestroy()
-    //{
-    //    GameEvents.Instance.OnMenuOpened -= InputActionsToMenu;
-    //    //GameEvents.Instance.OnMenuClosed -= CheckCurrentScene;
-    //    GameEvents.Instance.OnStoryModeStarted -= InputActionsToStory;
-    //    //GameEvents.Instance.OnStoryModeEnded -= CheckCurrentScene;
-    //    GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
-    //    GameEvents.Instance.OnBattleModeStarted -= InputActionsToBattle;
-    //}
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnMenuOpened -= InputActionsToMenu;
+        //GameEvents.Instance.OnMenuClosed -= CheckCurrentScene;
+        GameEvents.Instance.OnStoryModeStarted -= InputActionsToStory;
+        //GameEvents.Instance.OnStoryModeEnded -= CheckCurrentScene;
+        GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
+        GameEvents.Instance.OnBattleModeStarted -= InputActionsToBattle;
+    }
 }

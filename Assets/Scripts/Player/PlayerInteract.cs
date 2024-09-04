@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerInteract : MonoBehaviour
 {
     private Vector3 UIOffset = new Vector3(0f, 0.5f, 0f); // UI 元素相对角色的偏移量
-    public UIInteract DropItemUI, NPCUI, InteractiveUI;
+    public UIInteract DropItemUI, NPCTalkUI, NPCCollectUI, NPCPickUpUI, InteractiveUI;
 
     Collider2D currentCollider;
     [SerializeField] private List<Collider2D> DropItemColliders = new List<Collider2D>();
@@ -31,13 +31,38 @@ public class PlayerInteract : MonoBehaviour
         {
             currentCollider = DropItemColliders[0];
             ShowUI(DropItemUI);
-            HideUI(NPCUI);
+            HideUI(NPCTalkUI);
+            HideUI(NPCCollectUI);
+            HideUI(NPCPickUpUI);
             HideUI(InteractiveUI);
         }
         else if (NPCColliders.Count > 0)
         {
             currentCollider = NPCColliders[0];
-            ShowUI(NPCUI);
+
+            if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().Alive)
+            {
+                ShowUI(NPCTalkUI);
+                HideUI(NPCCollectUI);
+                HideUI(NPCPickUpUI);
+            }
+            else if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().DeadItem)
+            {
+                HideUI(NPCTalkUI);
+                ShowUI(NPCCollectUI);
+                HideUI(NPCPickUpUI);
+            }
+            else if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().DeadEmpty)
+            {
+                HideUI(NPCTalkUI);
+                HideUI(NPCCollectUI);
+                ShowUI(NPCPickUpUI);
+            }
+            else
+            {
+                Debug.LogWarning($"Error when checking NPC {currentCollider.transform.parent.name} life status");
+            }
+
             HideUI(DropItemUI);
             HideUI(InteractiveUI);
         }
@@ -46,13 +71,17 @@ public class PlayerInteract : MonoBehaviour
             currentCollider = InteractiveColliders[0];
             ShowUI(InteractiveUI);
             HideUI(DropItemUI);
-            HideUI(NPCUI);
+            HideUI(NPCTalkUI);
+            HideUI(NPCCollectUI);
+            HideUI(NPCPickUpUI);
         }
         else
         {
             HideUI(DropItemUI);
-            HideUI(DropItemUI);
-            HideUI(NPCUI);
+            HideUI(NPCTalkUI);
+            HideUI(NPCCollectUI);
+            HideUI(NPCPickUpUI);
+            HideUI(InteractiveUI);
         }
     }
 
@@ -94,7 +123,7 @@ public class PlayerInteract : MonoBehaviour
         {
             DropItemColliders.Add(collision);
         }
-        else if (collision.CompareTag("NPC"))
+        else if (collision.CompareTag("NPC") && collision.transform.root.GetComponentInChildren<NPCInteract>().isInteractable)
         {
             NPCColliders.Add(collision);
         }

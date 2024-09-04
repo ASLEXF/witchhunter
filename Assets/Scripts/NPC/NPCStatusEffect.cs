@@ -5,17 +5,40 @@ using UnityEngine;
 
 public class NPCStatusEffect : MonoBehaviour
 {
+    public string NPCName;
+
     NPCController controller;
 
-    [SerializeField] NPCLifeStatusEnum lifeStatus;
+    public NPCLifeStatusEnum lifeStatus;
     [SerializeField] List<DebuffEnum> debuffEnums;
     [SerializeField] List<BuffEnum> buffEnums;
 
+    public bool Alive
+    {
+        get
+        {
+            return lifeStatus == NPCLifeStatusEnum.Alive;
+        }
+    }
     public bool Dead
     {
         get
         {
             return lifeStatus == NPCLifeStatusEnum.DeadItem || lifeStatus == NPCLifeStatusEnum.DeadEmpty;
+        }
+    }
+    public bool DeadItem
+    {
+        get
+        {
+            return lifeStatus == NPCLifeStatusEnum.DeadItem;
+        }
+    }
+    public bool DeadEmpty
+    {
+        get
+        {
+            return lifeStatus == NPCLifeStatusEnum.DeadEmpty;
         }
     }
 

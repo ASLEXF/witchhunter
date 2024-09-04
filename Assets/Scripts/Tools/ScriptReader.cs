@@ -76,7 +76,7 @@ public class ScriptReader : MonoBehaviour
 
     private readonly string[] transitions =
     {
-        "CUT",
+        "CUT TO",
         "FADE IN",
         "FADE OUT",
         "FLASHBACK",
@@ -145,7 +145,7 @@ public class ScriptReader : MonoBehaviour
                 // case 1: transition
                 foreach (string s in transitions)
                 {
-                    if (trimmedSentence.Equals(s + ":"))
+                    if (trimmedSentence.Equals(s + ":") || trimmedSentence.Equals(s + "."))
                     {
                         output.Add(new Sentence(1, "", "", s));
                         goto outerLoop;
@@ -194,7 +194,7 @@ public class ScriptReader : MonoBehaviour
             string fileContent = file.text;
             string[] paragraphs = fileContent.Split(new string[] { "\r\n\r\n", "\n\n" }, System.StringSplitOptions.RemoveEmptyEntries);
 
-            Queue<Sentence> result = new Queue<Sentence>();
+            output = new List<Sentence>();
 
             foreach (string paragraph in paragraphs)
             {
