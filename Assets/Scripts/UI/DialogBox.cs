@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using System.Globalization;
 using UnityEngine.UI;
 
 public class DialogBox : MonoBehaviour
@@ -14,6 +13,12 @@ public class DialogBox : MonoBehaviour
     {
         get
         {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<DialogBox>();
+                if (_instance == null)
+                    Debug.LogWarning("DialogBox null!");
+            }
             return _instance;
         }
     }
@@ -33,7 +38,8 @@ public class DialogBox : MonoBehaviour
 
     private void Awake()
     {
-        _instance = this;
+        if (_instance == null)
+            _instance = this;
 
         _playerInput = GetComponent<PlayerInput>();
         _image = GetComponent<Image>();

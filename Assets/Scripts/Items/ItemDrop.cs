@@ -2,20 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class ItemDrop : MonoBehaviour
 {
-    bool isDrop;
+    SpriteRenderer spriteRenderer;
+    BoxCollider2D boxCollider;
+    [SerializeField] bool isDrop = true;
 
-    private void Start()
+    private void Awake()
     {
-        isDrop = false;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Interacted()
     {
-        if (isDrop && collision.gameObject.transform.root.CompareTag("Player") && collision.gameObject.name == "Interact")
+        if (isDrop)
         {
-
+            if (!PlayerInventory.Instance.isFull || !ItemsUI.Instance.isFull)
+            {
+                PlayerInventory.Instance.AddItem(gameObject.GetComponent<IItem>().GetItem());
+                Destroy(gameObject);
+                //isDrop = false;
+                //spriteRenderer.enabled = false;
+                //boxCollider.enabled = false;
+            }
         }
     }
 }

@@ -24,6 +24,16 @@
             "trackName": "Guide UI Signal",
             "sceneName": "Cliff",
             "gameObjectPath": "UI"
+        },
+        {
+            "trackName": "Cinemachine Track",
+            "sceneName": "Persistent",
+            "gameObjectPath": "Main Camera"
+        },
+        {
+            "trackName": "Activation Track",
+            "sceneName": "Persistent",
+            "gameObjectPath": "CM Intro1"
         }
     ],
     "1_2": [

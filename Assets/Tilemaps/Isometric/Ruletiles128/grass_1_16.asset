@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6f3fbb560bd6041a202ea918fa4f23, type: 3}
+  m_Name: grass_1_16
+  m_EditorClassIdentifier: 
+  m_DefaultSprite: {fileID: 21300000, guid: d35e686563cab2d4fbc28c819a198f2e, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 1
+  m_TilingRules:
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: 21300000, guid: d35e686563cab2d4fbc28c819a198f2e, type: 3}
+    - {fileID: 21300000, guid: fd58d6663b7812d42a89960388acf9c8, type: 3}
+    - {fileID: 21300000, guid: a06a70fd0620f8f409d9542cc6b0c54c, type: 3}
+    - {fileID: 21300000, guid: a5e11805415dec845845f7e44073e024, type: 3}
+    - {fileID: 21300000, guid: a48a37293fae73d4daeee38163727868, type: 3}
+    - {fileID: 21300000, guid: b1093585b84686843a294d1a4fb4cbde, type: 3}
+    - {fileID: 21300000, guid: 875a190374450074c8b628de3dfd3aa0, type: 3}
+    - {fileID: 21300000, guid: ef5d19cbee26d1e44aa64f55caf6bb3c, type: 3}
+    - {fileID: 21300000, guid: b678a79d560ab33449489763865f9ec8, type: 3}
+    - {fileID: 21300000, guid: 785cbd52ebfa57e4182e85fb0e6d0864, type: 3}
+    - {fileID: 21300000, guid: d41d21aedf3e81d45a55324516ad4311, type: 3}
+    - {fileID: 21300000, guid: 92c385c8dc0c5704988d3663247fc58a, type: 3}
+    - {fileID: 21300000, guid: dfea7ae4411c61444ad9ea12c2681386, type: 3}
+    - {fileID: 21300000, guid: 42bb4a83e70fd9547a1870c5836a6d09, type: 3}
+    - {fileID: 21300000, guid: 16df38682a4a4d848a600c45429bae0e, type: 3}
+    - {fileID: 21300000, guid: 1ddb1dce5c6164e4d85c342d7dce6261, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 1
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_Neighbors: 
+    m_NeighborPositions:
+    - {x: -1, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 1, y: 1, z: 0}
+    - {x: -1, y: 0, z: 0}
+    - {x: 1, y: 0, z: 0}
+    - {x: -1, y: -1, z: 0}
+    - {x: 0, y: -1, z: 0}
+    - {x: 1, y: -1, z: 0}
+    m_RuleTransform: 0

@@ -81,4 +81,11 @@ public class PlayerHealth : MonoBehaviour
         // animation
         maxHealth--;
     }
+
+    public IEnumerator Invincible(float seconds = 2.0f)
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(seconds);
+        isInvincible = false;
+    }
 }

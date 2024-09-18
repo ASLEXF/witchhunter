@@ -12,6 +12,7 @@ public class NPCHealth : MonoBehaviour
     PolygonCollider2D _collider;
     NPCAttack NPCAttack;
     NPCAttacked NPCAttacked;
+    NPCInteract NPCInteract;
     GameObject ranges;
     GameObject triggers;
 
@@ -64,17 +65,21 @@ public class NPCHealth : MonoBehaviour
     public void Die()
     {
         statusEffect.SetDead();
-        animator.SetBool("IsDead", true);
+        
         controller.enabled = false;
-        //animator. = false;
         _collider.enabled = false;
+
+        animator.SetBool("IsDead", true);
         NPCAttack.enabled = false;
         NPCAttacked.enabled = false;
+
+        NPCInteract.UpdateIsInteractable();
+
         ranges.SetActive(false);
         triggers.SetActive(false);
     }
 
-    public void heal(int heal)
+    public void Heal(int heal)
     {
         if (currentHealth < maxHealth)
         {

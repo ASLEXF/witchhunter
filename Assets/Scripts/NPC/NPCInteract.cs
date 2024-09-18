@@ -22,7 +22,7 @@ public class NPCInteract : MonoBehaviour
     {
         status = transform.parent.GetChild(1).GetComponent<NPCStatusEffect>();
         spriteRenderer = transform.parent.GetChild(0).GetComponent<SpriteRenderer>();
-        Items = transform.parent.GetChild(2).gameObject;
+        Items = transform.parent.Find("Items").gameObject;
     }
 
     private void Start()
@@ -101,7 +101,7 @@ public class NPCInteract : MonoBehaviour
         GenerateItems(raceName);
     }
 
-    void GenerateItems(string raceName)
+    public void GenerateItems(string raceName)
     {
         if (File.Exists(itemConfigFilePath))
         {

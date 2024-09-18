@@ -94,4 +94,17 @@ public class GameEvents : MonoBehaviour
     public void InteractableUpdated() => OnInteractableUpdated?.Invoke();
 
     #endregion
+
+    #region Items
+
+    public event Action OnItemsUpdated;
+
+    public event Action OnAddItemWhenInventoryFull;
+
+    public void ItemsUpdated() => OnItemsUpdated?.Invoke();
+
+    public void AddItemWhenInventoryFull() => OnAddItemWhenInventoryFull?.Invoke();
+
+    #endregion
+
 }

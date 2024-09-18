@@ -106,7 +106,12 @@ public class VisualRange : MonoBehaviour
 
         foreach (RaycastHit2D hit in hits)
         {
-            if (hit.collider.isTrigger)
+            if (hit.collider.CompareTag("Cover"))
+            {
+                point = hit.point;
+                break;
+            }
+            else if (hit.collider.isTrigger)
             {
                 continue;
             }

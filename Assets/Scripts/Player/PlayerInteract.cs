@@ -8,6 +8,7 @@ public class PlayerInteract : MonoBehaviour
     public UIInteract DropItemUI, NPCTalkUI, NPCCollectUI, NPCPickUpUI, InteractiveUI;
 
     Collider2D currentCollider;
+    InteractTypeEnum type;
     [SerializeField] private List<Collider2D> DropItemColliders = new List<Collider2D>();
     [SerializeField] public List<Collider2D> NPCColliders = new List<Collider2D>();
     [SerializeField] private List<Collider2D> InteractiveColliders = new List<Collider2D>();
@@ -29,6 +30,7 @@ public class PlayerInteract : MonoBehaviour
     {
         if (DropItemColliders.Count > 0)
         {
+            type = InteractTypeEnum.DropItem;
             currentCollider = DropItemColliders[0];
             ShowUI(DropItemUI);
             HideUI(NPCTalkUI);
@@ -38,6 +40,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else if (NPCColliders.Count > 0)
         {
+            type = InteractTypeEnum.NPC;
             currentCollider = NPCColliders[0];
 
             if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().Alive)
@@ -68,6 +71,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else if (InteractiveColliders.Count > 0)
         {
+            type = InteractTypeEnum.Interactive;
             currentCollider = InteractiveColliders[0];
             ShowUI(InteractiveUI);
             HideUI(DropItemUI);
@@ -106,13 +110,35 @@ public class PlayerInteract : MonoBehaviour
     {
         if (currentCollider != null)
         {
-            Debug.Log($"gameObject {currentCollider.gameObject}");
-            GameObject gameObject = currentCollider.gameObject;
-            NPCInteract script = gameObject.GetComponent<NPCInteract>();
-            if (script != null)
+            Debug.Log($"interact gameObject {currentCollider.gameObject}");
+            GameObject gameObject = currentCollider.transform.root.gameObject;
+            switch (type)
             {
-                script.Interacted();
+                case InteractTypeEnum.DropItem:
+                    {
+                        ItemDrop script = gameObject.GetComponentInChildren<ItemDrop>();
+                        if (script != null)
+                        {
+                            script.Interacted();
+                        }
+                        break;
+                    }
+                case InteractTypeEnum.NPC:
+                    {
+                        NPCInteract script = gameObject.GetComponentInChildren<NPCInteract>();
+                        if (script != null)
+                        {
+                            script.Interacted();
+                        }
+                        break;
+                    }
+                case InteractTypeEnum.Interactive:
+                    {
+                        
+                        break;
+                    }
             }
+
             GameEvents.Instance.InteractableUpdated();
         }
     }

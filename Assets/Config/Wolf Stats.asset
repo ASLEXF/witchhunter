@@ -19,29 +19,29 @@ MonoBehaviour:
   walkSpeed: 3
   runSpeed: 6
   MaxSpeed: 14
-  Acceleration: 120
-  decisionInterval: 1
+  Acceleration: 12
+  decisionInterval: 0.5
   approachMethod: 0
-  trackTime: 20
+  trackTime: 6
   wanderTime: 2
   wanderRadius: 5
   minDisatnce: 0.2
-  normal_moveClose: 0.9090909
+  normal_moveClose: 0.9
   normal_moveAway: 0
   normal_attack: 0
-  normal_wait: 0.09090912
+  normal_wait: 0.1
   moveRange_moveClose: 0.4
   moveRange_moveAway: 0.1
   moveRange_attack: 0.3
-  moveRange_wait: 0.19999999
+  moveRange_wait: 0.2
   longRange_moveClose: 0.4
   longRange_moveAway: 0.2
   longRange_attack: 0.3
-  longRange_wait: 0.09999998
+  longRange_wait: 0.1
   closeRange_moveClose: 0.1
   closeRange_moveAway: 0.1
   closeRange_attack: 0.8
-  closeRange_wait: -0.000000014901161
+  closeRange_wait: 0
   closestRange_moveClose: 0
   closestRange_moveAway: 0.3
   closestRange_attack: 0.7

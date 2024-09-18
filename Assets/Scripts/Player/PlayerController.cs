@@ -2,6 +2,7 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.Timeline;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -315,6 +316,17 @@ public class PlayerController : MonoBehaviour
         if (value.started)
         {
             _interact.Interact();
+        }
+    }
+
+    public void OnBackpack(InputAction.CallbackContext value)
+    {
+        if (value.started)
+        {
+            if (Backpack.Instance.gameObject.activeSelf)
+                Backpack.Instance.Hide();
+            else
+                Backpack.Instance.Show();
         }
     }
 

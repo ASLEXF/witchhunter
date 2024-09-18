@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class Item: MonoBehaviour
+public class Item
 {
     public int id;
     public string itemName;
@@ -11,7 +11,7 @@ public class Item: MonoBehaviour
     public bool isSalable;
     public bool isMaterial;
 
-    public Item(int id, string name, string description, string icon, bool isConsumable, bool isSalable)
+    public Item(int id = 0, string name = "", string description = "", string icon = "", bool isConsumable = false, bool isSalable = false)
     {
         this.id = id;
         this.itemName = name;
@@ -19,6 +19,11 @@ public class Item: MonoBehaviour
         this.icon = icon;
         this.isConsumable = isConsumable;
         this.isSalable = isSalable;
+    }
+
+    public Item DeepCopy()
+    {
+        return new Item(id, itemName, description, icon, isConsumable, isSalable);
     }
 }
 
@@ -34,7 +39,7 @@ public class WeaponItem: Item
     public float maxChargingTime;  // 最大蓄力时长
     public int attackNumber;  // 最大攻击段数
 
-    public WeaponItem(int id, string name, string description, string icon, int damage, int additionalDamage, float distance, float attackInternal, bool isTurnInstant, bool hasChargingTime, float maxChargeTime, int attackNumber) : base(id, name, description, icon, false, false)
+    public WeaponItem(int id, string itemName, string description, string icon, int damage, int additionalDamage, float distance, float attackInternal, bool isTurnInstant, bool hasChargingTime, float maxChargeTime, int attackNumber) : base(id, itemName, description, icon, false, false)
     {
         this.damage = damage;
         this.additionalDamage = additionalDamage;
@@ -57,6 +62,11 @@ public class WeaponItem: Item
             return this.damage;
         }
     }
+
+    public new WeaponItem DeepCopy()
+    {
+        return new WeaponItem(id, itemName, description, icon, damage, additionalDamage, distance, attackInternal, isTurnInstant, hasChargingTime, maxChargingTime, attackNumber);
+    }
 }
 
 public class ComsumableItem: Item
@@ -72,12 +82,22 @@ public class ComsumableItem: Item
     {
         Debug.Log("Using Item: " + itemName);
     }
+
+    public new ComsumableItem DeepCopy()
+    {
+        return new ComsumableItem(id, itemName, description, icon, amount);
+    }
 }
 
 public class ImportantItem: Item
 {
     public ImportantItem(int id, string name, string description, string icon) : base(id, name, description, icon, false, false)
     { }
+
+    public new ImportantItem DeepCopy()
+    {
+        return new ImportantItem(id, itemName, description, icon);
+    }
 }
 
 public class MaterialItem: Item
@@ -87,5 +107,10 @@ public class MaterialItem: Item
     public MaterialItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true)
     {
         this.amount = amount;
+    }
+
+    public new MaterialItem DeepCopy()
+    {
+        return new MaterialItem(id, itemName, description, icon, amount);
     }
 }

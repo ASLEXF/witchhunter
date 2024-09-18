@@ -45,10 +45,10 @@ public class PlayerAttacked : MonoBehaviour
 
     private void invincible()
     {
-        playerHealth.isInvincible = true;
+        StartCoroutine(playerHealth.Invincible());
     }
 
-    private void invincibleEnd()
+    private void stopInvincible()
     {
         playerHealth.isInvincible = false;
     }

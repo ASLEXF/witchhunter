@@ -8,6 +8,7 @@ public class NPCStatusEffect : MonoBehaviour
     public string NPCName;
 
     NPCController controller;
+    NPCInteract NPCInteract;
 
     public NPCLifeStatusEnum lifeStatus;
     [SerializeField] List<DebuffEnum> debuffEnums;
@@ -108,6 +109,7 @@ public class NPCStatusEffect : MonoBehaviour
         if (Random.value < random)
         {
             lifeStatus = NPCLifeStatusEnum.DeadItem;
+            NPCInteract.GenerateItems(NPCInteract.raceName);
         }
         else
         {

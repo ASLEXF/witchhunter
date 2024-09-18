@@ -237,6 +237,15 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Backpack"",
+                    ""type"": ""Button"",
+                    ""id"": ""7833533d-ac49-424a-9252-f2fda0beb4b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -298,7 +307,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6394d551-612f-4aec-8a42-a7d3b2d57a2c"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -308,23 +317,12 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c05176b1-4e17-44af-a10c-892258b079bd"",
-                    ""path"": ""<Keyboard>/enter"",
+                    ""id"": ""f40ab665-8170-42e4-b5f6-6a1ef3483219"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4b6b092f-9bea-41e6-a3f5-636975e99e45"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
+                    ""action"": ""Backpack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -342,6 +340,15 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Backpack"",
+                    ""type"": ""Button"",
+                    ""id"": ""6db5cb09-8ad6-4d95-9e42-16da992547e3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""AttackL"",
@@ -512,6 +519,17 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7716bd1a-b264-46c8-91ee-e97e12cb3cb8"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Backpack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -531,9 +549,11 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         m_Exploration = asset.FindActionMap("Exploration", throwIfNotFound: true);
         m_Exploration_Movement = m_Exploration.FindAction("Movement", throwIfNotFound: true);
         m_Exploration_Interact = m_Exploration.FindAction("Interact", throwIfNotFound: true);
+        m_Exploration_Backpack = m_Exploration.FindAction("Backpack", throwIfNotFound: true);
         // Battle
         m_Battle = asset.FindActionMap("Battle", throwIfNotFound: true);
         m_Battle_Movement = m_Battle.FindAction("Movement", throwIfNotFound: true);
+        m_Battle_Backpack = m_Battle.FindAction("Backpack", throwIfNotFound: true);
         m_Battle_AttackL = m_Battle.FindAction("AttackL", throwIfNotFound: true);
         m_Battle_AttackR = m_Battle.FindAction("AttackR", throwIfNotFound: true);
         m_Battle_WeaponSwitch = m_Battle.FindAction("WeaponSwitch", throwIfNotFound: true);
@@ -717,12 +737,14 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     private List<IExplorationActions> m_ExplorationActionsCallbackInterfaces = new List<IExplorationActions>();
     private readonly InputAction m_Exploration_Movement;
     private readonly InputAction m_Exploration_Interact;
+    private readonly InputAction m_Exploration_Backpack;
     public struct ExplorationActions
     {
         private @Actions m_Wrapper;
         public ExplorationActions(@Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Exploration_Movement;
         public InputAction @Interact => m_Wrapper.m_Exploration_Interact;
+        public InputAction @Backpack => m_Wrapper.m_Exploration_Backpack;
         public InputActionMap Get() { return m_Wrapper.m_Exploration; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -738,6 +760,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @Backpack.started += instance.OnBackpack;
+            @Backpack.performed += instance.OnBackpack;
+            @Backpack.canceled += instance.OnBackpack;
         }
 
         private void UnregisterCallbacks(IExplorationActions instance)
@@ -748,6 +773,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @Backpack.started -= instance.OnBackpack;
+            @Backpack.performed -= instance.OnBackpack;
+            @Backpack.canceled -= instance.OnBackpack;
         }
 
         public void RemoveCallbacks(IExplorationActions instance)
@@ -770,6 +798,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Battle;
     private List<IBattleActions> m_BattleActionsCallbackInterfaces = new List<IBattleActions>();
     private readonly InputAction m_Battle_Movement;
+    private readonly InputAction m_Battle_Backpack;
     private readonly InputAction m_Battle_AttackL;
     private readonly InputAction m_Battle_AttackR;
     private readonly InputAction m_Battle_WeaponSwitch;
@@ -779,6 +808,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         private @Actions m_Wrapper;
         public BattleActions(@Actions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Battle_Movement;
+        public InputAction @Backpack => m_Wrapper.m_Battle_Backpack;
         public InputAction @AttackL => m_Wrapper.m_Battle_AttackL;
         public InputAction @AttackR => m_Wrapper.m_Battle_AttackR;
         public InputAction @WeaponSwitch => m_Wrapper.m_Battle_WeaponSwitch;
@@ -795,6 +825,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
+            @Backpack.started += instance.OnBackpack;
+            @Backpack.performed += instance.OnBackpack;
+            @Backpack.canceled += instance.OnBackpack;
             @AttackL.started += instance.OnAttackL;
             @AttackL.performed += instance.OnAttackL;
             @AttackL.canceled += instance.OnAttackL;
@@ -814,6 +847,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
+            @Backpack.started -= instance.OnBackpack;
+            @Backpack.performed -= instance.OnBackpack;
+            @Backpack.canceled -= instance.OnBackpack;
             @AttackL.started -= instance.OnAttackL;
             @AttackL.performed -= instance.OnAttackL;
             @AttackL.canceled -= instance.OnAttackL;
@@ -858,10 +894,12 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnBackpack(InputAction.CallbackContext context);
     }
     public interface IBattleActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnBackpack(InputAction.CallbackContext context);
         void OnAttackL(InputAction.CallbackContext context);
         void OnAttackR(InputAction.CallbackContext context);
         void OnWeaponSwitch(InputAction.CallbackContext context);
