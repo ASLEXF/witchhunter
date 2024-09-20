@@ -5,6 +5,8 @@ using UnityEngine;
 public class SimpleController : MonoBehaviour
 {
     Rigidbody2D rb;
+    [SerializeField] ItemsUI itemsUI;
+    [SerializeField] Backpack Backpack;
 
     float speed = 10;
 
@@ -19,5 +21,10 @@ public class SimpleController : MonoBehaviour
         float verticalInput = Input.GetAxisRaw("Vertical");
 
         rb.velocity = new Vector3(horizontalInput * speed, verticalInput * speed, 0);
+
+        //if (Input.GetButtonDown("Tab"))
+        //{
+        //    Backpack.Instance.ShowItemsUI();
+        //}
     }
 }

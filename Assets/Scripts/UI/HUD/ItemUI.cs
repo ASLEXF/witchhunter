@@ -13,7 +13,6 @@ public class ItemUI : MonoBehaviour, IDropHandler
 {
     [SerializeField] Item _item;
     Image image;
-    GameObject key;
     TMP_Text _amount;
     DraggableItem draggableItem;
 
@@ -36,8 +35,7 @@ public class ItemUI : MonoBehaviour, IDropHandler
     private void Awake()
     {
         image = GetComponent<Image>();
-        key = transform.GetChild(0).gameObject;
-        _amount = transform.GetChild(1).GetComponent<TMP_Text>();
+        _amount = transform.Find("Amount").GetComponent<TMP_Text>();
         draggableItem = GetComponent<DraggableItem>();
     }
 

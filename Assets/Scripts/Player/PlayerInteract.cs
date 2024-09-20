@@ -164,7 +164,7 @@ public class PlayerInteract : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.CompareTag("DropItem"))
+        if (collision.CompareTag("DropItem"))
         {
             DropItemColliders.Remove(collision);
         }

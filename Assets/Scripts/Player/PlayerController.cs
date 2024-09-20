@@ -324,9 +324,9 @@ public class PlayerController : MonoBehaviour
         if (value.started)
         {
             if (Backpack.Instance.gameObject.activeSelf)
-                Backpack.Instance.Hide();
+                Backpack.Instance.HideItemsUI();
             else
-                Backpack.Instance.Show();
+                Backpack.Instance.ShowItemsUI();
         }
     }
 

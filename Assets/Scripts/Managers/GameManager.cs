@@ -35,7 +35,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(GameInitialize());
+        if (!DebugMode.IsDebugMode)
+        {
+            StartCoroutine(GameInitialize());
+        }
     }
 
     IEnumerator GameInitialize()

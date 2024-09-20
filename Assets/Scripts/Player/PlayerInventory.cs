@@ -10,22 +10,14 @@ public class PlayerInventory : MonoBehaviour
         get { return instance; }
     }
 
-    [SerializeField] int capacity = 10;
-    [SerializeField] List<Item> items;
-
-    public bool isFull
+    public bool IsFull
     {
-        get { return items.Count == capacity; }
+        get { return Backpack.Instance.IsFull && ItemsUI.Instance.IsFull; }
     }
 
     private void Awake()
     {
         instance = this;
-    }
-
-    private void Start()
-    {
-        items = new List<Item>();
     }
 
     public void AddItem(Item newItem)
@@ -44,13 +36,13 @@ public class PlayerInventory : MonoBehaviour
                 ComsumableItem oldComsumableItem = oldItem as ComsumableItem;
                 oldComsumableItem.amount += newComsumableItem.amount;
             }
-            else if (!ItemsUI.Instance.isFull)
+            else if (!ItemsUI.Instance.IsFull)
             {
                 ItemsUI.Instance.AddItem(newComsumableItem.DeepCopy());
             }
-            else if (!isFull)
+            else if (!IsFull)
             {
-                items.Add(newComsumableItem.DeepCopy());
+                Backpack.Instance.AddItem(newComsumableItem.DeepCopy());
             }
             else
             {
@@ -66,13 +58,13 @@ public class PlayerInventory : MonoBehaviour
                 MaterialItem oldComsumableItem = oldItem as MaterialItem;
                 oldComsumableItem.amount += newMaterialItem.amount;
             }
-            else if (!ItemsUI.Instance.isFull)
+            else if (!ItemsUI.Instance.IsFull)
             {
                 ItemsUI.Instance.AddItem(newMaterialItem.DeepCopy());
             }
-            else if (!isFull)
+            else if (!IsFull)
             {
-                items.Add(newMaterialItem.DeepCopy());
+                Backpack.Instance.AddItem(newMaterialItem.DeepCopy());
             }
             else
             {
@@ -82,13 +74,13 @@ public class PlayerInventory : MonoBehaviour
         else if (newItem is WeaponItem)
         {
             WeaponItem newWeaponItem = newItem as WeaponItem;
-            if (!ItemsUI.Instance.isFull)
+            if (!ItemsUI.Instance.IsFull)
             {
                 ItemsUI.Instance.AddItem(newWeaponItem.DeepCopy());
             }
-            else if (!isFull)
+            else if (!IsFull)
             {
-                items.Add(newWeaponItem.DeepCopy());
+                Backpack.Instance.AddItem(newWeaponItem.DeepCopy());
             }
             else
             {
@@ -98,11 +90,11 @@ public class PlayerInventory : MonoBehaviour
         else if (newItem is ImportantItem)
         {
             ImportantItem newImportantItem = newItem as ImportantItem;
-            if (!isFull)
+            if (!IsFull)
             {
-                items.Add(newImportantItem.DeepCopy());
+                Backpack.Instance.AddItem(newImportantItem.DeepCopy());
             }
-            else if (!ItemsUI.Instance.isFull)
+            else if (!ItemsUI.Instance.IsFull)
             {
                 ItemsUI.Instance.AddItem(newImportantItem.DeepCopy());
             }
@@ -113,11 +105,11 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            if (!isFull)
+            if (!IsFull)
             {
-                items.Add(newItem.DeepCopy());
+                Backpack.Instance.AddItem(newItem.DeepCopy());
             }
-            else if (!ItemsUI.Instance.isFull)
+            else if (!ItemsUI.Instance.IsFull)
             {
                 ItemsUI.Instance.AddItem(newItem.DeepCopy());
             }
@@ -137,19 +129,13 @@ public class PlayerInventory : MonoBehaviour
         {
             return itemUI;
         }
-        else
+
+        itemUI = Backpack.Instance.FindItem(itemID);
+        if (itemUI != null)
         {
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (items[i].id == itemID) return items[i];
-            }
+            return itemUI;
         }
         
         return null;
-    }
-
-    public void RemoveItem(Item item)
-    {
-        items.Remove(item);
     }
 }

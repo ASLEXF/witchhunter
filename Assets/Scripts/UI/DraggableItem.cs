@@ -7,7 +7,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private Vector3 originalPosition;
-    private bool isDroppedOnValidZone = false;
 
     private void Awake()
     {

@@ -18,7 +18,7 @@ public class PlayerAttack : MonoBehaviour
 
     public float moveDuration = 0f;
     public float moveSpeed = 0f;
-    private float moveDistance = 0f;
+    //private float moveDistance = 0f;
     private float elapsedTime = 0f;
 
     private int attackCounter = 0;

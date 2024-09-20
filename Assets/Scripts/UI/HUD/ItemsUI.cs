@@ -22,14 +22,14 @@ public class ItemsUI : MonoBehaviour
             int result = 0;
             for (int i = 0; i < maxNumber; i++)
             {
-                if (!ItemUIs[i].Empty) result++;
+                if (!itemUIs[i].Empty) result++;
             }
 
             return result;
         }
     }
 
-    public bool isFull
+    public bool IsFull
     {
         get
         {
@@ -37,8 +37,8 @@ public class ItemsUI : MonoBehaviour
         }
     }
 
-    [SerializeField] ItemUI[] ItemUIs;
-    [SerializeField] private int maxNumber = 7;
+    [SerializeField] ItemUI[] itemUIs;
+    [SerializeField] int maxNumber = 7;
 
     private void Awake()
     {
@@ -49,21 +49,21 @@ public class ItemsUI : MonoBehaviour
     {
         initializeItems();
 
-        hideItemsUI();
+        HideItemsUI();
 
-        GameEvents.Instance.OnBattleModeStarted += showItemsUI;
-        GameEvents.Instance.OnExplorationModeStarted += showItemsUI;
-        GameEvents.Instance.OnStoryModeStarted += hideItemsUI;
+        GameEvents.Instance.OnBattleModeStarted += ShowItemsUI;
+        GameEvents.Instance.OnExplorationModeStarted += ShowItemsUI;
+        GameEvents.Instance.OnStoryModeStarted += HideItemsUI;
 
         GameEvents.Instance.OnItemsUpdated += updateItemsUI;
     }
 
     private void initializeItems()
     {
-        ItemUIs = new ItemUI[maxNumber];
+        itemUIs = new ItemUI[maxNumber];
         for (int i = 0; i < maxNumber; i++)
         {
-            ItemUIs[i] = transform.GetChild(i).GetComponent<ItemUI>();
+            itemUIs[i] = transform.GetChild(i).GetComponent<ItemUI>();
         }
 
         gameObject.SetActive(false);
@@ -73,49 +73,55 @@ public class ItemsUI : MonoBehaviour
     {
         for (int i = 0; i < maxNumber; i++)
         {
-            ItemUIs[i].UpdateUI();
+            itemUIs[i].UpdateUI();
         }
     }
 
-    public void AddItem(Item newItem)
+    public bool AddItem(Item newItem)
     {
+        bool result = false;
         for (int i = 0; i < maxNumber; i++)
         {
-            if (ItemUIs[i].Empty)
+            if (itemUIs[i].Empty)
             {
-                ItemUIs[i].Item = newItem;
-                return;
+                itemUIs[i].Item = newItem;
+                result =  true;
+                break;
             }
         }
-        GameEvents.Instance.ItemsUpdated();
+        if (result)
+            GameEvents.Instance.ItemsUpdated();
+        return result;
     }
 
     public Item FindItem(int itemID)
     {
         for (int i = 0; i < maxNumber; i++)
         {
-            if (ItemUIs[i].Item != null && ItemUIs[i].Item.id == itemID) 
-                return ItemUIs[i].Item;
+            if (itemUIs[i].Item != null && itemUIs[i].Item.id == itemID) 
+                return itemUIs[i].Item;
         }
 
         return null;
     }
 
-    private void showItemsUI()
+    public void ShowItemsUI()
     {
         updateItemsUI();
         gameObject.SetActive(true);
     }
 
-    private void hideItemsUI()
+    public void HideItemsUI()
     {
         gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
+        GameEvents.Instance.OnBattleModeStarted -= ShowItemsUI;
+        GameEvents.Instance.OnExplorationModeStarted -= ShowItemsUI;
+        GameEvents.Instance.OnStoryModeStarted -= HideItemsUI;
+
         GameEvents.Instance.OnItemsUpdated -= updateItemsUI;
-        GameEvents.Instance.OnBattleModeStarted -= showItemsUI;
-        GameEvents.Instance.OnExplorationModeStarted -= showItemsUI;
     }
 }

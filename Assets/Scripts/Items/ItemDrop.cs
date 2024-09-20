@@ -20,7 +20,7 @@ public class ItemDrop : MonoBehaviour
     {
         if (isDrop)
         {
-            if (!PlayerInventory.Instance.isFull || !ItemsUI.Instance.isFull)
+            if (!PlayerInventory.Instance.IsFull || !ItemsUI.Instance.IsFull)
             {
                 PlayerInventory.Instance.AddItem(gameObject.GetComponent<IItem>().GetItem());
                 Destroy(gameObject);
