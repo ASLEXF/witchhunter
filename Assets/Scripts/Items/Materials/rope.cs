@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour, IItem
+public class rope : MonoBehaviour, IItem
 {
     public MaterialItem item;
 
     private void Start()
     {
-        item = new MaterialItem(1, "Coin", "collected then buy things from mechant", "Assets/Addressables/Icons/coin1.png", 1);
+        item = new MaterialItem(8, "Rope", "a rope, can be used to make something", "Assets/Addressables/Icons/rope.png", 1);
     }
 
     public Item GetItem() => item;

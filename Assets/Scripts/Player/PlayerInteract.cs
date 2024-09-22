@@ -116,7 +116,7 @@ public class PlayerInteract : MonoBehaviour
             {
                 case InteractTypeEnum.DropItem:
                     {
-                        ItemDrop script = gameObject.GetComponentInChildren<ItemDrop>();
+                        DroppedItem script = gameObject.GetComponentInChildren<DroppedItem>();
                         if (script != null)
                         {
                             script.Interacted();

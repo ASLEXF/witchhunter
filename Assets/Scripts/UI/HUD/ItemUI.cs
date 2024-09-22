@@ -22,6 +22,13 @@ public class ItemUI : MonoBehaviour, IDropHandler
         get { return _item; }
         set { _item = value; }
     }
+
+    public TMP_Text Amount
+    {
+        get { return _amount; }
+        set { _amount = value; }
+    }
+
     public int Index
     {
         get { return _index; }
@@ -58,6 +65,14 @@ public class ItemUI : MonoBehaviour, IDropHandler
             {
                 MaterialItem materialItem = _item as MaterialItem;
                 updateAmount(materialItem.amount);
+            }
+            else if (_item == PlayerHand.Instance.WeaponL)
+            {
+                _amount.text = "L";
+            }
+            else if (_item == PlayerHand.Instance.WeaponR)
+            {
+                _amount.text = "R";
             }
             else
             {

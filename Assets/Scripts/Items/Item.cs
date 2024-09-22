@@ -10,8 +10,9 @@ public class Item
     public bool isConsumable;
     public bool isSalable;
     public bool isMaterial;
+    public int prive;
 
-    public Item(int id = 0, string name = "", string description = "", string icon = "", bool isConsumable = false, bool isSalable = false)
+    public Item(int id = 0, string name = "", string description = "", string icon = "", bool isConsumable = false, bool isSalable = false, int prive = 0)
     {
         this.id = id;
         this.itemName = name;
@@ -19,6 +20,7 @@ public class Item
         this.icon = icon;
         this.isConsumable = isConsumable;
         this.isSalable = isSalable;
+        this.prive = prive;
     }
 
     public Item DeepCopy()
@@ -39,7 +41,7 @@ public class WeaponItem: Item
     public float maxChargingTime;  // 最大蓄力时长
     public int attackNumber;  // 最大攻击段数
 
-    public WeaponItem(int id, string itemName, string description, string icon, int damage, int additionalDamage, float distance, float attackInternal, bool isTurnInstant, bool hasChargingTime, float maxChargeTime, int attackNumber) : base(id, itemName, description, icon, false, false)
+    public WeaponItem(int id, string itemName, string description, string icon, int damage, int additionalDamage, float distance, float attackInternal, bool isTurnInstant, bool hasChargingTime, float maxChargeTime, int attackNumber) : base(id, itemName, description, icon, false, false, 0)
     {
         this.damage = damage;
         this.additionalDamage = additionalDamage;
@@ -73,7 +75,7 @@ public class ComsumableItem: Item
 {
     public int amount;
 
-    public ComsumableItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true)
+    public ComsumableItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true, 1)
     {
         this.amount = amount;
     }
@@ -81,6 +83,7 @@ public class ComsumableItem: Item
     public virtual void Use()
     {
         Debug.Log("Using Item: " + itemName);
+        amount--;
     }
 
     public new ComsumableItem DeepCopy()
@@ -91,7 +94,7 @@ public class ComsumableItem: Item
 
 public class ImportantItem: Item
 {
-    public ImportantItem(int id, string name, string description, string icon) : base(id, name, description, icon, false, false)
+    public ImportantItem(int id, string name, string description, string icon) : base(id, name, description, icon, false, false, 0)
     { }
 
     public new ImportantItem DeepCopy()
@@ -104,7 +107,7 @@ public class MaterialItem: Item
 {
     public int amount;
 
-    public MaterialItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true)
+    public MaterialItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true, 1)
     {
         this.amount = amount;
     }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class ItemDrop : MonoBehaviour
+public class DroppedItem : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
     BoxCollider2D boxCollider;
-    [SerializeField] bool isDrop = true;
+    [SerializeField] bool isDropped = true;
 
     private void Awake()
     {
@@ -16,9 +16,15 @@ public class ItemDrop : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
     }
 
+    private void Start()
+    {
+        gameObject.tag = "DropItem";
+        isDropped = true;
+    }
+
     public void Interacted()
     {
-        if (isDrop)
+        if (isDropped)
         {
             if (!PlayerInventory.Instance.IsFull || !ItemsUI.Instance.IsFull)
             {

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class blade : MonoBehaviour, IItem
+public class arch : MonoBehaviour, IItem
 {
     public WeaponItem item;
 
     private void Start()
     {
-        item = new WeaponItem(10, "blade", "initial weapon", "Assets/Addressables/Icons/blade.png", 1, 1, 0, 0, true, true, 1.0f, 2);
+        item = new WeaponItem(11, "arch", "initial weapon", "Assets/Addressables/Icons/arch.png", 1, 1, 12, 0, false, true, 5, 1);
     }
 
     public Item GetItem() => item;
