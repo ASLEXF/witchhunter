@@ -80,10 +80,12 @@ public class ComsumableItem: Item
         this.amount = amount;
     }
 
-    public virtual void Use()
+    public System.Action<ComsumableItem> Use = DefaultUse;
+    private static void DefaultUse(ComsumableItem item)
     {
-        Debug.Log("Using Item: " + itemName);
-        amount--;
+        Debug.Log($"Using Item: {item.itemName}");
+        item.amount--;
+        GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
     }
 
     public new ComsumableItem DeepCopy()

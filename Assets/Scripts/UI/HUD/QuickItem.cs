@@ -30,7 +30,7 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
             ComsumableItem comsumableItem = itemUI.Item as ComsumableItem;
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                comsumableItem.Use();
+                comsumableItem.Use(comsumableItem);
                 GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
             }
 
@@ -44,7 +44,7 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
                 if (PlayerHand.Instance.WeaponL != null 
                     && itemUI.Item.id == PlayerHand.Instance.WeaponL.id)
                 {
-
+                    // pass
                 }
                 else if (PlayerHand.Instance.WeaponR != null 
                     && itemUI.Item.id == PlayerHand.Instance.WeaponR.id)
@@ -61,7 +61,7 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
                 if (PlayerHand.Instance.WeaponR != null 
                     && itemUI.Item.id == PlayerHand.Instance.WeaponR.id)
                 {
-
+                    // pass
                 }
                 else if (PlayerHand.Instance.WeaponL != null 
                     && itemUI.Item.id == PlayerHand.Instance.WeaponL.id)

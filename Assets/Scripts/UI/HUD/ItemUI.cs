@@ -36,7 +36,7 @@ public class ItemUI : MonoBehaviour, IDropHandler
     }
     public bool Empty
     { 
-        get { return _item.id == 0; } 
+        get { return _item == null || _item.id == 0; } 
     }
 
     private void Awake()
@@ -83,6 +83,7 @@ public class ItemUI : MonoBehaviour, IDropHandler
         else
         {
             updateSprite("Assets/Addressables/Icons/SquareWithBorder.png");
+            _item = null;
             _amount.text = "";
             draggableItem.enabled = false;
         }
@@ -121,6 +122,7 @@ public class ItemUI : MonoBehaviour, IDropHandler
         else
         {
             updateSprite("Assets/Addressables/Icons/SquareWithBorder.png");
+            _item = null;
             image.sprite = null;
             _amount.text = "";
         }

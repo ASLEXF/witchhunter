@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    private static PlayerHealth instance;
+
+    public static PlayerHealth Instance
+        { get { return instance; } }
+
     PlayerSpawn playerSpawn;
     Animator animator;
 
@@ -25,6 +30,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
+
         playerSpawn = GetComponent<PlayerSpawn>();
         animator = transform.parent.GetChild(0).GetComponent<Animator>();
     }
@@ -50,18 +57,19 @@ public class PlayerHealth : MonoBehaviour
         playerSpawn.PlayerRespawn();
     }
 
-    public void heal()
+    public void Heal(int amount = 1)
     {
-        if (currentHealth < maxHealth)
+        int health = currentHealth + amount;
+        if (health < maxHealth)
         {
-            currentHealth++;
+            currentHealth = health;
             GameEvents.Instance.PlayerHealthChanged();
         }
     }
 
-    public void rest()
+    private void rest()
     {
-        heal();
+        Heal();
     }
 
     public void revive()
@@ -70,13 +78,14 @@ public class PlayerHealth : MonoBehaviour
         GameEvents.Instance.PlayerHealthChanged();
     }
 
-    public void addMaxHealth()
+    public void AddMaxHealth(int amount = 1)
     {
         // animation
-        maxHealth++;
+        if (maxHealth + amount < 9)
+            maxHealth += amount;
     }
 
-    public void reduceMaxHealth()
+    public void ReduceMaxHealth()
     {
         // animation
         maxHealth--;
