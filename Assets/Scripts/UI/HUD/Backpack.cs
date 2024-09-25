@@ -37,107 +37,6 @@ public class Backpack : MonoBehaviour, IDropHandler
     [SerializeField] ItemUI[] itemUIs;
     [SerializeField] int maxNumber = 4;
 
-    //private void Awake()
-    //{
-    //    instance = this;
-    //}
-
-    //private void Start()
-    //{
-    //    initializeUIs();
-
-    //    if (DebugMode.IsDebugMode)
-    //    {
-    //        Show();
-    //    }
-
-    //    gameObject.SetActive(false);
-    //}
-
-    //private void initializeUIs()
-    //{
-    //    ItemUIs = new ItemUI[maxNumber];
-    //    for (int i = 0; i < maxNumber; i++)
-    //    {
-    //        ItemUIs[i] = transform.GetChild(i).GetComponent<ItemUI>();
-    //    }
-    //}
-
-    //public bool AddItem(Item item)
-    //{
-    //    bool result = false;
-    //    for (int i = 0; i < maxNumber; i++)
-    //    {
-    //        if ()
-    //    }
-    //    if (!IsFull)
-    //    {
-    //        items.Add(item);
-    //        GameEvents.Instance.ItemsUpdated();
-    //        return true;
-    //    }
-    //    return false;
-    //}
-
-    //private void updateItems()
-    //{
-    //    for (int i = 0; i < items.Count; i++)
-    //    {
-    //        Image image = ItemUIs[i].GetComponent<Image>();
-    //        Text amount = ItemUIs[i].transform.Find("Amount").GetComponent<Text>();
-    //        if (items[i] is ComsumableItem)
-    //        {
-    //            ComsumableItem comsumableItem = items[i] as ComsumableItem;
-    //            if (comsumableItem.amount == 0)
-    //            {
-    //                image.sprite = null;
-    //                amount.text = "";
-    //                items.RemoveAt(i);
-    //                i--;
-    //            }
-    //            else
-    //            {
-    //                spriteAddresses.Add(comsumableItem.icon);
-    //                amount.text = comsumableItem.amount.ToString();
-    //            }
-    //        }
-    //        else if (items[i] is MaterialItem)
-    //        {
-    //            MaterialItem materialItem = items[i] as MaterialItem;
-    //            if (materialItem.amount == 0)
-    //            {
-    //                image.sprite = null;
-    //                amount.text = "";
-    //                items.RemoveAt(i);
-    //                i--;
-    //            }
-    //            else
-    //            {
-    //                SpriteRenderer itemSprite = itemObj.GetComponent<SpriteRenderer>();
-    //                image.sprite = itemSprite.sprite;
-    //                amount.text = materialItem.amount.ToString();
-    //            }
-    //        }
-
-    //        else
-    //        {
-    //            image.sprite = null;
-    //            amount.text = "";
-    //        }
-    //    }
-    //}
-
-    //public void Show()
-    //{
-    //    updateItems();
-    //    gameObject.SetActive(true);
-    //}
-
-    //public void Hide()
-    //{
-    //    gameObject.SetActive(false);
-    //}
-
     private void Awake()
     {
         instance = this;
@@ -147,9 +46,14 @@ public class Backpack : MonoBehaviour, IDropHandler
     {
         initializeItems();
 
-        ShowItemsUI();
-
-        //HideItemsUI();
+        if (DebugMode.IsDebugMode)
+        {
+            ShowItemsUI();
+        }
+        else
+        {
+            HideItemsUI();
+        }
 
         GameEvents.Instance.OnItemsUpdated += updateItemsUI;
     }

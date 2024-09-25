@@ -31,10 +31,10 @@ public class NPCAttacked : MonoBehaviour
         float lerpTime = Time.deltaTime * lerpSpeed;
 
 
-        Vector3 targetPosition = transform.position +  _position;
-        _position = Vector3.zero;
+        //Vector3 targetPosition = transform.position +  _position;
+        //_position = Vector3.zero;
 
-        controller.gameObject.transform.position = Vector3.Lerp(controller.gameObject.transform.position, targetPosition, lerpTime);
+        //controller.gameObject.transform.position = Vector3.Lerp(controller.gameObject.transform.position, targetPosition, lerpTime);
     }
 
     public void GetAttacked(int damage, float force, PolygonCollider2D PlayerCollider)

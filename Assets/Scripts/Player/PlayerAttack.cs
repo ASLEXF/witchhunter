@@ -125,7 +125,7 @@ public class PlayerAttack : MonoBehaviour
 
     IEnumerator resetAttackCounter()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2);
 
         attackCounter = 0;
     }

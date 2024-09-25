@@ -71,6 +71,14 @@ public class GameEvents : MonoBehaviour
 
     #endregion
 
+    #region Scene
+
+    public event Action OnNewSceneLoaded;
+
+    public void NewSceneLoaded() => OnNewSceneLoaded?.Invoke();
+
+    #endregion
+
     #region Timeline
 
     public event Action OnPlayableAssetLoaded;

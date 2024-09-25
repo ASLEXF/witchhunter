@@ -26,7 +26,7 @@ public class SceneLoader : MonoBehaviour
 
     public Animator fadeAnimator;
 
-    public List<string> CurrentScenes = new List<string>();
+    public List<string> CurrentScenes = new List<string>();  // FIXME
     public bool isLoading = true;
 
     private void Awake()
@@ -176,11 +176,11 @@ public class SceneLoader : MonoBehaviour
 
             AsyncOperation async = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             //async.completed += UnloadCurrentScene;
-            async.completed += OnLoadedSceneSlowFadeInComplete;
+            async.completed += OnLoadedSceneSlowFadeInCompleted;
         }
     }
 
-    private void OnLoadedSceneSlowFadeInComplete(AsyncOperation obj)
+    private void OnLoadedSceneSlowFadeInCompleted(AsyncOperation obj)
     {
         if (fadeAnimator != null && fadeAnimator.isActiveAndEnabled)
         {
@@ -194,6 +194,8 @@ public class SceneLoader : MonoBehaviour
             Debug.Log("slow fade in completed fail!");
         }
         isLoading = false;
+
+        GameEvents.Instance.NewSceneLoaded();
     }
 
     //private void UnloadCurrentScene(AsyncOperation obj)
