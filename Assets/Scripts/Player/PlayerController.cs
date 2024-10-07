@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
 
     Vector2 facePosition;
 
+    public Vector3 FormerPosition; // to create transition when teleport
+
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
     Animator _animator;

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool isInitiated = false;
+    public int stage = 1;
 
     private void Awake()
     {

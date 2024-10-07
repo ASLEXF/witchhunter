@@ -201,6 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInitiated: 0
+  stage: 1
 --- !u!1 &6655109273145305661
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +266,12 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: 7528021930914427161, guid: 39e6f04ab77037d488be71845079dd3b, type: 2}
     value: {fileID: 3411291805576658111}
+  - key: {fileID: 3729587796168775327, guid: 39e6f04ab77037d488be71845079dd3b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -1314840183568527664, guid: 39e6f04ab77037d488be71845079dd3b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 3702406158226614162, guid: 39e6f04ab77037d488be71845079dd3b, type: 2}
+    value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &6936094894223696921

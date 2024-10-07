@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
-    private Vector3 UIOffset = new Vector3(0f, 0.5f, 0f); // UI 元素相对角色的偏移量
-    public UIInteract DropItemUI, NPCTalkUI, NPCCollectUI, NPCPickUpUI, InteractiveUI;
+    [SerializeField] UIInteract DropItemUI, NPCTalkUI, NPCCollectUI, NPCPickUpUI, InteractiveUI;
 
     Collider2D currentCollider;
     InteractTypeEnum type;
     [SerializeField] private List<Collider2D> DropItemColliders = new List<Collider2D>();
     [SerializeField] public List<Collider2D> NPCColliders = new List<Collider2D>();
     [SerializeField] private List<Collider2D> InteractiveColliders = new List<Collider2D>();
+
+    bool isInteracted = false;  // don't interact twice
+
 
     private void Start()
     {
@@ -28,6 +31,12 @@ public class PlayerInteract : MonoBehaviour
 
     private void updateColliders()
     {
+        if (isInteracted)
+        {
+            clearInteractedCollider();
+            isInteracted = false;
+        }
+
         if (DropItemColliders.Count > 0)
         {
             type = InteractTypeEnum.DropItem;
@@ -43,19 +52,19 @@ public class PlayerInteract : MonoBehaviour
             type = InteractTypeEnum.NPC;
             currentCollider = NPCColliders[0];
 
-            if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().Alive)
+            if (currentCollider.GetComponentInChildren<NPCStatusEffect>().Alive)
             {
                 ShowUI(NPCTalkUI);
                 HideUI(NPCCollectUI);
                 HideUI(NPCPickUpUI);
             }
-            else if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().DeadItem)
+            else if (currentCollider.GetComponentInChildren<NPCStatusEffect>().DeadItem)
             {
                 HideUI(NPCTalkUI);
                 ShowUI(NPCCollectUI);
                 HideUI(NPCPickUpUI);
             }
-            else if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().DeadEmpty)
+            else if (currentCollider.GetComponentInChildren<NPCStatusEffect>().DeadEmpty)
             {
                 HideUI(NPCTalkUI);
                 HideUI(NPCCollectUI);
@@ -89,12 +98,71 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
+    void clearInteractedCollider()
+    {
+        if (currentCollider == null) return;
+
+        switch (type)
+        {
+            case InteractTypeEnum.DropItem:
+                {
+                    DropItemColliders.Remove(currentCollider);
+                    break;
+                }
+            case InteractTypeEnum.NPC:
+                {
+                    NPCColliders.Remove(currentCollider);
+                    break;
+                }
+            case InteractTypeEnum.Interactive:
+                {
+                    InteractiveColliders.Remove(currentCollider);
+                    break;
+                }
+        }
+        currentCollider = null;
+    }
+
     void ShowUI(UIInteract uIInteract)
     {
         if (uIInteract == null)
         {
             Debug.LogError("Interactive UI Panel is not assigned.");
             return;
+        }
+
+        Vector3 UIOffset = new Vector3();
+        GameObject gameObject = currentCollider.transform.root.gameObject;
+        switch (type)
+        {
+            case InteractTypeEnum.DropItem:
+                {
+                    DroppedItem script = gameObject.GetComponentInChildren<DroppedItem>();
+                    if (script != null)
+                    {
+                        UIOffset = script.UIOffset;
+                    }
+                    break;
+                }
+            case InteractTypeEnum.NPC:
+                {
+                    NPCInteract script = gameObject.GetComponentInChildren<NPCInteract>();
+                    if (script != null)
+                    {
+                        UIOffset = script.UIOffset;
+                    }
+                    break;
+                }
+            case InteractTypeEnum.Interactive:
+                {
+                    Interactive script = gameObject.GetComponentInChildren<Interactive>();
+                    if (script != null)
+                    {
+                        UIOffset = script.UIOffset;
+                    }
+
+                    break;
+                }
         }
 
         uIInteract.Show();
@@ -115,30 +183,36 @@ public class PlayerInteract : MonoBehaviour
             switch (type)
             {
                 case InteractTypeEnum.DropItem:
+                {
+                    DroppedItem script = gameObject.GetComponentInChildren<DroppedItem>();
+                    if (script != null)
                     {
-                        DroppedItem script = gameObject.GetComponentInChildren<DroppedItem>();
-                        if (script != null)
-                        {
-                            script.Interacted();
-                        }
-                        break;
+                        script.Interacted();
                     }
+                    break;
+                }
                 case InteractTypeEnum.NPC:
+                {
+                    NPCInteract script = gameObject.GetComponentInChildren<NPCInteract>();
+                    if (script != null)
                     {
-                        NPCInteract script = gameObject.GetComponentInChildren<NPCInteract>();
-                        if (script != null)
-                        {
-                            script.Interacted();
-                        }
-                        break;
+                        script.Interacted();
                     }
+                    break;
+                }
                 case InteractTypeEnum.Interactive:
+                {
+                    Interactive script = gameObject.GetComponentInChildren<Interactive>();
+                    if (script != null)
                     {
-                        
-                        break;
+                        script.Interacted();
                     }
+
+                    break;
+                }
             }
 
+            isInteracted = true;
             GameEvents.Instance.InteractableUpdated();
         }
     }
@@ -168,7 +242,7 @@ public class PlayerInteract : MonoBehaviour
         {
             DropItemColliders.Remove(collision);
         }
-        else if (collision.CompareTag("NPC"))
+        else if (collision.CompareTag("NPC") && collision.transform.root.GetComponentInChildren<NPCInteract>().isInteractable)
         {
             NPCColliders.Remove(collision);
         }
@@ -177,6 +251,8 @@ public class PlayerInteract : MonoBehaviour
             InteractiveColliders.Remove(collision);
         }
         else return;
+
+        DialogBox.Instance.ClearAndHide();
 
         GameEvents.Instance.InteractableUpdated();
     }

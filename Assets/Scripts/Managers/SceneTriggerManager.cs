@@ -20,9 +20,6 @@ public class SceneTriggerManager : MonoBehaviour
         }
     }
 
-    
-    
-
     private void Awake()
     {
         if(_instance != null && _instance != this)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[System.Serializable]
+/* sample */
 public class Item
 {
     public int id;
@@ -10,9 +10,9 @@ public class Item
     public bool isConsumable;
     public bool isSalable;
     public bool isMaterial;
-    public int prive;
+    public int prise;
 
-    public Item(int id = 0, string name = "", string description = "", string icon = "", bool isConsumable = false, bool isSalable = false, int prive = 0)
+    public Item(int id = 0, string name = "", string description = "", string icon = "", bool isConsumable = false, bool isSalable = false, int prise = 0)
     {
         this.id = id;
         this.itemName = name;
@@ -20,7 +20,7 @@ public class Item
         this.icon = icon;
         this.isConsumable = isConsumable;
         this.isSalable = isSalable;
-        this.prive = prive;
+        this.prise = prise;
     }
 
     public Item DeepCopy()

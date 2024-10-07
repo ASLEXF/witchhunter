@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class NPCInteract : MonoBehaviour
 {
@@ -11,16 +13,18 @@ public class NPCInteract : MonoBehaviour
     GameObject Items;
 
     public string raceName;
-    [SerializeField] bool[] isInteractableArray = new bool[3];
-    public bool isInteractable;
-    [SerializeField] private Vector3 UIOffset;
 
-    string interactConfigFilePath = "Assets/Config/InteractableNPC.json";
-    string itemConfigFilePath = "Assets/Config/NPCItems.json";
+    [SerializeField] bool[] isInteractableStatus = new bool[3];
+    public bool isInteractable;
+    [SerializeField] public Vector3 UIOffset = new Vector3(0f, 0.5f, 0f);
+
+    [SerializeField] string interactConfigFilePath = "Assets/Config/InteractableNPC.json";
+    [SerializeField] string itemConfigFilePath = "Assets/Config/NPCItems.json";
+    [SerializeField] string talkFilePath = "Assets/Config/NPCTalkFile.json"; 
 
     private void Awake()
     {
-        status = transform.parent.GetChild(1).GetComponent<NPCStatusEffect>();
+        status = transform.parent.Find("Status").GetComponent<NPCStatusEffect>();
         spriteRenderer = transform.parent.GetChild(0).GetComponent<SpriteRenderer>();
         Items = transform.parent.Find("Items").gameObject;
     }
@@ -43,30 +47,32 @@ public class NPCInteract : MonoBehaviour
             var configs = JsonConvert.DeserializeObject<Dictionary<string, List<NPCInteractConfigEntry>>>(json);
             if (configs == null)
             {
-                Debug.LogError("Failed to deserialize JSON.");
+                Debug.LogError($"Failed to deserialize JSON {interactConfigFilePath}.");
                 return;
             }
             if (configs.TryGetValue(raceName, out List<NPCInteractConfigEntry> config))
             {
-                for (int i = 0; i < isInteractableArray.Length; i++)
+                for (int i = 0; i < isInteractableStatus.Length; i++)
                 {
-                    isInteractableArray[i] = config[i].isInteractable;
+                    isInteractableStatus[i] = config[i].isInteractable;
                 }
+
+                UpdateIsInteractable();
             }
             else
             {
-                Debug.LogError("No configurations found for the specified NPC interactable.");
+                Debug.LogError($"No configurations found for the NPC {raceName}.");
             }
         }
         else
         {
-            Debug.LogError($"Config file not found at {interactConfigFilePath}");
+            Debug.LogError($"Config file not found at {interactConfigFilePath}.");
         }
     }
 
     public void UpdateIsInteractable()
     {
-        isInteractable = isInteractableArray[(int)status.lifeStatus];
+        isInteractable = isInteractableStatus[(int)status.lifeStatus];
     }
 
     public void Interacted()
@@ -91,6 +97,37 @@ public class NPCInteract : MonoBehaviour
     private void Talk()
     {
         Debug.Log("NPC Talk");
+
+        if (File.Exists(talkFilePath))
+        {
+            string json = File.ReadAllText(talkFilePath);
+            var configs = JsonConvert.DeserializeObject<Dictionary<string, List<NPCTalkConfigEntry>>>(json);
+            if (configs == null)
+            {
+                Debug.LogError($"Failed to deserialize JSON {talkFilePath}.");
+                return;
+            }
+            if (configs.TryGetValue(raceName, out List<NPCTalkConfigEntry> config))
+            {
+                for (int i = 0; i < config.Count; i++)
+                {
+                    if (GameManager.Instance.stage <= config[i].stage)
+                    {
+                        DialogBox.Instance.LoadAndStartText(config[i].fileName);
+
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError($"No configurations found for the NPC {raceName}.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"Config file not found at {interactConfigFilePath}");
+        }
     }
 
     private void GetBodyItem()
@@ -121,7 +158,7 @@ public class NPCInteract : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No configurations found for the specified NPC items.");
+                Debug.LogError($"No configurations found for the NPC {raceName}.");
             }
         }
         else

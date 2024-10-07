@@ -49,17 +49,9 @@ public class DialogBox : MonoBehaviour
 
     private void Start()
     {
-        _playerInput.enabled = false;
+        Hide();
 
-        //GameEvents.Instance.OnTextScriptUpdate += OnTextScriptUpdate;
-
-        //input = ScriptReader.Instance.output;
-        ////Debug.Log("count: " + input.Count);
-        //while (input[index].type != 3 && input[index].type != 4)
-        //{
-        //    index++;
-        //}
-        //StartCoroutine(TypingSentence());
+        GameEvents.Instance.OnTextScriptUpdated += StartTyping;
     }
 
     public void StartTyping()
@@ -69,6 +61,7 @@ public class DialogBox : MonoBehaviour
         {
             index = 0;
             StartCoroutine(TypingSentence());
+            show();
         }
         else
         {
@@ -203,9 +196,18 @@ public class DialogBox : MonoBehaviour
         }
     }
 
-    public void LoadTextAsset(string fileName)
+    public void LoadAndStartText(string fileName)
     {
+        Clear();
         ScriptReader.Instance.LoadTextAsset(fileName);
+    }
+
+    public void Clear()
+    {
+        input = null;
+        index = 0;
+        isTyping = false;
+        isSkipping = false;
     }
 
     public void Hide()
@@ -216,11 +218,17 @@ public class DialogBox : MonoBehaviour
         _playerInput.enabled = false;
     }
 
-    public void Show()
+    private void show()
     {
         _image.enabled = true;
         _title.enabled = true;
         _content.enabled = true;
         _playerInput.enabled = true;
+    }
+
+    public void ClearAndHide()
+    {
+        Clear();
+        Hide();
     }
 }

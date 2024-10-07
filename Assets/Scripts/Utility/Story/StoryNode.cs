@@ -94,17 +94,22 @@ public class StoryNode
             // dialogbox
             if (txtFile != null)
             {
-                DialogBox.Instance.LoadTextAsset(txtFile);
+                DialogBox.Instance.LoadAndStartText(txtFile);
             }
+
+            // player controller
+            PlayerController.Instance.ShowThePlayer();
+            if (isMovePosition)
+            {
+                PlayerController.Instance.FormerPosition = PlayerController.Instance.transform.position;
+                PlayerController.Instance.transform.position = playerPosition;
+            }
+            PlayerController.Instance.enabled = false;
 
             // timeline
             TimeLineManager.Instance.LoadPlayableAsset(timeLineFile);
             TimeLineManager.Instance.LoadBindingTable(timeLineFile);
-
-            // player controller
-            PlayerController.Instance.ShowThePlayer();
-            if (isMovePosition) PlayerController.Instance.transform.position = playerPosition;
-            PlayerController.Instance.enabled = false;
+            TimeLineManager.Instance.PlayTimeLine();
         }
     }
 }

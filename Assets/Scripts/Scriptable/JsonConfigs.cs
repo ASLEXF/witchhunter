@@ -22,3 +22,10 @@ public class NPCItemConfigEntry
     public int min;
     public int max;
 }
+
+[Serializable]
+public class NPCTalkConfigEntry
+{
+    public int stage;
+    public string fileName;
+}

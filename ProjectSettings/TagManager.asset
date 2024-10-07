@@ -18,7 +18,7 @@ TagManager:
   - Player
   - Water
   - UI
-  - 
+  - Test
   - 
   - 
   - 
@@ -62,4 +62,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1465732615
+    locked: 0
+  - name: Debug
+    uniqueID: 3310421823
     locked: 0

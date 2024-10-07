@@ -1,0 +1,14 @@
+{
+    "Mayor": [
+        {
+            "stage": 1,
+            "fileName": "1-3"
+        }
+    ],
+    "WoodCutter": [
+        {
+            "stage": 1,
+            "fileName": "woodcutter_1"
+        }
+    ]
+}
