@@ -24,7 +24,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / CanvasManager.Instance.GetCanvasScale();
+        rectTransform.anchoredPosition += eventData.delta / 1;
     }
 
     public void OnEndDrag(PointerEventData eventData)

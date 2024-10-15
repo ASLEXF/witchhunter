@@ -189,6 +189,9 @@ public class PlayerInteract : MonoBehaviour
                     {
                         script.Interacted();
                     }
+
+                    // game object get destroyed
+
                     break;
                 }
                 case InteractTypeEnum.NPC:
@@ -198,6 +201,10 @@ public class PlayerInteract : MonoBehaviour
                     {
                         script.Interacted();
                     }
+
+                    isInteracted = true;
+                    GameEvents.Instance.InteractableUpdated();
+
                     break;
                 }
                 case InteractTypeEnum.Interactive:
@@ -208,12 +215,12 @@ public class PlayerInteract : MonoBehaviour
                         script.Interacted();
                     }
 
+                    isInteracted = true;
+                    GameEvents.Instance.InteractableUpdated();
+
                     break;
                 }
             }
-
-            isInteracted = true;
-            GameEvents.Instance.InteractableUpdated();
         }
     }
 
@@ -252,7 +259,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else return;
 
-        DialogBox.Instance.ClearAndHide();
+        DialogBox.Instance.ClearAndHide();  // NOTE: remove dialogbox when leaving npc
 
         GameEvents.Instance.InteractableUpdated();
     }

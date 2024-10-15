@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "prefab": "Assets/Prefabs/Items/coin1.prefab"
+    },
+    {
+        "id": 3,
+        "prefab": "Assets/Prefabs/Items/fang.prefab"
+    },
+    {
+        "id": 10,
+        "prefab": "Assets/Prefabs/Items/blade.prefab"
+    },
+    {
+        "id": 11,
+        "prefab": "Assets/Prefabs/Items/arch.prefab"
+    },
+    {
+        "id": 12,
+        "prefab": "Assets/Prefabs/Items/cleaver.prefab"
+    }
+]

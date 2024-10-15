@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class BindingConfigEntry
+public class TimelineBindingConfigEntry
 {
     public string trackName;
     public string sceneName;
@@ -27,5 +27,13 @@ public class NPCItemConfigEntry
 public class NPCTalkConfigEntry
 {
     public int stage;
+    public int id;
     public string fileName;
+}
+
+[Serializable]
+public class ItemConfigEntry
+{
+    public int id;
+    public string prefab;
 }

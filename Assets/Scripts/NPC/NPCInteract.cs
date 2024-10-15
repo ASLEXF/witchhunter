@@ -11,6 +11,7 @@ public class NPCInteract : MonoBehaviour
     NPCStatusEffect status;
     SpriteRenderer spriteRenderer;
     GameObject Items;
+    NPCTasks tasks;
 
     public string raceName;
 
@@ -27,16 +28,12 @@ public class NPCInteract : MonoBehaviour
         status = transform.parent.Find("Status").GetComponent<NPCStatusEffect>();
         spriteRenderer = transform.parent.GetChild(0).GetComponent<SpriteRenderer>();
         Items = transform.parent.Find("Items").gameObject;
+        tasks = transform.parent.Find("Tasks").GetComponent<NPCTasks>();
     }
 
     private void Start()
     {
         loadInteractable(raceName);
-    }
-
-    private void Update()
-    {
-        
     }
 
     private void loadInteractable(string raceName)
@@ -97,6 +94,24 @@ public class NPCInteract : MonoBehaviour
     private void Talk()
     {
         Debug.Log("NPC Talk");
+        int id = 0;
+
+        if (tasks != null)
+        {
+            ITask task;
+            if ((task = tasks.GetTaskByStatus(TaskStatus.published)) != null)
+            {
+                // TODO: for now, only 1 task exist for 1 NPC at the same time
+                if (task.CheckFinish())
+                    id = task.GetTalkFileId(TaskStatus.finish);
+                else
+                    id = task.GetTalkFileId(TaskStatus.published);
+            }
+            else if ((task = tasks.GetTaskByStatus(TaskStatus.finished)) != null)
+            {
+                id = task.GetTalkFileId(TaskStatus.finished);
+            }
+        }
 
         if (File.Exists(talkFilePath))
         {
@@ -111,7 +126,7 @@ public class NPCInteract : MonoBehaviour
             {
                 for (int i = 0; i < config.Count; i++)
                 {
-                    if (GameManager.Instance.stage <= config[i].stage)
+                    if (GameManager.Instance.stage <= config[i].stage && id == config[i].id)
                     {
                         DialogBox.Instance.LoadAndStartText(config[i].fileName);
 

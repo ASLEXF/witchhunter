@@ -1,9 +1,15 @@
+/* sample */
+# nullable enable
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerInventory : MonoBehaviour
 {
+    // use singleton here for single player game
     private static PlayerInventory instance;
     public static PlayerInventory Instance
     {
@@ -20,20 +26,27 @@ public class PlayerInventory : MonoBehaviour
         instance = this;
     }
 
-    public void AddItem(Item newItem)
+    public async void AddItem(int id, int count = 1)
     {
-        if (newItem == null) 
+        Item item = await ItemManager.Instance.GenerateItem(id, count);
+        AddItem(item);
+    }
+
+    public void AddItem(Item? newItem)
+    {
+        if (newItem is null) 
         {
-            Debug.LogError("Wrong game object type for AddItem func!");
+            Debug.LogError("Wrong game object for AddItem func!");
+            throw new ArgumentNullException(nameof(newItem), "Item cannot be null.");
         }
 
         if (newItem is ComsumableItem)
         {
-            ComsumableItem newComsumableItem = newItem as ComsumableItem;
-            Item oldItem = FindItem(newComsumableItem.id);
+            ComsumableItem newComsumableItem = (ComsumableItem)newItem;  // cast to avoid nullable check
+            Item? oldItem = FindItem(newComsumableItem.id);
             if (oldItem != null)
             {
-                ComsumableItem oldComsumableItem = oldItem as ComsumableItem;
+                ComsumableItem oldComsumableItem = (ComsumableItem)oldItem;
                 oldComsumableItem.amount += newComsumableItem.amount;
             }
             else if (!ItemsUI.Instance.IsFull)
@@ -46,16 +59,16 @@ public class PlayerInventory : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player Inventory full!");
+                HandleInventoryFull();
             }
         }
         else if (newItem is MaterialItem)
         {
-            MaterialItem newMaterialItem = newItem as MaterialItem;
-            Item oldItem = FindItem(newItem.id);
+            MaterialItem newMaterialItem = (MaterialItem)newItem;
+            Item? oldItem = FindItem(newItem.id);
             if (oldItem != null)
             {
-                MaterialItem oldComsumableItem = oldItem as MaterialItem;
+                MaterialItem oldComsumableItem = (MaterialItem)oldItem;
                 oldComsumableItem.amount += newMaterialItem.amount;
             }
             else if (!ItemsUI.Instance.IsFull)
@@ -68,12 +81,12 @@ public class PlayerInventory : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player Inventory full!");
+                HandleInventoryFull();
             }
         }
         else if (newItem is WeaponItem)
         {
-            WeaponItem newWeaponItem = newItem as WeaponItem;
+            WeaponItem newWeaponItem = (WeaponItem)newItem;
             if (!ItemsUI.Instance.IsFull)
             {
                 ItemsUI.Instance.AddItem(newWeaponItem.DeepCopy());
@@ -84,12 +97,12 @@ public class PlayerInventory : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player Inventory full!");
+                HandleInventoryFull();
             }
         }
         else if (newItem is ImportantItem)
         {
-            ImportantItem newImportantItem = newItem as ImportantItem;
+            ImportantItem newImportantItem = (ImportantItem)newItem;
             if (!IsFull)
             {
                 Backpack.Instance.AddItem(newImportantItem.DeepCopy());
@@ -100,7 +113,7 @@ public class PlayerInventory : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player Inventory full!");
+                HandleInventoryFull();
             }
         }
         else
@@ -115,14 +128,14 @@ public class PlayerInventory : MonoBehaviour
             }
             else
             {
-                Debug.Log("Player Inventory full!");
+                HandleInventoryFull();
             }
         }
 
         GameEvents.Instance.ItemsUpdated();
     }
 
-    public Item FindItem(int itemID)
+    public Item? FindItem(int itemID)
     {
         Item itemUI = ItemsUI.Instance.FindItem(itemID);
         if (itemUI != null)
@@ -137,5 +150,10 @@ public class PlayerInventory : MonoBehaviour
         }
         
         return null;
+    }
+
+    private void HandleInventoryFull()
+    {
+        Debug.Log("Player Inventory full!");
     }
 }

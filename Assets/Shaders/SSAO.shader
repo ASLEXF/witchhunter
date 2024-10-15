@@ -12,9 +12,16 @@ Shader "Custom/SSAOShader"
 
     SubShader
     {
-        Tags { "RenderType" = "Opaque" }
+        Tags 
+        {
+            "RenderType" = "Opaque"
+            "RenderPipeline" = "UniversalPipeline"
+        }
+        LOD 200
         Pass
         {
+            Tags { "LightMode" = "Universal2D" }
+
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -22,25 +29,23 @@ Shader "Custom/SSAOShader"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
 
-
-
-            // Properties
-            Texture2D _InputTexture : register(s0);
-            sampler2D _InputSampler = sampler_state
+            TEXTURE2D(_InputTexture);
+            SAMPLER(_InputSampler) = sampler_state
             {
                 Texture = <_InputTexture>;
             };
 
-            Texture2D _SSAOTexture;
-            SamplerState _SSAOSampler
+            TEXTURE2D(_SSAOTexture);
+            SAMPLER(_SSAOSampler) = sampler_state
             {
-                Texture = <_SSAOSampler>;
+                Texture = <_SSAOTexture>;
                 MinFilter = Linear;
                 MagFilter = Linear;
                 MipFilter = Linear;
                 AddressU = Clamp;
                 AddressV = Clamp;
             };
+            half4 _MainTex_ST;
             float _R_OFFSET;
             float _SSAO_RADIUS;
             float _SSAO_STRENGTH;
@@ -61,14 +66,14 @@ Shader "Custom/SSAOShader"
             v2f vert(appdata_t v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = v.uv;
+                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+                o.vertex = TransformObjectToHClip(v.vertex);
                 return o;
             }
 
             float4 DepthMapPixelShader(v2f i) : SV_Target
             {
-                float4 InputColor = _InputTexture.Sample(_InputSampler, i.uv);
+                float4 InputColor = SAMPLE_TEXTURE2D(_InputTexture, _InputSampler, i.uv);
                 if (InputColor.a == 0)
                 {
                     return float4(0, 0, 0, 0);
@@ -82,13 +87,13 @@ Shader "Custom/SSAOShader"
             float4 SSAOPixelShader(v2f i) : SV_Target
             {
                 float Occlusion = 1.0f;
-                float4 D_Buffer = _SSAOTexture.Sample(_SSAOSampler, i.uv);
+                float4 D_Buffer = SAMPLE_TEXTURE2D(_SSAOTexture, _SSAOSampler, i.uv);
                 
                 if (D_Buffer.r == 0)
                 {
                     for (int j = 0; j <= 2; j++)
                     {
-                        float4 DD_Buffer = _InputTexture.Sample(_InputSampler, float2(i.uv.x, i.uv.y - (j * _SSAO_RADIUS)));
+                        float4 DD_Buffer = SAMPLE_TEXTURE2D(_InputTexture, _InputSampler, float2(i.uv.x, i.uv.y - (j * _SSAO_RADIUS)));
                         if (DD_Buffer.r > 0)
                         {
                             Occlusion -= (_SSAO_STRENGTH / (4.0f * (j + 1))) * (1 - DD_Buffer.b);
@@ -101,7 +106,7 @@ Shader "Custom/SSAOShader"
                     {
                         for (int k = -2; k <= 2; k++)
                         {
-                            float4 DD_Buffer = _InputTexture.Sample(_InputSampler, float2(i.uv.x + (j * _SSAO_RADIUS), i.uv.y + (k * _SSAO_RADIUS)));
+                            float4 DD_Buffer = SAMPLE_TEXTURE2D(_InputTexture, _InputSampler, float2(i.uv.x + (j * _SSAO_RADIUS), i.uv.y + (k * _SSAO_RADIUS)));
                             float Dist = abs(j + k);
                             if (DD_Buffer.r != 0 && D_Buffer.r < DD_Buffer.r)
                             {
@@ -142,5 +147,4 @@ Shader "Custom/SSAOShader"
             ENDHLSL
         }
     }
-    FallBack "Diffuse"
 }

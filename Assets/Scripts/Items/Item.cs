@@ -1,6 +1,7 @@
+/* sample */
 using UnityEngine;
 
-/* sample */
+
 public class Item
 {
     public int id;
@@ -12,7 +13,7 @@ public class Item
     public bool isMaterial;
     public int prise;
 
-    public Item(int id = 0, string name = "", string description = "", string icon = "", bool isConsumable = false, bool isSalable = false, int prise = 0)
+    public Item(int id = 0, string name = "test", string description = "test", string icon = "", bool isConsumable = false, bool isSalable = false, int prise = 0)
     {
         this.id = id;
         this.itemName = name;
@@ -53,15 +54,15 @@ public class WeaponItem: Item
         this.attackNumber = attackNumber;
     }
 
-    public int GetChargingDamage(float intervalSeconds)
+    public int GetDamage(float intervalSeconds)
     {
-        if (this.hasChargingTime)
+        if (hasChargingTime)
         {
-            return Mathf.RoundToInt(intervalSeconds > this.maxChargingTime ? this.additionalDamage : this.damage + intervalSeconds * this.additionalDamage / this.maxChargingTime);
+            return Mathf.RoundToInt(intervalSeconds > maxChargingTime ? additionalDamage : damage + intervalSeconds * additionalDamage / maxChargingTime);
         }
         else
         {
-            return this.damage;
+            return damage;
         }
     }
 
@@ -83,9 +84,9 @@ public class ComsumableItem: Item
     public System.Action<ComsumableItem> Use = DefaultUse;
     private static void DefaultUse(ComsumableItem item)
     {
-        Debug.Log($"Using Item: {item.itemName}");
+        Debug.LogWarning($"DefaultUsing Item: {item.itemName}");
         item.amount--;
-        GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
+        GameEvents.Instance.ItemsUpdated();
     }
 
     public new ComsumableItem DeepCopy()

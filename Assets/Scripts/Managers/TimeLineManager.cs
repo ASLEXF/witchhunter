@@ -150,7 +150,7 @@ public class TimeLineManager : MonoBehaviour
         if (File.Exists(configFilePath))
         {
             string json = File.ReadAllText(configFilePath);
-            var timelines = JsonConvert.DeserializeObject<Dictionary<string, List<BindingConfigEntry>>>(json);
+            var timelines = JsonConvert.DeserializeObject<Dictionary<string, List<TimelineBindingConfigEntry>>>(json);
 
             if (timelines == null)
             {
@@ -158,7 +158,7 @@ public class TimeLineManager : MonoBehaviour
                 return;
             }
 
-            if (timelines.TryGetValue(timeLineFileName, out List<BindingConfigEntry> configs))
+            if (timelines.TryGetValue(timeLineFileName, out List<TimelineBindingConfigEntry> configs))
             {
                 bindingTable.Clear();
                 foreach (var config in configs)
