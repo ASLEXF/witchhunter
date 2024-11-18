@@ -81,20 +81,20 @@ public class ItemManager : MonoBehaviour
         return null;
     }
 
-    public List<Item> GetItem()
-    {
-        List<Item> result = new List<Item>();
-        foreach (var item in Items)
-        {
-            result.Add(item.DeepCopy());
-        }
-        Items.Clear();
-        foreach (var obj in objs)
-        {
-            Destroy(obj);
-        }
-        objs.Clear();
+    //public List<Item> GetItem()
+    //{
+    //    List<Item> result = new List<Item>();
+    //    foreach (var item in Items)
+    //    {
+    //        result.Add(item.DeepCopy());
+    //    }
+    //    Items.Clear();
+    //    foreach (var obj in objs)
+    //    {
+    //        Destroy(obj);
+    //    }
+    //    objs.Clear();
 
-        return result;
-    }
+    //    return result;
+    //}
 }

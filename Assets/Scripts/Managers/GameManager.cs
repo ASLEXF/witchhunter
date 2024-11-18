@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     }
 
     public bool isInitiated = false;
-    public int stage = 1;
+    public int Stage = 1;
 
     private void Awake()
     {
@@ -36,15 +36,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (!DebugMode.IsDebugMode)
-        {
-            StartCoroutine(GameInitialize());
-        }
+        StartCoroutine(GameInitialize());
     }
 
     IEnumerator GameInitialize()
     {
-        PlayerController.Instance.HideThePlayer();
+        if (!DebugMode.IsDebugMode)
+            PlayerController.Instance.HideThePlayer();
         DialogBox.Instance.Hide();
 
         StartCoroutine(SceneLoader.Instance.GameSceneInitiate());
@@ -56,7 +54,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        //// 检测鼠标左键点击
         //if (Input.GetMouseButtonDown(0))
         //{
         //    Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -64,7 +61,6 @@ public class GameManager : MonoBehaviour
 
         //    if (hit.collider != null)
         //    {
-        //        // 输出被点击对象的名称到控制台
         //        Debug.Log("Clicked on: " + hit.transform.name);
         //    }
         //}

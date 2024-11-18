@@ -23,6 +23,11 @@ public class task1_1 : MonoBehaviour, ITask
     {
     }
 
+    public void SetActive(bool active)
+    {
+        isActivated = active;
+    }
+
     public bool CheckFinish()
     {
         Item item = PlayerInventory.Instance.FindItem(3);  // fang
@@ -43,10 +48,15 @@ public class task1_1 : MonoBehaviour, ITask
         return false;
     }
 
-    private void getReward()
+    private async void getReward()
     {
         // notification
-        PlayerInventory.Instance.AddItem(1, 2);
+        await PlayerInventory.Instance.AddItem(1, 2);
+    }
+
+    public int GetStage()
+    {
+        return stage;
     }
 
     public TaskStatus GetTaskStatus()

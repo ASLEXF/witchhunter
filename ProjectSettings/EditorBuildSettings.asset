@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Cliff.unity
     guid: cd2a3b2a1558a754d9053fc43346a52e
   - enabled: 1
+    path: Assets/Scenes/Village.unity
+    guid: db316bbe2cfc66347a501e32b916b665
+  - enabled: 1
     path: Assets/Scenes/Forest.unity
     guid: 2caace273a884d04c8169846f9ea2e79
   m_configObjects:

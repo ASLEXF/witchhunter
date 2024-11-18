@@ -90,7 +90,10 @@ public class ItemsUI : MonoBehaviour
             }
         }
         if (result)
+        {
             GameEvents.Instance.ItemsUpdated();
+        }
+            
         return result;
     }
 

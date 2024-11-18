@@ -104,12 +104,12 @@ public class NPCStatusEffect : MonoBehaviour
         return false;
     }
 
-    public void SetDead(float random = 0.8f)
+    public async void SetDead(float random = 0.8f)
     {
         if (Random.value < random)
         {
             lifeStatus = NPCLifeStatusEnum.DeadItem;
-            NPCInteract.GenerateItems(NPCInteract.raceName);
+            await NPCInteract.GenerateItems(NPCInteract.raceName);
         }
         else
         {

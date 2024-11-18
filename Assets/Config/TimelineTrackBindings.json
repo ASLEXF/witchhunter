@@ -23,7 +23,7 @@
         {
             "trackName": "Guide UI Signal",
             "sceneName": "Cliff",
-            "gameObjectPath": "UI"
+            "gameObjectPath": "UI_Cliff"
         },
         {
             "trackName": "Activation Track",
@@ -55,7 +55,7 @@
         {
             "trackName": "Guide UI Signal",
             "sceneName": "Cliff",
-            "gameObjectPath": "UI"
+            "gameObjectPath": "UI_Cliff"
         },
         {
             "trackName": "Activation Track",

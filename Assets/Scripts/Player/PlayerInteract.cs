@@ -13,7 +13,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] public List<Collider2D> NPCColliders = new List<Collider2D>();
     [SerializeField] private List<Collider2D> InteractiveColliders = new List<Collider2D>();
 
-    bool isInteracted = false;  // don't interact twice
+    bool isInteracted = false;  // avoid interacting twice
 
 
     private void Start()
@@ -23,7 +23,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (DebugMode.IsDebugMode && Input.GetKeyDown(KeyCode.E))
         {
             Interact();
         }
@@ -230,7 +230,7 @@ public class PlayerInteract : MonoBehaviour
         {
             DropItemColliders.Add(collision);
         }
-        else if (collision.CompareTag("NPC") && collision.transform.root.GetComponentInChildren<NPCInteract>().isInteractable)
+        else if ((collision.CompareTag("NPC") || collision.CompareTag("Enermy")) && collision.transform.root.GetComponentInChildren<NPCInteract>().isInteractable)
         {
             NPCColliders.Add(collision);
         }

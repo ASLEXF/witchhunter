@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -26,7 +27,7 @@ public class PlayerInventory : MonoBehaviour
         instance = this;
     }
 
-    public async void AddItem(int id, int count = 1)
+    public async Task AddItem(int id, int count = 1)
     {
         Item item = await ItemManager.Instance.GenerateItem(id, count);
         AddItem(item);

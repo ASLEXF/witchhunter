@@ -60,10 +60,13 @@ public class GameEvents : MonoBehaviour
     #region Dialog Box
 
     public event Action OnTextScriptUpdated;
+    public event Action OnDialogBoxStart;
     public event Action OnDialogBoxStarted;
     public event Action OnDialogBoxEnded;
 
     public void TextScriptUpdated() => OnTextScriptUpdated?.Invoke();
+
+    public void DialogBoxStart() => OnDialogBoxStart?.Invoke();
 
     public void DialogBoxStarted() => OnDialogBoxStarted?.Invoke();
 

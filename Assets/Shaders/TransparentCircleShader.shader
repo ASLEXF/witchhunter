@@ -5,6 +5,7 @@ Shader "Unlit/TransparentCircleShader"
         _MainTex ("Texture", 2D) = "white" {}
         _Center ("Center", Vector) = (0,0,0,0)
         _Radius ("Radius", Float) = 1
+        _Inner_Radius ("Inner Radius", Float) = 1
         _Transparency ("Transparency", Range(0, 1)) = 0.5
     }
     SubShader
@@ -17,7 +18,7 @@ Shader "Unlit/TransparentCircleShader"
         }
 
         Blend SrcAlpha OneMinusSrcAlpha
-        Cull Back
+        Cull Off
         ZWrite Off
 
         LOD 200
@@ -48,6 +49,7 @@ Shader "Unlit/TransparentCircleShader"
             half4 _MainTex_ST;
             float4 _Center;
             float _Radius;
+            float _Inner_Radius;
             float _Transparency;
 
             v2f vert (appdata_t v)
@@ -67,13 +69,14 @@ Shader "Unlit/TransparentCircleShader"
 
                 float distance = length(screenPos - centerPos);
 
-                if (distance < _Radius / 1.2)
+                if (distance < _Inner_Radius)
                 {
                     col.a = 0;
                 }
                 else if (distance < _Radius)
                 {
-                    col.a = lerp(_Transparency, 0, (6 * _Radius - 5 * distance) / _Radius);
+                    // col.a = 1;
+                    // col.a = lerp(0, _Transparency, (distance - _Inner_Radius) / (_Radius - _Inner_Radius));
                 }
 
                 return col;

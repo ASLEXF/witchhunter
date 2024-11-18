@@ -1,3 +1,5 @@
+# nullable enable
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +7,14 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks;
+
 
 public class NPCInteract : MonoBehaviour
 {
     NPCStatusEffect status;
     SpriteRenderer spriteRenderer;
-    GameObject Items;
-    NPCTasks tasks;
+    NPCTasks? tasks;
 
     public string raceName;
 
@@ -27,8 +30,12 @@ public class NPCInteract : MonoBehaviour
     {
         status = transform.parent.Find("Status").GetComponent<NPCStatusEffect>();
         spriteRenderer = transform.parent.GetChild(0).GetComponent<SpriteRenderer>();
-        Items = transform.parent.Find("Items").gameObject;
-        tasks = transform.parent.Find("Tasks").GetComponent<NPCTasks>();
+
+        Transform? tasksTransform = transform.parent.Find("Tasks");
+        if (tasksTransform is null)
+            tasks = null;
+        else
+            tasks = tasksTransform.GetComponent<NPCTasks>();
     }
 
     private void Start()
@@ -96,20 +103,26 @@ public class NPCInteract : MonoBehaviour
         Debug.Log("NPC Talk");
         int id = 0;
 
-        if (tasks != null)
+        if (tasks != null && tasks.hasTask)
         {
-            ITask task;
+            ITask? task;
             if ((task = tasks.GetTaskByStatus(TaskStatus.published)) != null)
             {
-                // TODO: for now, only 1 task exist for 1 NPC at the same time
+                // TODO: for now, only 1 task exist for each NPC at the same time
                 if (task.CheckFinish())
                     id = task.GetTalkFileId(TaskStatus.finish);
                 else
                     id = task.GetTalkFileId(TaskStatus.published);
             }
-            else if ((task = tasks.GetTaskByStatus(TaskStatus.finished)) != null)
+            else if (tasks.ActivateTasksByStage())
+            {}
+            else if((task = tasks.GetTaskByStatus(TaskStatus.finished)) != null)
             {
                 id = task.GetTalkFileId(TaskStatus.finished);
+            }
+            else
+            {
+                Debug.LogWarning($"Unrecognizable task '{task}'!");
             }
         }
 
@@ -126,7 +139,7 @@ public class NPCInteract : MonoBehaviour
             {
                 for (int i = 0; i < config.Count; i++)
                 {
-                    if (GameManager.Instance.stage <= config[i].stage && id == config[i].id)
+                    if (GameManager.Instance.Stage <= config[i].stage && id == config[i].id)
                     {
                         DialogBox.Instance.LoadAndStartText(config[i].fileName);
 
@@ -145,15 +158,26 @@ public class NPCInteract : MonoBehaviour
         }
     }
 
-    private void GetBodyItem()
+    private async void GetBodyItem()
     {
         Debug.Log("NPC GetNPCItem");
-        
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, spriteRenderer.color.a);
-        GenerateItems(raceName);
+
+        Item[]? items = await GenerateItems(raceName);
+
+        if (items != null)
+        {
+            foreach (Item item in items)
+            {
+                PlayerInventory.Instance.AddItem(item);
+            }
+        }
+
+        spriteRenderer.color = new Color(spriteRenderer.color.r / 2, spriteRenderer.color.g / 2, spriteRenderer.color.b / 2, spriteRenderer.color.a);
+
+        status.lifeStatus = NPCLifeStatusEnum.DeadEmpty;
     }
 
-    public void GenerateItems(string raceName)
+    public async Task<Item[]?> GenerateItems(string raceName)
     {
         if (File.Exists(itemConfigFilePath))
         {
@@ -162,14 +186,17 @@ public class NPCInteract : MonoBehaviour
             if (configs == null)
             {
                 Debug.LogError("Failed to deserialize JSON.");
-                return;
+                return null;
             }
             if (configs.TryGetValue(raceName, out List<NPCItemConfigEntry> config))
             {
+                List<Task<Item>> tasks = new List<Task<Item>>();
                 foreach (var configItem in config)
                 {
-                    GenerateItem(configItem.itemID, Items, Random.Range(configItem.min, configItem.max + 1));
+                    tasks.Add(ItemManager.Instance.GenerateItem(configItem.itemID, Random.Range(configItem.min, configItem.max + 1)));
                 }
+
+                return await Task.WhenAll(tasks);
             }
             else
             {
@@ -180,12 +207,8 @@ public class NPCInteract : MonoBehaviour
         {
             Debug.LogError($"Config file not found at {interactConfigFilePath}");
         }
-    }
 
-    void GenerateItem(int itemID, GameObject parentGameObj, int number)
-    {
-        GameObject gameObject = new GameObject();
-
+        return null;
     }
 
     private void PickUpBody()

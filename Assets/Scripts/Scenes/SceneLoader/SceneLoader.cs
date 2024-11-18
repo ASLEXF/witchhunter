@@ -44,8 +44,12 @@ public class SceneLoader : MonoBehaviour
 
     public IEnumerator GameSceneInitiate()
     {
-        StartCoroutine(UnloadCurrentScenes());
-        LoadScene("Main Menu");
+        if (!DebugMode.IsDebugMode)
+        {
+            StartCoroutine(UnloadCurrentScenes());
+            LoadScene("Main Menu");
+        }
+            
 
         yield return null;
 

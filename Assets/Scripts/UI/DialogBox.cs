@@ -51,7 +51,7 @@ public class DialogBox : MonoBehaviour
     {
         Hide();
 
-        GameEvents.Instance.OnTextScriptUpdated += StartTyping;
+        GameEvents.Instance.OnDialogBoxStart += StartTyping;
     }
 
     public void StartTyping()
@@ -196,10 +196,16 @@ public class DialogBox : MonoBehaviour
         }
     }
 
-    public void LoadAndStartText(string fileName)
+    public void LoadText(string fileName)
     {
         Clear();
         ScriptReader.Instance.LoadTextAsset(fileName);
+    }
+
+    public void LoadAndStartText(string fileName)
+    {
+        Clear();
+        ScriptReader.Instance.LoadAndStartTextAsset(fileName);
     }
 
     public void Clear()

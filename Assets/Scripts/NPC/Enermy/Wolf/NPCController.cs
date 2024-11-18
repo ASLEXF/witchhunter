@@ -67,6 +67,8 @@ public class NPCController : MonoBehaviour
 
     private void Update()
     {
+        if (statusEffect.Dead) return;
+
         updateTargetPosition();
 
         spriteRenderer.flipX = isFlip;
@@ -342,6 +344,8 @@ public class NPCController : MonoBehaviour
 
     public void SeePlayer()
     {
+        if (statusEffect.Dead) return;
+
         seePlayer = true;
         isTracking = false;
         isWandering = false;
@@ -349,17 +353,18 @@ public class NPCController : MonoBehaviour
 
     public void CantSeePlayer()
     {
+        if (statusEffect.Dead) return;
+
         seePlayer = false;
         isWandering = false;
         isTracking = true;
 
         StartCoroutine(track(targetPosition, stats.trackTime));
-
     }
 
     public void Alert(PolygonCollider2D PlayerCollider = null)
     {
-        // TODO: 对背后攻击、远程攻击的处理
+        // TODO: handle long range attack & attack from back (attack that can't be seen)
         //if (source != null && targetPosition == Vector2.zero)
         //{
         //    if (Vector2.Distance(transform.position, source.position) > 5.0f)
@@ -417,6 +422,12 @@ public class NPCController : MonoBehaviour
         {
             isFlip = false;
         }
+    }
+
+    public void Die()
+    {
+        agent.ResetPath();
+        agent.enabled = false;
     }
 
     private void OnDisable()

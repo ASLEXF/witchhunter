@@ -27,7 +27,7 @@ MonoBehaviour:
   - m_From: '**ANY CAMERA**'
     m_To: CM Transition
     m_Blend:
-      m_Style: 0
+      m_Style: 1
       m_Time: 2
       m_CustomCurve:
         serializedVersion: 2
@@ -35,10 +35,21 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: '**ANY CAMERA**'
+  - m_From: CM Intro1
     m_To: CM Follow
     m_Blend:
       m_Style: 1
+      m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: CM Transition
+    m_To: CM Follow
+    m_Blend:
+      m_Style: 0
       m_Time: 2
       m_CustomCurve:
         serializedVersion: 2

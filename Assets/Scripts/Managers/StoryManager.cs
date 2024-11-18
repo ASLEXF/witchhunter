@@ -1,11 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 
 public class StoryManager : MonoBehaviour
 {
@@ -49,6 +43,7 @@ public class StoryManager : MonoBehaviour
     private void Update()
     {
         // check story node condition, begin story mode
+        //if (DebugMode.IsDebugMode) return;
         if (GameManager.Instance.isInitiated && !SceneLoader.Instance.isLoading)
         {
             currentNodes = StoryTree.GetCurrentNodes();

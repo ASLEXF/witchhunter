@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR;
 
 public class NPCHealth : MonoBehaviour
 {
@@ -45,29 +46,34 @@ public class NPCHealth : MonoBehaviour
         triggers = transform.parent.GetChild(3).gameObject;
     }
 
-    private void Update()
+    private void Start()
     {
-        if (currentHealth <= 0)
-        {
+        if (currentHealth == 0)
             Die();
-        }
     }
 
     public void TakeDamage(int damage)
     {
-        if (!isInvincible)
+        if (isInvincible) return;
+
+        int resultHealth = currentHealth - damage;
+        if (resultHealth < 0)
+        {
+            Die();
+        }
+        else
         {
             currentHealth -= damage;
-            controller.Alert();
         }
+        
+        if(controller != null)
+            controller.Alert();
     }
 
     public void Die()
     {
         statusEffect.SetDead();
-        
-        controller.enabled = false;
-        _collider.enabled = false;
+        controller.Die();
 
         animator.SetBool("IsDead", true);
         NPCAttack.enabled = false;

@@ -94,7 +94,7 @@ public class StoryNode
             // dialogbox
             if (txtFile != null)
             {
-                DialogBox.Instance.LoadAndStartText(txtFile);
+                DialogBox.Instance.LoadText(txtFile);
             }
 
             // player controller

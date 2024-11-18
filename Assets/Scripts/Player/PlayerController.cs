@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 facePosition;
 
-    public Vector3 FormerPosition; // to create transition when teleport
+    public Vector3 FormerPosition; // create transition when teleport
 
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
@@ -68,8 +68,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Vector2 moveDirection = new Vector2(horizentalInput, verticalInput);
-        //rb.velocity = moveDirection * movementSpeed;
         if (canMove)
         {
             TurnThePlayer();

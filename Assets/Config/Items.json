@@ -4,8 +4,20 @@
         "prefab": "Assets/Prefabs/Items/coin1.prefab"
     },
     {
+        "id": 2,
+        "prefab": "Assets/Prefabs/Items/raw_meat.prefab"
+    },
+    {
         "id": 3,
         "prefab": "Assets/Prefabs/Items/fang.prefab"
+    },
+    {
+        "id": 8,
+        "prefab": "Assets/Prefabs/Items/rope.prefab"
+    },
+    {
+        "id": 9,
+        "prefab": "Assets/Prefabs/Items/potion.prefab"
     },
     {
         "id": 10,

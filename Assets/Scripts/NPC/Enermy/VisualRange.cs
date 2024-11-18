@@ -80,6 +80,7 @@ public class VisualRange : MonoBehaviour
 
     private Vector2 getCollidedPoint(float angle)
     {
+        // NPC 2D vision
         Vector2 direction;
         if (angle == 90.0f)
         {
@@ -96,12 +97,6 @@ public class VisualRange : MonoBehaviour
 
         Vector2 point = new Vector2();
 
-        //ContactFilter2D filter = new ContactFilter2D();
-        //filter.layerMask = LayerMask.GetMask("Player");
-        //filter.useTriggers = false;
-        //filter.useLayerMask = false;
-        //filter.useDepth = false;
-        //filter.useNormalAngle = false;
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction, distance, LayerMask.GetMask("Default"));
 
         foreach (RaycastHit2D hit in hits)

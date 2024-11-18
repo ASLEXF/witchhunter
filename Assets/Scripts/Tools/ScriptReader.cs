@@ -116,6 +116,12 @@ public class ScriptReader : MonoBehaviour
         Addressables.LoadAssetAsync<TextAsset>(file).Completed += handle => OnTextAssetLoaded(handle, fileName);
     }
 
+    public void LoadAndStartTextAsset(string fileName)
+    {
+        string file = "Assets/Addressables/StoryScripts/" + fileName + ".txt";
+        Addressables.LoadAssetAsync<TextAsset>(file).Completed += handle => OnTextAssetLoadedThenStart(handle, fileName);
+    }
+
     void OnTextAssetLoaded(AsyncOperationHandle<TextAsset> handle, string fileName)
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
@@ -123,6 +129,21 @@ public class ScriptReader : MonoBehaviour
             textAsset = handle.Result;
             ReadScript(textAsset);
             GameEvents.Instance.TextScriptUpdated();
+        }
+        else
+        {
+            Debug.LogError("Addressables TextAsset not found: " + fileName);
+        }
+    }
+
+    void OnTextAssetLoadedThenStart(AsyncOperationHandle<TextAsset> handle, string fileName)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            textAsset = handle.Result;
+            ReadScript(textAsset);
+            GameEvents.Instance.TextScriptUpdated();
+            GameEvents.Instance.DialogBoxStart();
         }
         else
         {

@@ -1,17 +1,17 @@
 {
     "Wolf":[
         {
-            "itemID": 1,
+            "itemID": 2,
             "min": 0,
-            "max": 2
+            "max": 1
         },
         {
-            "itemID": 2,
+            "itemID": 3,
             "min": 0,
             "max": 2
         }
     ],
-    "Failure": [
+    "FailureCreature": [
         {
             "itemID": 3,
             "min": 0,
@@ -23,14 +23,14 @@
             "max": 1
         }
     ],
-    "Hollow": [
+    "HollowArmor": [
         {
             "itemID": 4,
             "min": 0,
             "max": 2
         }
     ],
-    "Success":
+    "SuccessCreature":
     [
         {
             "itemID": 1,
