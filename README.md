@@ -1,5 +1,3 @@
-# My First 2D Game
-It has not been finished yet!
-completion: 5%
+single player, RPG, 2D, pixel, isometric
 
-RPG, 2D, pixel, isometric
+completion: 5%
