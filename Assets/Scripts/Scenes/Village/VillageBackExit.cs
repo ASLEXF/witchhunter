@@ -15,6 +15,6 @@ public class VillageBackExit : Interactive
     public override void Interacted()
     {
         base.Interacted();
-        SceneLoader.Instance.LoadScene("ForestB1");
+        SceneLoader.Instance.LoadSceneAdditive("ForestB1");
     }
 }

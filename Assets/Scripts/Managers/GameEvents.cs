@@ -7,6 +7,14 @@ public class GameEvents : Singleton<GameEvents>
 {
     //[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 
+    #region UI Interaction
+
+    public event Action<int> OnButtonHover;
+
+    public void ButtonHover(int button) => OnButtonHover?.Invoke(button);
+
+    #endregion
+
     #region Game Mode
 
     public event Action OnMenuOpened;

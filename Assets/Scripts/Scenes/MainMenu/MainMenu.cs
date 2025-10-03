@@ -2,23 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour, IPointerEnterHandler
+public class MainMenu : MonoBehaviour
 {
-    public Button newGameButton;
-    public Button continueButton;
-    public Button settingsButton;
-    public Button exitButton;
-    private Button[] buttons;
     [SerializeField] private int currentButtonIndex = -1;  // start with -1 to disable this function until get key down
-
+    private ButtonScript[] buttons;
     private bool hasSaveFile = false;
 
     private void Awake()
     {
-        buttons = GetComponentsInChildren<Button>();
+        buttons = GetComponentsInChildren<ButtonScript>();
     }
 
     private void Start()
@@ -26,8 +22,10 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
         hasSaveFile = readSaveFiles().Length > 0;
         if (!hasSaveFile)
         {
-            continueButton.interactable = false;
+            buttons[1].Interactable = false;
         }
+
+        GameEvents.Instance.OnButtonHover += Instance_OnButtonHover;
     }
 
     private void Update()
@@ -61,10 +59,7 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (currentButtonIndex >= 0 && buttons[currentButtonIndex] != null && buttons[currentButtonIndex].IsActive())
-            {
-                buttons[currentButtonIndex].onClick.Invoke();
-            }
+            buttons[currentButtonIndex].Invoke();
         }
     }
 
@@ -75,70 +70,69 @@ public class MainMenu : MonoBehaviour, IPointerEnterHandler
         return "";
     }
 
-    #region LoadScene
-
-    //private IEnumerator StartNewGame()
-    //{
-    //    AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync("Main Menu");
-    //    yield return unloadOperation;
-
-    //    AsyncOperation loadOperation = SceneManager.LoadSceneAsync("Cliff", LoadSceneMode.Additive);
-    //    yield return loadOperation;
-
-    //}
+    #region Button selection
 
     private void findNextInteractableButton(int direction)
     {
-        for (currentButtonIndex += direction;; currentButtonIndex += direction)
+        for (currentButtonIndex += direction; ; currentButtonIndex += direction)
         {
             currentButtonIndex = currentButtonIndex < 0 ? buttons.Length + currentButtonIndex : currentButtonIndex;
             currentButtonIndex = currentButtonIndex > buttons.Length - 1 ? currentButtonIndex - buttons.Length : currentButtonIndex;
-            if (buttons[currentButtonIndex].interactable)
+            if (buttons[currentButtonIndex].Interactable)
                 return;
         }
     }
 
     private void selectButton(int index)
     {
-        //foreach (Button button in buttons)
+        buttons[index].Select();
+
+        //for (int i = 0; i < buttons.Length; i++)
         //{
-        //    button.interactable = true;
-        //    if (!hasSaveFile)
+        //    if (i == index)
         //    {
-        //        continueButton.interactable = false;
+        //        buttons[index].Play();
+        //    }
+        //    else
+        //    {
+        //        buttons[index].Stop();
         //    }
         //}
-
-        buttons[index].Select();
-        //buttons[index].interactable = false;
     }
 
-
-    private void startNewGame()
+    private void Instance_OnButtonHover(int index)
     {
-        //SceneManager.UnloadSceneAsync("Main Menu");
-        //StartCoroutine(SceneLoader.Instance.LoadSceneSlowFadeIn("Cliff"));
-        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        //SceneManager.LoadScene("Cliff", LoadSceneMode.Additive);
-        SceneLoader.Instance.LoadSceneSlowFadeIn("Cliff");
-    }
-
-    private void loadSettingsScene()
-    {
-        //SceneManager.UnloadSceneAsync("Main Menu");
-        //SceneManager.LoadScene("Settings", LoadSceneMode.Additive);
-        //StartCoroutine(sceneLoader.LoadScene("Settings"));
-        SceneLoader.Instance.LoadScene("Settings");
+        currentButtonIndex = index;
+        selectButton(index);
     }
 
     #endregion
 
-    private void quitGame()
+    #region LoadScene
+
+    public void StartNewGame()
+    {
+        SceneLoader.Instance.LoadSceneSlowFadeIn("Cliff");
+    }
+
+    public void LoadSettingsScene()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+
+    #endregion
+
+    public void QuitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnButtonHover -= Instance_OnButtonHover;
     }
 }

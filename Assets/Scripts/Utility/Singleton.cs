@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -29,7 +27,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                         {
                             GameObject singletonObj = new GameObject(typeof(T).Name);
                             _instance = singletonObj.AddComponent<T>();
-                            DontDestroyOnLoad(singletonObj);
+                            //DontDestroyOnLoad(singletonObj);
                         }
                     }
                 }
@@ -44,7 +42,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         if ( _instance == null )
         {
             _instance = this as T;
-            //DontDestroyOnLoad(_instance);
         }
         else if (_instance != this)
         {

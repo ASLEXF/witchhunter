@@ -24,6 +24,7 @@ public class Settings : MonoBehaviour
     }
 
     #region Menu
+
     public void OnGrapgicSettings()
     {
         GrapgicSettings.SetActive(true);
@@ -44,9 +45,16 @@ public class Settings : MonoBehaviour
         InputSettings.SetActive(false);
         AudioSettings.SetActive(true);
     }
+
+    public void LoadMainMenuScene()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
     #endregion
 
     #region Graphic
+
     public void OnResolutionChanged()
     {
         // ResolutionDropdown.value
@@ -82,10 +90,4 @@ public class Settings : MonoBehaviour
 
     }
     #endregion
-
-    public void LoadMainMenuScene()
-    {
-        SceneManager.UnloadSceneAsync("Settings");
-        SceneManager.LoadScene("Main Menu", LoadSceneMode.Additive);
-    }
 }

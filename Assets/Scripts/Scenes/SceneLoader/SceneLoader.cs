@@ -24,7 +24,7 @@ public class SceneLoader : Singleton<SceneLoader>
     public List<string> BattleScenes = new List<string>() { "Cliff", "Forest" };
     public List<string> ExplorationScenes = new List<string>() { "Village", "Room", "Basement" };
 
-    public Animator fadeAnimator;
+    [SerializeField] private Animator fadeAnimator;
 
     public List<string> CurrentScenes = new List<string>();  // FIXME
     public bool isLoading = true;
@@ -47,7 +47,7 @@ public class SceneLoader : Singleton<SceneLoader>
         if (!DebugMode.IsDebugMode)
         {
             StartCoroutine(UnloadCurrentScenes());
-            LoadScene("Main Menu");
+            LoadSceneAdditive("Main Menu");
         }
             
 
@@ -77,7 +77,7 @@ public class SceneLoader : Singleton<SceneLoader>
         yield break;
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadSceneAdditive(string sceneName)
     {
         if (CurrentScenes.Contains(sceneName)) { return; }
         else if (CurrentScenes.Count > 1)

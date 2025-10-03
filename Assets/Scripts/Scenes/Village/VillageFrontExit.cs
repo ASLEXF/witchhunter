@@ -10,7 +10,7 @@ public class VillageFrontExit : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            SceneLoader.Instance.LoadScene("ForestRoad");
+            SceneLoader.Instance.LoadSceneAdditive("ForestRoad");
         }
     }
 }
