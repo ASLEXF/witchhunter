@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "fc6a18c98b22c4630dde5354692106bc90b01dc7"
+      "hash": "3291e121ab0279943a92be1ca9b5082ef49f0767"
     },
     "com.unity.2d.animation": {
       "version": "9.1.1",
@@ -281,9 +281,9 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.director": "1.0.0",
         "com.unity.modules.animation": "1.0.0",
+        "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
       },
       "url": "https://packages.unity.com"

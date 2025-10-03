@@ -8,23 +8,11 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-public class PlayerInventory : MonoBehaviour
+public class PlayerInventory : Singleton<PlayerInventory>
 {
-    // use singleton here for single player game
-    private static PlayerInventory instance;
-    public static PlayerInventory Instance
-    {
-        get { return instance; }
-    }
-
     public bool IsFull
     {
         get { return Backpack.Instance.IsFull && ItemsUI.Instance.IsFull; }
-    }
-
-    private void Awake()
-    {
-        instance = this;
     }
 
     public async Task AddItem(int id, int count = 1)

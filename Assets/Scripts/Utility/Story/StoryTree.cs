@@ -52,30 +52,6 @@ public class StoryTree
 
     public void RemoveNode(StoryNode node)
     {
-        //if(id <= 0 || id >= _nodes.Count)
-        //{
-        //    Debug.Log("invalid id for RemoveNode func!");
-        //    return;
-        //}
-
-        //if (root.next != null)
-        //{
-        //    StoryNode previousNode = null;
-        //    foreach (StoryNode node in _nodes)
-        //    {
-        //        if(node.id.Equals(id))
-        //        {
-        //            if(node.next != null && previousNode != null)
-        //            {
-        //                previousNode.next = node.next;
-        //            }
-        //        }
-        //        previousNode = node;
-        //    }
-        //}
-
-        //_nodes.RemoveAll(obj => obj.id == id);
-
         if (root.next != null)
         {
             StoryNode previousNode = null;

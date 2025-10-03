@@ -57,6 +57,7 @@ public class StoryNode
             }
             else if (dict.Key == "CloseToNPC")
             {
+                // replaced with triggers
                 //if (NPCChecker.Instance.GetInteractableNPC().Contains(dict.Value))
                 //    return true;
             }

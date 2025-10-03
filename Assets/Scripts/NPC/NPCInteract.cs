@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 public class NPCInteract : MonoBehaviour
 {
-    NPCStatusEffect status;
-    SpriteRenderer spriteRenderer;
+    NPCStatusEffect status = null!;
+    SpriteRenderer spriteRenderer = null!;
     NPCTasks? tasks;
 
-    public string raceName;
+    public string raceName = null!;
 
     [SerializeField] bool[] isInteractableStatus = new bool[3];
     public bool isInteractable;

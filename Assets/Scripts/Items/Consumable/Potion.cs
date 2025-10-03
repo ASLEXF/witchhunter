@@ -12,5 +12,7 @@ public class Potion : MonoBehaviour, IItem
         item.Use = item => { PlayerHealth.Instance.AddMaxHealth(1); };
     }
 
+    public void Use() => PlayerHealth.Instance.Heal(1);
+
     public Item GetItem() => item;
 }

@@ -5,14 +5,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : MonoBehaviour, IPointerEnterHandler
 {
     public Button newGameButton;
     public Button continueButton;
     public Button settingsButton;
     public Button exitButton;
     private Button[] buttons;
-    private int currentButtonIndex = -1;
+    [SerializeField] private int currentButtonIndex = -1;  // start with -1 to disable this function until get key down
 
     private bool hasSaveFile = false;
 
@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        hasSaveFile = ReadSaveFiles().Length > 0;
+        hasSaveFile = readSaveFiles().Length > 0;
         if (!hasSaveFile)
         {
             continueButton.interactable = false;
@@ -37,12 +37,12 @@ public class MainMenu : MonoBehaviour
             if (currentButtonIndex == -1)
             {
                 currentButtonIndex = 0;
-                SelectButton(currentButtonIndex);
+                selectButton(currentButtonIndex);
             }
             else
             {
-                currentButtonIndex = (currentButtonIndex - 1 + buttons.Length) % buttons.Length;
-                SelectButton(currentButtonIndex);
+                findNextInteractableButton(-1);
+                selectButton(currentButtonIndex);
             }
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -50,12 +50,12 @@ public class MainMenu : MonoBehaviour
             if (currentButtonIndex == -1)
             {
                 currentButtonIndex = 0;
-                SelectButton(currentButtonIndex);
+                selectButton(currentButtonIndex);
             }
             else
             {
-                currentButtonIndex = (currentButtonIndex + 1) % buttons.Length;
-                SelectButton(currentButtonIndex);
+                findNextInteractableButton(1);
+                selectButton(currentButtonIndex);
             }
         }
 
@@ -68,9 +68,10 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public string ReadSaveFiles()
+    private string readSaveFiles()
     {
         // TODO: 查找存档文件
+        // 当存在存档文件时，提供存档选择/覆盖存档时警告玩家
         return "";
     }
 
@@ -86,24 +87,34 @@ public class MainMenu : MonoBehaviour
 
     //}
 
-
-    void SelectButton(int index)
+    private void findNextInteractableButton(int direction)
     {
-        foreach (Button button in buttons)
+        for (currentButtonIndex += direction;; currentButtonIndex += direction)
         {
-            button.interactable = true;
-            if (!hasSaveFile)
-            {
-                continueButton.interactable = false;
-            }
+            currentButtonIndex = currentButtonIndex < 0 ? buttons.Length + currentButtonIndex : currentButtonIndex;
+            currentButtonIndex = currentButtonIndex > buttons.Length - 1 ? currentButtonIndex - buttons.Length : currentButtonIndex;
+            if (buttons[currentButtonIndex].interactable)
+                return;
         }
+    }
+
+    private void selectButton(int index)
+    {
+        //foreach (Button button in buttons)
+        //{
+        //    button.interactable = true;
+        //    if (!hasSaveFile)
+        //    {
+        //        continueButton.interactable = false;
+        //    }
+        //}
 
         buttons[index].Select();
-        buttons[index].interactable = false;
+        //buttons[index].interactable = false;
     }
 
 
-    private void StartNewGame()
+    private void startNewGame()
     {
         //SceneManager.UnloadSceneAsync("Main Menu");
         //StartCoroutine(SceneLoader.Instance.LoadSceneSlowFadeIn("Cliff"));
@@ -112,7 +123,7 @@ public class MainMenu : MonoBehaviour
         SceneLoader.Instance.LoadSceneSlowFadeIn("Cliff");
     }
 
-    private void LoadSettingsScene()
+    private void loadSettingsScene()
     {
         //SceneManager.UnloadSceneAsync("Main Menu");
         //SceneManager.LoadScene("Settings", LoadSceneMode.Additive);
@@ -122,5 +133,12 @@ public class MainMenu : MonoBehaviour
 
     #endregion
 
-    public void QuitGame() => Application.Quit();
+    private void quitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

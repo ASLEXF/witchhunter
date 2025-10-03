@@ -29,19 +29,19 @@ MonoBehaviour:
   normal_moveClose: 0.9
   normal_moveAway: 0
   normal_attack: 0
-  normal_wait: 0.1
+  normal_wait: 0.100000024
   moveRange_moveClose: 0.4
   moveRange_moveAway: 0.1
   moveRange_attack: 0.3
-  moveRange_wait: 0.2
+  moveRange_wait: 0.19999999
   longRange_moveClose: 0.4
   longRange_moveAway: 0.2
   longRange_attack: 0.3
-  longRange_wait: 0.1
+  longRange_wait: 0.09999998
   closeRange_moveClose: 0.1
   closeRange_moveAway: 0.1
   closeRange_attack: 0.8
-  closeRange_wait: 0
+  closeRange_wait: -0.000000014901161
   closestRange_moveClose: 0
   closestRange_moveAway: 0.3
   closestRange_attack: 0.7
