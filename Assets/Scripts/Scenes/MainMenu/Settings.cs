@@ -23,9 +23,14 @@ public class Settings : MonoBehaviour
         ResolutionDropdown = Resolution.GetComponent<Dropdown>();
     }
 
+    private void Start()
+    {
+        OnGraphicSettings();
+    }
+
     #region Menu
 
-    public void OnGrapgicSettings()
+    public void OnGraphicSettings()
     {
         GrapgicSettings.SetActive(true);
         InputSettings.SetActive(false);
@@ -35,15 +40,15 @@ public class Settings : MonoBehaviour
     public void OnAudioSettings()
     {
         GrapgicSettings.SetActive(false);
-        InputSettings.SetActive(true);
-        AudioSettings.SetActive(false);
+        InputSettings.SetActive(false);
+        AudioSettings.SetActive(true);
     }
 
     public void OnInputSettings()
     {
         GrapgicSettings.SetActive(false);
-        InputSettings.SetActive(false);
-        AudioSettings.SetActive(true);
+        InputSettings.SetActive(true);
+        AudioSettings.SetActive(false);
     }
 
     public void LoadMainMenuScene()
@@ -78,16 +83,20 @@ public class Settings : MonoBehaviour
     #endregion
 
     #region Input
+
     public void OnInputChanged()
     {
 
     }
+
     #endregion
 
     #region Audio
+
     public void OnAudioChanged()
     {
 
     }
+
     #endregion
 }

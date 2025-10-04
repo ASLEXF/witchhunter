@@ -83,22 +83,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    private void selectButton(int index)
-    {
-        buttons[index].Select();
-
-        //for (int i = 0; i < buttons.Length; i++)
-        //{
-        //    if (i == index)
-        //    {
-        //        buttons[index].Play();
-        //    }
-        //    else
-        //    {
-        //        buttons[index].Stop();
-        //    }
-        //}
-    }
+    private void selectButton(int index) => buttons[index].Select();
 
     private void Instance_OnButtonHover(int index)
     {
