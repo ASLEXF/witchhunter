@@ -5,23 +5,8 @@ using System.Collections;
 using UnityEngine.Timeline;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
-    private static PlayerController _instance;
-
-    public static PlayerController Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogWarning("Player Controller null");
-                GameObject singletonObject = new GameObject("PlayerController");
-                _instance = singletonObject.AddComponent<PlayerController>();
-            }
-            return _instance;
-        }
-    }
 
     Vector2 facePosition;
 
@@ -33,17 +18,9 @@ public class PlayerController : MonoBehaviour
     PlayerAttack _attack;
     PlayerInteract _interact;
 
-    void Awake()
+    protected override void Awake()
     {
-        //if (_instance != null && _instance != this)
-        //{
-        //    Destroy(gameObject);
-        //}
-        //else
-        //{
-        //    _instance = this;
-        //}
-        _instance = this;
+        base.Awake();
 
         _rb = GetComponent<Rigidbody2D>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -62,8 +39,6 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
         _animator.SetBool(Animator.StringToHash("IsMoving"), Mathf.Abs(horizontalInput) > 0f || Mathf.Abs(verticalInput) > 0f);
-
-
     }
 
     private void FixedUpdate()
@@ -331,9 +306,4 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-
-    private void OnDestroy()
-    {
-        
-    }
 }

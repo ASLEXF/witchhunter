@@ -24,8 +24,6 @@ public class MainMenu : MonoBehaviour
         {
             buttons[1].Interactable = false;
         }
-
-        GameEvents.Instance.OnButtonHover += Instance_OnButtonHover;
     }
 
     private void Update()
@@ -60,6 +58,19 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             buttons[currentButtonIndex].Invoke();
+        }
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.Instance.OnButtonHover += Instance_OnButtonHover;
+    }
+
+    private void OnDisable()
+    {
+        if (GameEvents.HasInstance)
+        {
+            GameEvents.Instance.OnButtonHover -= Instance_OnButtonHover;
         }
     }
 
@@ -114,10 +125,5 @@ public class MainMenu : MonoBehaviour
 #else
         Application.Quit();
 #endif
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.Instance.OnButtonHover -= Instance_OnButtonHover;
     }
 }

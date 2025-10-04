@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 /// <summary>
@@ -10,6 +11,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
     private static readonly object _lock = new object();
+    public static bool HasInstance => _instance != null;
 
     public static T Instance
     {
@@ -25,6 +27,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                     {
                         if ( _instance == null )
                         {
+                            Debug.Log("make new game object " + typeof(T).Name);
                             GameObject singletonObj = new GameObject(typeof(T).Name);
                             _instance = singletonObj.AddComponent<T>();
                             //DontDestroyOnLoad(singletonObj);
