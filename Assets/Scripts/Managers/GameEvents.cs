@@ -15,6 +15,14 @@ public class GameEvents : Singleton<GameEvents>
 
     #endregion
 
+    #region Game Graphic Settings
+
+    public event Action OnApplyGraphicSettings;
+
+    public void ApplyGraphicSettings() => OnApplyGraphicSettings?.Invoke();
+
+    #endregion
+
     #region Game Mode
 
     public event Action OnMenuOpened;
