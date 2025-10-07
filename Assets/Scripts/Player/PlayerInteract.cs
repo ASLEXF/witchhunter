@@ -8,6 +8,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] UIInteract DropItemUI, NPCTalkUI, NPCCollectUI, NPCPickUpUI, InteractiveUI;
 
     Collider2D currentCollider;
+    SpriteRenderer renderer;
     InteractTypeEnum type;
     [SerializeField] private List<Collider2D> DropItemColliders = new List<Collider2D>();
     [SerializeField] public List<Collider2D> NPCColliders = new List<Collider2D>();
@@ -15,10 +16,16 @@ public class PlayerInteract : MonoBehaviour
 
     bool isInteracted = false;  // avoid interacting twice
 
+    private void Awake()
+    {
+        renderer = GetComponent<SpriteRenderer>();
+    }
 
     private void Start()
     {
-        GameEvents.Instance.OnInteractableUpdated += updateColliders;
+#if !Unity_Editor
+        renderer.enabled = false;
+#endif
     }
 
     private void Update()
@@ -26,6 +33,19 @@ public class PlayerInteract : MonoBehaviour
         if (DebugMode.IsDebugMode && Input.GetKeyDown(KeyCode.E))
         {
             Interact();
+        }
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.Instance.OnInteractableUpdated += updateColliders;
+    }
+
+    private void OnDisable()
+    {
+        if (GameEvents.HasInstance)
+        {
+            GameEvents.Instance.OnInteractableUpdated -= updateColliders;
         }
     }
 
@@ -262,10 +282,5 @@ public class PlayerInteract : MonoBehaviour
         DialogBox.Instance.ClearAndHide();  // NOTE: remove dialogbox when leaving npc
 
         GameEvents.Instance.InteractableUpdated();
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.Instance.OnInteractableUpdated -= updateColliders;
     }
 }

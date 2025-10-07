@@ -27,6 +27,7 @@ public class GraphicManager : Singleton<GraphicManager>
         refreshRate = Screen.currentResolution.refreshRateRatio;
     }
 
+    [System.Obsolete]
     private Resolution FindClosestResolution(Resolution current, Resolution[] supported)
     {
         Resolution bestMatch = supported[0];

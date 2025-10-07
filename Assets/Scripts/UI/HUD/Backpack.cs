@@ -3,15 +3,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Backpack : MonoBehaviour, IDropHandler
+public class Backpack : Singleton<Backpack>, IDropHandler
 {
-    private static Backpack instance;
-
-    public static Backpack Instance
-    {
-        get { return instance; }
-    }
-
     public int ItemNumber
     {
         get
@@ -37,11 +30,6 @@ public class Backpack : MonoBehaviour, IDropHandler
     [SerializeField] ItemUI[] itemUIs;
     [SerializeField] int maxNumber = 4;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     private void Start()
     {
         initializeItems();
@@ -54,8 +42,17 @@ public class Backpack : MonoBehaviour, IDropHandler
         {
             HideItemsUI();
         }
+    }
 
+    private void OnEnable()
+    {
         GameEvents.Instance.OnItemsUpdated += updateItemsUI;
+    }
+
+    private void OnDestroy()
+    {
+        if (GameEvents.HasInstance)
+        { GameEvents.Instance.OnItemsUpdated -= updateItemsUI; }
     }
 
     private void initializeItems()
@@ -131,10 +128,5 @@ public class Backpack : MonoBehaviour, IDropHandler
                 }
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.Instance.OnItemsUpdated -= updateItemsUI;
     }
 }

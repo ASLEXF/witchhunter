@@ -2,37 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    private static GameManager _instance;
-
-    public static GameManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogWarning("game manager not found!");
-            }
-            return _instance;
-        }
-    }
-
     public bool isInitiated = false;
     public int Stage = 1;
-
-    private void Awake()
-    {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        else if (_instance != this)
-        {
-            Debug.LogWarning("game manager destroyed");
-            Destroy(gameObject);
-        }
-    }
 
     void Start()
     {

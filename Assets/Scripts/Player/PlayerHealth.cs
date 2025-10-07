@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : Singleton<PlayerHealth>
 {
-    private static PlayerHealth instance;
-
-    public static PlayerHealth Instance
-        { get { return instance; } }
-
     PlayerSpawn playerSpawn;
     Animator animator;
 
@@ -28,10 +23,9 @@ public class PlayerHealth : MonoBehaviour
         get { return currentHealth; }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
-        instance = this;
-
+        base.Awake();
         playerSpawn = GetComponent<PlayerSpawn>();
         animator = transform.parent.GetChild(0).GetComponent<Animator>();
     }

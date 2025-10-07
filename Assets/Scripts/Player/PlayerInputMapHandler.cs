@@ -17,7 +17,6 @@ public class PlayerInputMapHandler : MonoBehaviour
 
     private void Start()
     {
-        ListenInputEvents();
         SetDefaultInputMap();
     }
 
@@ -26,7 +25,7 @@ public class PlayerInputMapHandler : MonoBehaviour
         currentMapName = playerInput.currentActionMap.name;
     }
 
-    void ListenInputEvents()
+    private void OnEnable()
     {
         GameEvents.Instance.OnMenuOpened += InputActionsToMenu;
         //GameEvents.Instance.OnMenuClosed += CheckCurrentScene;
@@ -35,6 +34,20 @@ public class PlayerInputMapHandler : MonoBehaviour
         GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
         GameEvents.Instance.OnBattleModeStarted += InputActionsToBattle;
     }
+
+    private void OnDisable()
+    {
+        if (GameEvents.HasInstance)
+        {
+            GameEvents.Instance.OnMenuOpened -= InputActionsToMenu;
+            //GameEvents.Instance.OnMenuClosed -= CheckCurrentScene;
+            GameEvents.Instance.OnStoryModeStarted -= InputActionsToStory;
+            //GameEvents.Instance.OnStoryModeEnded -= CheckCurrentScene;
+            GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
+            GameEvents.Instance.OnBattleModeStarted -= InputActionsToBattle;
+        }
+    }
+
     void SetDefaultInputMap()
     {
         playerInput.SwitchCurrentActionMap("Menu");
@@ -84,15 +97,5 @@ public class PlayerInputMapHandler : MonoBehaviour
     {
         playerInput.SwitchCurrentActionMap("Battle");
         Debug.Log("player input: battle");
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.Instance.OnMenuOpened -= InputActionsToMenu;
-        //GameEvents.Instance.OnMenuClosed -= CheckCurrentScene;
-        GameEvents.Instance.OnStoryModeStarted -= InputActionsToStory;
-        //GameEvents.Instance.OnStoryModeEnded -= CheckCurrentScene;
-        GameEvents.Instance.OnExplorationModeStarted += InputActionsToExploration;
-        GameEvents.Instance.OnBattleModeStarted -= InputActionsToBattle;
     }
 }

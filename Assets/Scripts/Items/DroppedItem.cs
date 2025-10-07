@@ -8,7 +8,7 @@ public class DroppedItem : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
     BoxCollider2D boxCollider;
-    [SerializeField] bool isDropped = true;
+    [SerializeField] bool interactable = true;
     [SerializeField] public Vector3 UIOffset = new Vector3(0f, 0.5f, 0f);
 
     private void Awake()
@@ -20,12 +20,12 @@ public class DroppedItem : MonoBehaviour
     private void Start()
     {
         gameObject.tag = "DropItem";
-        isDropped = true;
+        interactable = true;
     }
 
     public void Interacted()
     {
-        if (isDropped)
+        if (interactable)
         {
             if (!PlayerInventory.Instance.IsFull || !ItemsUI.Instance.IsFull)
             {

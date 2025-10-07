@@ -1,39 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoryManager : MonoBehaviour
+public class StoryManager : Singleton<StoryManager>
 {
-    private static StoryManager _instance;
-
-    public static StoryManager Instance
-    {
-        get
-        {
-            if(_instance == null)
-            {
-                Debug.LogWarning("StoryManager null");
-            }
-            return _instance;
-        }
-    }
-
     public StoryTree StoryTree;
 
     public bool isPlaying = false;
 
     [SerializeField] private List<StoryNode> currentNodes;
-
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
 
     void Start()
     {

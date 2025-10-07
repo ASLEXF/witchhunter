@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHand : MonoBehaviour
+public class PlayerHand : Singleton<PlayerHand>
 {
-    private static PlayerHand instance;
-
-    public static PlayerHand Instance
-    { get { return instance; } }
-
     [SerializeField] private WeaponItem weaponL;
 
     public WeaponItem WeaponL
@@ -31,11 +26,6 @@ public class PlayerHand : MonoBehaviour
     public bool IsREmpty
     {
         get { return weaponR == null; }
-    }
-
-    private void Awake()
-    {
-        instance = this;
     }
 
     public void EquipL(WeaponItem item)

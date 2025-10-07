@@ -5,24 +5,8 @@ using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
 
-public class DialogBox : MonoBehaviour
+public class DialogBox : Singleton<DialogBox>
 {
-    private static DialogBox _instance;
-
-    public static DialogBox Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<DialogBox>();
-                if (_instance == null)
-                    Debug.LogWarning("DialogBox null!");
-            }
-            return _instance;
-        }
-    }
-
     Image _image;
     TMP_Text _title, _content;
     PlayerInput _playerInput;
@@ -36,10 +20,9 @@ public class DialogBox : MonoBehaviour
     private bool isTyping = false;
     private bool isSkipping = false;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (_instance == null)
-            _instance = this;
+        base.Awake();
 
         _playerInput = GetComponent<PlayerInput>();
         _image = GetComponent<Image>();
@@ -50,8 +33,17 @@ public class DialogBox : MonoBehaviour
     private void Start()
     {
         Hide();
+    }
 
+    private void OnEnable()
+    {
         GameEvents.Instance.OnDialogBoxStart += StartTyping;
+    }
+
+    private void OnDisable()
+    {
+        if (GameEvents.HasInstance)
+        { GameEvents.Instance.OnDialogBoxStart -= StartTyping; }
     }
 
     public void StartTyping()

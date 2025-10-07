@@ -3,44 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneTriggerManager : MonoBehaviour
+public class SceneTriggerManager : Singleton<SceneTriggerManager>
 {
-    private static SceneTriggerManager _instance;
-
-    public static SceneTriggerManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject singletonObject = new GameObject("SceneTriggerManager");
-                _instance = singletonObject.AddComponent<SceneTriggerManager>();
-            }
-            return _instance;
-        }
-    }
-
-    private void Awake()
-    {
-        if(_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
-
-    private void Start()
+    private void OnEnable()
     {
         GameEvents.Instance.OnStoryModeEnded += checkCurrentScene;
         GameEvents.Instance.OnMenuClosed += checkCurrentScene;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        
+        if (GameEvents.HasInstance)
+        {
+            GameEvents.Instance.OnStoryModeEnded -= checkCurrentScene;
+            GameEvents.Instance.OnMenuClosed -= checkCurrentScene;
+        }
     }
 
     void checkCurrentScene()

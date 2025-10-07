@@ -6,15 +6,8 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class ItemsUI : MonoBehaviour
+public class ItemsUI : Singleton<ItemsUI>
 {
-    private static ItemsUI instance;
-
-    public static ItemsUI Instance
-    {
-        get { return instance; }
-    }
-
     public int ItemNumber
     {
         get
@@ -39,11 +32,6 @@ public class ItemsUI : MonoBehaviour
 
     [SerializeField] ItemUI[] itemUIs;
     [SerializeField] int maxNumber = 7;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     private void Start()
     {

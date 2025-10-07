@@ -19,14 +19,26 @@ public class HealthBarUI : MonoBehaviour
     private void Start()
     {
         initializeHearts();
-
         hideHealthBar();
+    }
 
+    private void OnEnable()
+    {
         GameEvents.Instance.OnBattleModeStarted += showHealthBar;
         GameEvents.Instance.OnExplorationModeStarted += hideHealthBar;
         GameEvents.Instance.OnStoryModeStarted += hideHealthBar;
-
         GameEvents.Instance.OnPlayerHealthChanged += showHealthBar;
+    }
+
+    private void OnDisable()
+    {
+        if (GameEvents.HasInstance)
+        {
+            GameEvents.Instance.OnBattleModeStarted -= showHealthBar;
+            GameEvents.Instance.OnExplorationModeStarted -= hideHealthBar;
+            GameEvents.Instance.OnStoryModeStarted -= hideHealthBar;
+            GameEvents.Instance.OnPlayerHealthChanged -= showHealthBar;
+        }
     }
 
     private void initializeHearts()
@@ -66,13 +78,5 @@ public class HealthBarUI : MonoBehaviour
         {
             hearts[i].SetActive(false);
         }
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.Instance.OnBattleModeStarted -= showHealthBar;
-        GameEvents.Instance.OnExplorationModeStarted -= hideHealthBar;
-        GameEvents.Instance.OnStoryModeStarted -= hideHealthBar;
-        GameEvents.Instance.OnPlayerHealthChanged -= showHealthBar;
     }
 }

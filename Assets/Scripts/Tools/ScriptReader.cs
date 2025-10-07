@@ -25,23 +25,8 @@ public struct Sentence
     }
 }
 
-public class ScriptReader : MonoBehaviour
+public class ScriptReader : Singleton<ScriptReader>
 {
-    private static ScriptReader _instance;
-
-    public static ScriptReader Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject singletonObject = new GameObject("ScriptReader");
-                _instance = singletonObject.AddComponent<ScriptReader>();
-            }
-            return _instance;
-        }
-    }
-
     public List<Sentence> output = new List<Sentence>();
 
     [SerializeField] private TextAsset textAsset;
@@ -92,18 +77,6 @@ public class ScriptReader : MonoBehaviour
         "INT",
         "EXT",
     };
-
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-    }
 
     //private void Start()
     //{

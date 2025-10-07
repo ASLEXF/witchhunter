@@ -17,14 +17,22 @@ public class CMFollow : MonoBehaviour
         confiner = GetComponent<CinemachineConfiner2D>();
     }
 
-    private void Start()
+    private void Update()
+    {
+        cm.transform.rotation = new Quaternion();
+    }
+
+    private void OnEnable()
     {
         GameEvents.Instance.OnNewSceneLoaded += LoadConfiner;
     }
 
-    private void Update()
+    private void OnDisable()
     {
-        cm.transform.rotation = new Quaternion();
+        if (GameEvents.HasInstance)
+        {
+            GameEvents.Instance.OnNewSceneLoaded -= LoadConfiner;
+        }
     }
 
     void SwitchToCM2()

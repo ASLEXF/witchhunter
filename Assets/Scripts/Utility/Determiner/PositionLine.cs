@@ -1,37 +1,15 @@
 using UnityEngine;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
-public class PositionLine : MonoBehaviour
+public class PositionLine : Singleton<PositionLine>
 {
     [SerializeField][Range(0, 1)] public float slope = 1.0f;
 
-    private static PositionLine _instance;
-
-    public static PositionLine Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject singletonObject = new GameObject("Line");
-                _instance = singletonObject.AddComponent<PositionLine>();
-            }
-            return _instance;
-        }
-    }
-
     LineRenderer _lineRenderer1, _lineRenderer2;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (_instance == null)
-        {
-            _instance = this;
-        }
-        else if (_instance != this)
-        {
-            Destroy(gameObject);
-        }
+        base.Awake();
 
         GameObject lineObject1 = new GameObject("Line1");
         GameObject lineObject2 = new GameObject("Line2");

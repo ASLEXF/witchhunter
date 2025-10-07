@@ -9,44 +9,43 @@ using UnityEngine;
 /// </summary>
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T _instance;
+    private static T instance;
     private static readonly object _lock = new object();
-    public static bool HasInstance => _instance != null;
+    public static bool HasInstance => instance != null;
 
     public static T Instance
     {
         get
         {
-            if (_instance == null)
+            if (instance == null)
             {
-                _instance = FindObjectOfType<T>();
+                instance = FindObjectOfType<T>();
 
-                if (_instance == null)
+                if (instance == null)
                 {
                     lock (_lock)
                     {
-                        if ( _instance == null )
+                        if ( instance == null )
                         {
                             Debug.Log("make new game object " + typeof(T).Name);
                             GameObject singletonObj = new GameObject(typeof(T).Name);
-                            _instance = singletonObj.AddComponent<T>();
+                            instance = singletonObj.AddComponent<T>();
                             //DontDestroyOnLoad(singletonObj);
                         }
                     }
                 }
-
             }
-            return _instance;
+            return instance;
         }
     }
 
     protected virtual void Awake()
     {
-        if ( _instance == null )
+        if ( instance == null )
         {
-            _instance = this as T;
+            instance = this as T;
         }
-        else if (_instance != this)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }

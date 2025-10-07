@@ -9,23 +9,11 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using System.Threading.Tasks;
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : Singleton<ItemManager>
 {
-    private static ItemManager instance;
-
-    public static ItemManager Instance
-    {
-        get { return instance; } 
-    }
-
     [SerializeField] List<GameObject> objs = new List<GameObject>();
     public List<Item> Items = new List<Item>();
     [SerializeField] string itemConfigFilePath = "Assets/Config/Items.json";
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     public async Task<Item> GenerateItem(int id, int amount = 1)
     {

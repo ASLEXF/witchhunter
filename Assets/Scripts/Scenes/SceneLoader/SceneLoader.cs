@@ -6,21 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    //private static SceneLoader _instance;
-
-    //public static SceneLoader Instance
-    //{
-    //    get
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            GameObject singletonObject = new GameObject("SceneLoader");
-    //            _instance = singletonObject.AddComponent<SceneLoader>();
-    //        }
-    //        return _instance;
-    //    }
-    //}
-
     public List<string> BattleScenes = new List<string>() { "Cliff", "Forest" };
     public List<string> ExplorationScenes = new List<string>() { "Village", "Room", "Basement" };
 
@@ -28,19 +13,6 @@ public class SceneLoader : Singleton<SceneLoader>
 
     public List<string> CurrentScenes = new List<string>();  // FIXME
     public bool isLoading = true;
-
-    //private void Awake()
-    //{
-    //    if (_instance != null && _instance != this)
-    //    {
-    //        Debug.LogWarning("destroy sceneLoader");
-    //        Destroy(gameObject);
-    //    }
-    //    else
-    //    {
-    //        _instance = this;
-    //    }
-    //}
 
     public IEnumerator GameSceneInitiate()
     {
@@ -50,7 +22,6 @@ public class SceneLoader : Singleton<SceneLoader>
             LoadSceneAdditive("Main Menu");
         }
             
-
         yield return null;
 
         isLoading = false;

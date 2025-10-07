@@ -10,37 +10,15 @@ using static UnityEngine.EventSystems.EventTrigger;
 using UnityEngine.SceneManagement;
 using Newtonsoft.Json;
 
-public class TimeLineManager : MonoBehaviour
+public class TimeLineManager : Singleton<TimeLineManager>
 {
-    private static TimeLineManager _instance;
-
-    public static TimeLineManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject singletonObject = new GameObject("TimeLineManager");
-                _instance = singletonObject.AddComponent<TimeLineManager>();
-            }
-            return _instance;
-        }
-    }
-
     PlayableDirector _playableDirector;
     string configFilePath = "Assets/Config/TimelineTrackBindings.json";
     Dictionary<string, GameObject> bindingTable = new Dictionary<string, GameObject>();
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
+        base.Awake();
 
         _playableDirector = GetComponent<PlayableDirector>();
     }
@@ -48,9 +26,6 @@ public class TimeLineManager : MonoBehaviour
     private void Start()
     {
         _playableDirector.playableAsset = null;
-
-        GameEvents.Instance.OnDialogBoxStarted += PauseTimeline;
-        GameEvents.Instance.OnDialogBoxEnded += PlayTimeLine;
 
         //_playableDirector.played += OnTimelinePlayed =>
         //{
@@ -81,6 +56,21 @@ public class TimeLineManager : MonoBehaviour
         // debug
         if (_playableDirector == null) {
             Debug.LogError("playable director not found!");
+        }
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.Instance.OnDialogBoxStarted += PauseTimeline;
+        GameEvents.Instance.OnDialogBoxEnded += PlayTimeLine;
+    }
+
+    private void OnDisable()
+    {
+        if (GameEvents.HasInstance)
+        {
+            GameEvents.Instance.OnDialogBoxStarted -= PauseTimeline;
+            GameEvents.Instance.OnDialogBoxEnded -= PlayTimeLine;
         }
     }
 

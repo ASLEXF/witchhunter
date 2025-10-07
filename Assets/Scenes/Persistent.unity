@@ -267,6 +267,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1364941241, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1378200089, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1165992582217251712, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.97
@@ -311,6 +319,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1165992582217251770, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1287495865629464425, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434418426999418775, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3519787274704167439, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3771290288660424549, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5341025114050002795, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6224669224491026871, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: NPCTalkUI
       value: 
@@ -331,6 +363,14 @@ PrefabInstance:
       propertyPath: InteractiveUI
       value: 
       objectReference: {fileID: 1225513989}
+    - target: {fileID: 6494273976938068439, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958083340299837190, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -721,6 +761,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
+    - target: {fileID: 1047746095240237169, guid: 6e0acff5999d88a4dbc8caf84e9c0c81, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300455059488674497, guid: 6e0acff5999d88a4dbc8caf84e9c0c81, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3098152711698381683, guid: 6e0acff5999d88a4dbc8caf84e9c0c81, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -792,6 +840,18 @@ PrefabInstance:
     - target: {fileID: 3411291805576658111, guid: 6e0acff5999d88a4dbc8caf84e9c0c81, type: 3}
       propertyPath: m_Events.m_Events.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4541042318643487483, guid: 6e0acff5999d88a4dbc8caf84e9c0c81, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6826635004678609532, guid: 6e0acff5999d88a4dbc8caf84e9c0c81, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8352769196198617871, guid: 6e0acff5999d88a4dbc8caf84e9c0c81, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8464902046924617984, guid: 6e0acff5999d88a4dbc8caf84e9c0c81, type: 3}
       propertyPath: m_PlayableAsset
