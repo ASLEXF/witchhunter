@@ -24,10 +24,10 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Adjest",
+                    "name": "Adjust",
                     "type": "Button",
                     "id": "333f470c-6671-4996-9176-553c42e4b895",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -85,7 +85,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Adjest",
+                    "action": "Adjust",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -96,7 +96,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Adjest",
+                    "action": "Adjust",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -107,7 +107,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Adjest",
+                    "action": "Adjust",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
@@ -332,7 +332,7 @@
                     "name": "AttackL",
                     "type": "Button",
                     "id": "226f934d-0c14-47f6-9316-7ecd462d3b5c",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

@@ -110,10 +110,10 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Adjest"",
+                    ""name"": ""Adjust"",
                     ""type"": ""Button"",
                     ""id"": ""333f470c-6671-4996-9176-553c42e4b895"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -171,7 +171,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Adjest"",
+                    ""action"": ""Adjust"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -182,7 +182,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Adjest"",
+                    ""action"": ""Adjust"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -193,7 +193,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Adjest"",
+                    ""action"": ""Adjust"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -418,7 +418,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
                     ""name"": ""AttackL"",
                     ""type"": ""Button"",
                     ""id"": ""226f934d-0c14-47f6-9316-7ecd462d3b5c"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -604,7 +604,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
         m_Menu_Switch = m_Menu.FindAction("Switch", throwIfNotFound: true);
-        m_Menu_Adjest = m_Menu.FindAction("Adjest", throwIfNotFound: true);
+        m_Menu_Adjust = m_Menu.FindAction("Adjust", throwIfNotFound: true);
         // Story
         m_Story = asset.FindActionMap("Story", throwIfNotFound: true);
         m_Story_Confirm = m_Story.FindAction("Confirm", throwIfNotFound: true);
@@ -707,7 +707,7 @@ public partial class @Actions: IInputActionCollection2, IDisposable
     private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
     private readonly InputAction m_Menu_Select;
     private readonly InputAction m_Menu_Switch;
-    private readonly InputAction m_Menu_Adjest;
+    private readonly InputAction m_Menu_Adjust;
     /// <summary>
     /// Provides access to input actions defined in input action map "Menu".
     /// </summary>
@@ -728,9 +728,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Switch => m_Wrapper.m_Menu_Switch;
         /// <summary>
-        /// Provides access to the underlying input action "Menu/Adjest".
+        /// Provides access to the underlying input action "Menu/Adjust".
         /// </summary>
-        public InputAction @Adjest => m_Wrapper.m_Menu_Adjest;
+        public InputAction @Adjust => m_Wrapper.m_Menu_Adjust;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -763,9 +763,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Switch.started += instance.OnSwitch;
             @Switch.performed += instance.OnSwitch;
             @Switch.canceled += instance.OnSwitch;
-            @Adjest.started += instance.OnAdjest;
-            @Adjest.performed += instance.OnAdjest;
-            @Adjest.canceled += instance.OnAdjest;
+            @Adjust.started += instance.OnAdjust;
+            @Adjust.performed += instance.OnAdjust;
+            @Adjust.canceled += instance.OnAdjust;
         }
 
         /// <summary>
@@ -783,9 +783,9 @@ public partial class @Actions: IInputActionCollection2, IDisposable
             @Switch.started -= instance.OnSwitch;
             @Switch.performed -= instance.OnSwitch;
             @Switch.canceled -= instance.OnSwitch;
-            @Adjest.started -= instance.OnAdjest;
-            @Adjest.performed -= instance.OnAdjest;
-            @Adjest.canceled -= instance.OnAdjest;
+            @Adjust.started -= instance.OnAdjust;
+            @Adjust.performed -= instance.OnAdjust;
+            @Adjust.canceled -= instance.OnAdjust;
         }
 
         /// <summary>
@@ -1217,12 +1217,12 @@ public partial class @Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSwitch(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Adjest" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Adjust" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAdjest(InputAction.CallbackContext context);
+        void OnAdjust(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Story" which allows adding and removing callbacks.

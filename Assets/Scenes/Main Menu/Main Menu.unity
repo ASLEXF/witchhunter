@@ -1813,6 +1813,7 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!1 &1655773149
 GameObject:
   m_ObjectHideFlags: 0
@@ -2681,8 +2682,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4FEE\u590D\u573A\u666F1\u7684\u6E38\u620F\u5BF9\u8C61\u95EE\u9898\n\u6DFB\u52A0\u5F71\u5B50\n\u8003\u86512d
-    \u73AF\u5883\u5149\u906E\u853D\n\u8003\u8651\u65E5\u6708\u5149\u6E32\u67D3"
+  m_Text: "\u4FEE\u590D\u52A8\u753B\u95EE\u9898\n1. \u653B\u51FB\u52A8\u753B\u4E0D\u80FD\u88AB\u91CD\u590D\u89E6\u53D1\n2.
+    \u4E0A\u534A\u8EAB\u4E0B\u534A\u8EABblend"
 --- !u!222 &2138104753
 CanvasRenderer:
   m_ObjectHideFlags: 0

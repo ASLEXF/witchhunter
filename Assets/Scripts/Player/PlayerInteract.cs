@@ -23,7 +23,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Start()
     {
-#if !Unity_Editor
+#if !UNITY_EDITOR
         spriteRenderer.enabled = false;
 #endif
     }

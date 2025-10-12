@@ -32,9 +32,11 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Start()
     {
-        initializeInputHolding();
-#if !UNITY_EDITOR
         _sr.enabled = false;
+        initializeInputHolding();
+#if UNITY_EDITOR
+        _sr.enabled = true;
+        playerInput.SwitchCurrentActionMap("Battle");
 #endif
     }
 
@@ -44,8 +46,8 @@ public class PlayerController : Singleton<PlayerController>
         float verticalInput = Input.GetAxisRaw("Vertical");
         _animator.SetBool(Animator.StringToHash("IsMoving"), Mathf.Abs(horizontalInput) > 0f || Mathf.Abs(verticalInput) > 0f);
     }
-
     private void FixedUpdate()
+
     {
         if (canMove)
         {
@@ -272,12 +274,13 @@ public class PlayerController : Singleton<PlayerController>
         _rawInputMovement = value.ReadValue<Vector2>();
     }
 
-    //public void OnAttack(InputAction.CallbackContext value)
+    //public void OnAttackL(InputAction.CallbackContext value)
     //{
+    //    Debug.Log("Attack L");
     //    if (value.started)
     //    {
     //        canMove = false;
-    //        _attack.Attack();
+    //        _attack.AttackL();
     //    }
     //}
 
