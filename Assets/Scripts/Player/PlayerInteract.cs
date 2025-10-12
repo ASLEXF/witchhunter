@@ -8,7 +8,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] UIInteract DropItemUI, NPCTalkUI, NPCCollectUI, NPCPickUpUI, InteractiveUI;
 
     Collider2D currentCollider;
-    SpriteRenderer renderer;
+    SpriteRenderer spriteRenderer;
     InteractTypeEnum type;
     [SerializeField] private List<Collider2D> DropItemColliders = new List<Collider2D>();
     [SerializeField] public List<Collider2D> NPCColliders = new List<Collider2D>();
@@ -18,13 +18,13 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        renderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
     {
 #if !Unity_Editor
-        renderer.enabled = false;
+        spriteRenderer.enabled = false;
 #endif
     }
 

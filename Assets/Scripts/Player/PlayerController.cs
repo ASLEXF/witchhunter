@@ -13,7 +13,7 @@ public class PlayerController : Singleton<PlayerController>
     public Vector3 FormerPosition; // create transition when teleport
 
     Rigidbody2D _rb;
-    SpriteRenderer _spriteRenderer;
+    SpriteRenderer _sr, _spriteRenderer;
     Animator _animator;
     PlayerAttack _attack;
     PlayerInteract _interact;
@@ -23,6 +23,7 @@ public class PlayerController : Singleton<PlayerController>
         base.Awake();
 
         _rb = GetComponent<Rigidbody2D>();
+        _sr = GetComponent<SpriteRenderer>();
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _animator = transform.GetChild(0).GetComponent<Animator>();
         _attack = transform.GetChild(0).GetComponent<PlayerAttack>();
@@ -32,6 +33,9 @@ public class PlayerController : Singleton<PlayerController>
     private void Start()
     {
         initializeInputHolding();
+#if !UNITY_EDITOR
+        _sr.enabled = false;
+#endif
     }
 
     void Update()

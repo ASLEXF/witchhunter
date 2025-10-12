@@ -315,6 +315,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1165992582217251715, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165992582217251715, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1976270038}
+    - target: {fileID: 1165992582217251715, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnInteract
+      objectReference: {fileID: 0}
+    - target: {fileID: 1165992582217251715, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_ActionEvents.Array.data[6].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1165992582217251770, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -365,7 +381,7 @@ PrefabInstance:
       objectReference: {fileID: 1225513989}
     - target: {fileID: 6494273976938068439, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7958083340299837190, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_IsActive
@@ -449,6 +465,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1976270038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1165992582217251717, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+  m_PrefabInstance: {fileID: 1110450232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2068c919f12bd724b911396e7e8cb2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &419132336169842698 stripped
