@@ -1195,6 +1195,7 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!1001 &564916297
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1402,6 +1403,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3105302451726449458, guid: 6ad5a8ced80fe5545b2554c04d151231, type: 3}
+      propertyPath: itemsUI
+      value: 
+      objectReference: {fileID: 1805421125}
+    - target: {fileID: 3105302451726449458, guid: 6ad5a8ced80fe5545b2554c04d151231, type: 3}
+      propertyPath: Backpack
+      value: 
+      objectReference: {fileID: 1405645000}
     - target: {fileID: 3777881085331482586, guid: 6ad5a8ced80fe5545b2554c04d151231, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.586
@@ -1465,6 +1474,10 @@ PrefabInstance:
     - target: {fileID: 7621627492273454643, guid: 6ad5a8ced80fe5545b2554c04d151231, type: 3}
       propertyPath: m_Name
       value: TestPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7621627492273454643, guid: 6ad5a8ced80fe5545b2554c04d151231, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3525,7 +3538,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2cf7f2879afd64aa4543dcdbb31eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDropped: 0
+  interactable: 1
+  UIOffset: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &1403907640
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3583,6 +3597,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 079e660061857e14581486be08ec1688, type: 3}
+--- !u!114 &1405645000 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4691968486495804337, guid: da44d31c27216674eb954ca7ef8f69ce, type: 3}
+  m_PrefabInstance: {fileID: 1684158759}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615036ab5f4d2ab43b965c02f33c4414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1684158759
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3847,10 +3872,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   raceName: Wolf
-  isInteractableArray: 000000
+  isInteractableStatus: 000000
   isInteractable: 0
   UIOffset: {x: 0, y: 0, z: 0}
-  talkContentFileName: 
+  interactConfigFilePath: Assets/Config/InteractableNPC.json
+  itemConfigFilePath: Assets/Config/NPCItems.json
+  talkFilePath: Assets/Config/NPCTalkFile.json
+--- !u!114 &1805421125 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1445495594467698630, guid: da44d31c27216674eb954ca7ef8f69ce, type: 3}
+  m_PrefabInstance: {fileID: 1684158759}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ff3cb8d97487c54d8234de00064c918, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1870500128
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3861,11 +3899,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1165992582217251712, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.29
+      value: 2.15
       objectReference: {fileID: 0}
     - target: {fileID: 1165992582217251712, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.25
+      value: -3.29
       objectReference: {fileID: 0}
     - target: {fileID: 1165992582217251712, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3905,7 +3943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1165992582217251770, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5151171349736828537, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4572,6 +4610,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 564916297}
   - {fileID: 14935609}
+  - {fileID: 1870500128}
   - {fileID: 716623551}
   - {fileID: 941170817}
   - {fileID: 2053190790}
@@ -4589,5 +4628,4 @@ SceneRoots:
   - {fileID: 528864591306543783}
   - {fileID: 3165700994615759530}
   - {fileID: 5287996054270602078}
-  - {fileID: 1870500128}
   - {fileID: 1403907640}
