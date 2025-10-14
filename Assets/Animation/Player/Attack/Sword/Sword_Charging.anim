@@ -22,8 +22,10 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: 21300000, guid: 05be3f145a4a58646bdc7db85e80ee2b, type: 3}
+    - time: 0.11666667
+      value: {fileID: 21300000, guid: 687e6e67b6dd79d47a04b7489bb2c0bd, type: 3}
     - time: 1
-      value: {fileID: 21300000, guid: 05be3f145a4a58646bdc7db85e80ee2b, type: 3}
+      value: {fileID: 21300000, guid: 687e6e67b6dd79d47a04b7489bb2c0bd, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -47,7 +49,8 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
     - {fileID: 21300000, guid: 05be3f145a4a58646bdc7db85e80ee2b, type: 3}
-    - {fileID: 21300000, guid: 05be3f145a4a58646bdc7db85e80ee2b, type: 3}
+    - {fileID: 21300000, guid: 687e6e67b6dd79d47a04b7489bb2c0bd, type: 3}
+    - {fileID: 21300000, guid: 687e6e67b6dd79d47a04b7489bb2c0bd, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -80,7 +83,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.3
+  - time: 0.11666667
     functionName: MeetChargingTime
     data: 
     objectReferenceParameter: {fileID: 0}

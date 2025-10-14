@@ -127,10 +127,11 @@ public class PlayerAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
-        attackCounter = 0;
+        ResetAttackCounter();
     }
 
     #region Movement
+
     public void MoveOnAttack()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -174,7 +175,11 @@ public class PlayerAttack : MonoBehaviour
 
     #region Counter
 
-    public void ResetAttackCounter() => attackCounter = 0;
+    public void ResetAttackCounter()
+    {
+        attackCounter = 0;
+        animator.SetInteger("SwordCounter", attackCounter);
+    }
 
     #endregion
 
