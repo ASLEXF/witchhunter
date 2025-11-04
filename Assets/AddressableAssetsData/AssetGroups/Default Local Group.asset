@@ -17,16 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 422ab638b77c80e4da38f8efa432ddec
   m_SerializeEntries:
-  - m_GUID: bd49876661662e340bfd6d8ad59e67b9
-    m_Address: Assets/Addressables/StoryScripts
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2cade99675b8d154d8b019ce6623a357
-    m_Address: Assets/Addressables/Icons
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 06f083aa7e57c724aa7078f0b2753e28
     m_Address: Assets/Addressables/Timelines
     m_ReadOnly: 0
@@ -37,9 +27,19 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2cade99675b8d154d8b019ce6623a357
+    m_Address: Assets/Addressables/Icons
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd49876661662e340bfd6d8ad59e67b9
+    m_Address: Assets/Addressables/StoryScripts
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 62768b3d0ffa53647a441fe6d3ec86b1, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 6be5f39fda3e7b74d8daf01103bfa491, type: 2}
     - {fileID: 11400000, guid: 9e8e546afcce319469019ff597af4c1d, type: 2}
+    - {fileID: 11400000, guid: 6be5f39fda3e7b74d8daf01103bfa491, type: 2}
