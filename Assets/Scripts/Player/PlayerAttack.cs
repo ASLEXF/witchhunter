@@ -130,7 +130,7 @@ public class PlayerAttack : MonoBehaviour
         ResetAttackCounter();
     }
 
-    #region Movement
+    #region Animation Events
 
     public void MoveOnAttack()
     {
@@ -150,12 +150,22 @@ public class PlayerAttack : MonoBehaviour
 
     private void canMove()
     {
-        PlayerController.Instance.canMove = true;
+        PlayerController.Instance.CanMove = true;
     }
 
     private void stopMovement()
     {
-        PlayerController.Instance.canMove = false;
+        PlayerController.Instance.CanMove = false;
+    }
+
+    private void canAttack()
+    {
+        PlayerController.Instance.CanAttack = true;
+    }
+
+    private void stopAttacking()
+    {
+        PlayerController.Instance.CanAttack = false;
     }
 
     #endregion

@@ -49,7 +49,7 @@ public class PlayerController : Singleton<PlayerController>
     private void FixedUpdate()
 
     {
-        if (canMove)
+        if (CanMove)
         {
             TurnThePlayer();
             MoveThePlayer();
@@ -115,7 +115,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private float minSpeed = 2.0f;
     [SerializeField] private float maxSpeed = 5.0f;
     //[SerializeField] private float movementSmoothingSpeed = 1.0f;
-    public bool canMove = true;
+    public bool CanMove = true;
     Vector2 _rawInputMovement;
     Vector2 _frameVelocity;
     public float Acceleration = 1.2f;
@@ -156,6 +156,7 @@ public class PlayerController : Singleton<PlayerController>
 
     #region Input System
 
+    public bool CanAttack = true;
     bool isChargingL, isChargingR = false;
     bool isChargingCompletedL, isChargingCompletedR = false;
     float chargingTimeL, chargingTimeR;
@@ -167,6 +168,7 @@ public class PlayerController : Singleton<PlayerController>
     PlayerInput playerInput;
     InputAction attackActionL, attackActionR;
 
+    // charging attack
     Coroutine CheckIsLongPressingCoroutineL, CheckIsChargingCoroutineL;
     Coroutine CheckIsLongPressingCoroutineR, CheckIsChargingCoroutineR;
 
@@ -174,17 +176,19 @@ public class PlayerController : Singleton<PlayerController>
     {
         attackActionL = playerInput.actions.FindActionMap("Battle").FindAction("AttackL");
         attackActionL.started += OnAttackLStarted => {
+            if (!CanAttack) return;
             if (CheckIsLongPressingCoroutineR != null) StopCoroutine(CheckIsLongPressingCoroutineR);
             if (CheckIsChargingCoroutineR != null) StopCoroutine(CheckIsChargingCoroutineR);
             pressStartTime = Time.time;
             CheckIsLongPressingCoroutineL = StartCoroutine(CheckIsLongPressingL());
         };
         attackActionL.canceled += OnAttackLCanceled => {
-            if (!isChargingCompletedL)
+            // canceled while charging not completed
+            StopCoroutine(CheckIsLongPressingCoroutineL);
+            if (CheckIsChargingCoroutineL != null) StopCoroutine(CheckIsChargingCoroutineL);
+
+            if (CanAttack)
             {
-                // canceled while charging not completed
-                StopCoroutine(CheckIsLongPressingCoroutineL);
-                if (CheckIsChargingCoroutineL != null) StopCoroutine(CheckIsChargingCoroutineL);
                 if (isChargingL)
                 {
                     _attack.ChargeAttackL(Time.time - chargingTimeL);
@@ -195,15 +199,12 @@ public class PlayerController : Singleton<PlayerController>
                     _attack.AttackL();
                 }
             }
-            else
-            {
-                isChargingCompletedL = false;
-            }
         };
 
         attackActionR = playerInput.actions.FindActionMap("Battle").FindAction("AttackR");
         attackActionR.started += OnAttackRStarted =>
         {
+            if (!CanAttack) return;
             if (CheckIsLongPressingCoroutineL != null)  StopCoroutine(CheckIsLongPressingCoroutineL);
             if (CheckIsChargingCoroutineL != null) StopCoroutine(CheckIsChargingCoroutineL);
             pressStartTime = Time.time;
@@ -216,14 +217,19 @@ public class PlayerController : Singleton<PlayerController>
                 // canceled while charging not completed
                 StopCoroutine(CheckIsLongPressingCoroutineR);
                 if (CheckIsChargingCoroutineR != null) StopCoroutine(CheckIsChargingCoroutineR);
-                if (isChargingR)
+
+                if (CanAttack)
                 {
-                    _attack.ChargeAttackR(Time.time - chargingTimeR);
-                    isChargingR = false;
-                }
-                else
-                {
-                    _attack.AttackR();
+                    if (isChargingR)
+                    {
+                        _attack.ChargeAttackR(Time.time - chargingTimeR);
+                        isChargingR = false;
+                    }
+                    else
+                    {
+
+                        _attack.AttackR();
+                    }
                 }
             }
             else
