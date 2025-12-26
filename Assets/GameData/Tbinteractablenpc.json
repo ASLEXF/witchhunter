@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "NPC": "Wolf",
+    "status": 0,
+    "isInteractable": false
+  },
+  {
+    "id": 2,
+    "NPC": "Wolf",
+    "status": 1,
+    "isInteractable": true
+  },
+  {
+    "id": 3,
+    "NPC": "Wolf",
+    "status": 2,
+    "isInteractable": true
+  },
+  {
+    "id": 4,
+    "NPC": "Failure",
+    "status": 0,
+    "isInteractable": false
+  },
+  {
+    "id": 5,
+    "NPC": "Failure",
+    "status": 1,
+    "isInteractable": true
+  },
+  {
+    "id": 6,
+    "NPC": "Failure",
+    "status": 2,
+    "isInteractable": true
+  },
+  {
+    "id": 7,
+    "NPC": "Hollow",
+    "status": 0,
+    "isInteractable": false
+  },
+  {
+    "id": 8,
+    "NPC": "Hollow",
+    "status": 1,
+    "isInteractable": true
+  },
+  {
+    "id": 9,
+    "NPC": "Hollow",
+    "status": 2,
+    "isInteractable": true
+  },
+  {
+    "id": 10,
+    "NPC": "Knight",
+    "status": 0,
+    "isInteractable": true
+  },
+  {
+    "id": 11,
+    "NPC": "Knight",
+    "status": 1,
+    "isInteractable": true
+  },
+  {
+    "id": 12,
+    "NPC": "Knight",
+    "status": 2,
+    "isInteractable": false
+  },
+  {
+    "id": 13,
+    "NPC": "Mayor",
+    "status": 0,
+    "isInteractable": true
+  },
+  {
+    "id": 14,
+    "NPC": "Mayor",
+    "status": 1,
+    "isInteractable": true
+  },
+  {
+    "id": 15,
+    "NPC": "Mayor",
+    "status": 2,
+    "isInteractable": true
+  },
+  {
+    "id": 16,
+    "NPC": "BulletinBoard",
+    "status": 0,
+    "isInteractable": true
+  },
+  {
+    "id": 17,
+    "NPC": "BulletinBoard",
+    "status": 1,
+    "isInteractable": false
+  },
+  {
+    "id": 18,
+    "NPC": "BulletinBoard",
+    "status": 2,
+    "isInteractable": false
+  },
+  {
+    "id": 19,
+    "NPC": "WoodCutter",
+    "status": 0,
+    "isInteractable": true
+  },
+  {
+    "id": 20,
+    "NPC": "WoodCutter",
+    "status": 1,
+    "isInteractable": true
+  },
+  {
+    "id": 21,
+    "NPC": "WoodCutter",
+    "status": 2,
+    "isInteractable": true
+  }
+]

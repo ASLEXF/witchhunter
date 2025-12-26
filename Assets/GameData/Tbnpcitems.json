@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "NPCName": "Wolf",
+    "itemID": 2,
+    "min": 0,
+    "max": 1
+  },
+  {
+    "id": 2,
+    "NPCName": "Wolf",
+    "itemID": 3,
+    "min": 0,
+    "max": 2
+  },
+  {
+    "id": 3,
+    "NPCName": "FailureCreature",
+    "itemID": 3,
+    "min": 0,
+    "max": 1
+  },
+  {
+    "id": 4,
+    "NPCName": "FailureCreature",
+    "itemID": 4,
+    "min": 0,
+    "max": 1
+  },
+  {
+    "id": 5,
+    "NPCName": "HollowArmor",
+    "itemID": 4,
+    "min": 1,
+    "max": 2
+  },
+  {
+    "id": 6,
+    "NPCName": "SuccessCreature",
+    "itemID": 1,
+    "min": 1,
+    "max": 2
+  },
+  {
+    "id": 7,
+    "NPCName": "SuccessCreature",
+    "itemID": 2,
+    "min": 2,
+    "max": 4
+  },
+  {
+    "id": 8,
+    "NPCName": "SuccessCreature",
+    "itemID": 3,
+    "min": 1,
+    "max": 1
+  },
+  {
+    "id": 9,
+    "NPCName": "SuccessCreature",
+    "itemID": 4,
+    "min": 1,
+    "max": 2
+  }
+]

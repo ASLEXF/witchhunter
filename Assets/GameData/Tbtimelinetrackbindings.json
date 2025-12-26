@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1,
+    "name": "Opening",
+    "trackName": "Tree Animation",
+    "scemeName": "Cliff",
+    "gameObjectPath": "Tree"
+  },
+  {
+    "id": 2,
+    "name": "Opening",
+    "trackName": "Player Animation",
+    "scemeName": "Persistent",
+    "gameObjectPath": "Animator"
+  },
+  {
+    "id": 3,
+    "name": "Opening",
+    "trackName": "DialogBox Signal",
+    "scemeName": "Persistent",
+    "gameObjectPath": "DialogBox"
+  },
+  {
+    "id": 4,
+    "name": "Opening",
+    "trackName": "Story Manager Signal",
+    "scemeName": "Persistent",
+    "gameObjectPath": "StoryManager"
+  },
+  {
+    "id": 5,
+    "name": "Opening",
+    "trackName": "Guide UI Signal",
+    "scemeName": "Cliff",
+    "gameObjectPath": "UI_Cliff"
+  },
+  {
+    "id": 6,
+    "name": "Opening",
+    "trackName": "Activation Track",
+    "scemeName": "Persistent",
+    "gameObjectPath": "CM Intro1"
+  },
+  {
+    "id": 7,
+    "name": "Opening",
+    "trackName": "Cinemachine Track",
+    "scemeName": "Persistent",
+    "gameObjectPath": "Main Camera"
+  },
+  {
+    "id": 8,
+    "name": "1_2",
+    "trackName": "Player Animation",
+    "scemeName": "Persistent",
+    "gameObjectPath": "Animator"
+  },
+  {
+    "id": 9,
+    "name": "1_2",
+    "trackName": "DialogBox Signal",
+    "scemeName": "Persistent",
+    "gameObjectPath": "DialogBox"
+  },
+  {
+    "id": 10,
+    "name": "1_2",
+    "trackName": "Story Manager Signal",
+    "scemeName": "Persistent",
+    "gameObjectPath": "StoryManager"
+  },
+  {
+    "id": 11,
+    "name": "1_2",
+    "trackName": "Guide UI Signal",
+    "scemeName": "Cliff",
+    "gameObjectPath": "UI_Cliff"
+  },
+  {
+    "id": 12,
+    "name": "1_2",
+    "trackName": "Activation Track",
+    "scemeName": "Persistent",
+    "gameObjectPath": "CM Transition"
+  },
+  {
+    "id": 13,
+    "name": "1_2",
+    "trackName": "Cinemachine Track",
+    "scemeName": "Persistent",
+    "gameObjectPath": "Main Camera"
+  }
+]

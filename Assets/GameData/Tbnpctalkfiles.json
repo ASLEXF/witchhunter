@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "NPC": "Mayor",
+    "stage": 1,
+    "fileName": "1-3"
+  },
+  {
+    "id": 1,
+    "NPC": "Mayor",
+    "stage": 1,
+    "fileName": "mayor_task_1_1_hint"
+  },
+  {
+    "id": 2,
+    "NPC": "Mayor",
+    "stage": 2,
+    "fileName": "mayor_task_1_1_finish"
+  },
+  {
+    "id": 3,
+    "NPC": "Mayor",
+    "stage": 3,
+    "fileName": ""
+  },
+  {
+    "id": 4,
+    "NPC": "WoodCutter",
+    "stage": 4,
+    "fileName": "woodcutter_1"
+  }
+]
