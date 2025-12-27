@@ -58,6 +58,8 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    #region Animation Events
+
     private void MeetChargingTime()
     {
         // while meeting minimun charging time for charging movements
@@ -130,8 +132,6 @@ public class PlayerAttack : MonoBehaviour
         ResetAttackCounter();
     }
 
-    #region Animation Events
-
     public void MoveOnAttack()
     {
         AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -166,6 +166,11 @@ public class PlayerAttack : MonoBehaviour
     private void stopAttacking()
     {
         PlayerController.Instance.CanAttack = false;
+    }
+
+    private void generateProjectile()
+    {
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().Shoot(new Vector2(5, 0), transform.position.y);
     }
 
     #endregion
