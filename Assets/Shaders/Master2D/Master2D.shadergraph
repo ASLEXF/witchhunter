@@ -1077,8 +1077,8 @@
     "m_ObjectId": "0403de96ac2a450fa7ecdf7204db3f79",
     "m_Title": "Hit Effect",
     "m_Position": {
-        "x": -71.99996948242188,
-        "y": -602.666748046875
+        "x": -72.0001220703125,
+        "y": -602.9999389648438
     }
 }
 
@@ -1316,7 +1316,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -1480,8 +1480,8 @@
     "m_ObjectId": "1826335e638e45d798bf8b77d70191e0",
     "m_Title": "Distortion",
     "m_Position": {
-        "x": -1482.0,
-        "y": -586.6668701171875
+        "x": -1481.9998779296875,
+        "y": -586.9998779296875
     }
 }
 
@@ -1768,8 +1768,8 @@
     "m_ObjectId": "1fc8f3939eb941c5b942e0b8baebc364",
     "m_Title": "Outline",
     "m_Position": {
-        "x": -874.6666259765625,
-        "y": -605.3334350585938
+        "x": -874.0,
+        "y": -606.0
     }
 }
 
@@ -2481,7 +2481,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -2620,7 +2620,7 @@
     "m_StageCapability": 2,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -3167,8 +3167,8 @@
     "m_ObjectId": "63947d3444a14f8186e7fe32197d6390",
     "m_Title": "Emission",
     "m_Position": {
-        "x": -378.6667175292969,
-        "y": -1026.0001220703125
+        "x": -378.0001220703125,
+        "y": -1025.9998779296875
     }
 }
 
@@ -3271,8 +3271,8 @@
     "m_ObjectId": "6bc8cc2f027d455580b25857600087de",
     "m_Title": "Negative",
     "m_Position": {
-        "x": 649.3334350585938,
-        "y": -1027.3333740234375
+        "x": 649.9998779296875,
+        "y": -1027.9998779296875
     }
 }
 
@@ -4528,8 +4528,8 @@
     "m_ObjectId": "a8db4a88fc6941a094eb115044ca9419",
     "m_Title": "Hue Shift",
     "m_Position": {
-        "x": 1265.999755859375,
-        "y": -1030.0
+        "x": 1175.0001220703125,
+        "y": -1029.9998779296875
     }
 }
 
@@ -4689,8 +4689,8 @@
     "m_ObjectId": "b3a59d131c6940b183003d87dd4898b0",
     "m_Title": "Contrast",
     "m_Position": {
-        "x": 138.66661071777345,
-        "y": -1047.3333740234375
+        "x": 139.0001220703125,
+        "y": -1047.9998779296875
     }
 }
 
@@ -4734,8 +4734,8 @@
     "m_ObjectId": "b64898de9b414a3c94efc9b32b608f4b",
     "m_Title": "Saturation",
     "m_Position": {
-        "x": 977.3334350585938,
-        "y": -575.9998168945313
+        "x": 942.0001220703125,
+        "y": -576.0
     }
 }
 
@@ -4854,7 +4854,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -5010,8 +5010,8 @@
     "m_ObjectId": "c9766a8f66d745fd81fd8bd707b8c6d8",
     "m_Title": "Brightness",
     "m_Position": {
-        "x": 407.333251953125,
-        "y": -569.9999389648438
+        "x": 407.9998779296875,
+        "y": -570.0
     }
 }
 
@@ -5341,8 +5341,8 @@
     "m_ObjectId": "dc4703a3905a432b899d0254227da56d",
     "m_Title": "Pixelation",
     "m_Position": {
-        "x": -1951.33349609375,
-        "y": -590.6669311523438
+        "x": -1950.9998779296875,
+        "y": -591.0
     }
 }
 
