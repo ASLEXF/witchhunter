@@ -16,7 +16,7 @@ MonoBehaviour:
   settings:
     renderPassEvent: 550
     material: {fileID: 2100000, guid: 1d2e5ad6fc637bf4fa47f6119664a2a7, type: 2}
-    pixelSize: 8
+    pixelSize: 4
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
