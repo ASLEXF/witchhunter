@@ -2682,7 +2682,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: "\u5C04\u7BAD\nprojectile\n\u6982\u7387\u9500\u6BC1\n\u6361\u8D77\u9053\u5177"
 --- !u!222 &2138104753
 CanvasRenderer:
   m_ObjectHideFlags: 0
