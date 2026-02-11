@@ -27,7 +27,7 @@ public class DroppedItem : MonoBehaviour
     {
         if (interactable)
         {
-            if (!PlayerInventory.Instance.IsFull || !ItemsUI.Instance.IsFull)
+            if (!PlayerInventory.Instance.IsFull || !ItemBar.Instance.IsFull)
             {
                 PlayerInventory.Instance.AddItem(gameObject.GetComponent<IItem>().GetItem());
                 Destroy(gameObject);

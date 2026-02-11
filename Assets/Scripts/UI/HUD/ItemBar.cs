@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 using UnityEngine.UI;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class ItemsUI : Singleton<ItemsUI>
+public class ItemBar : Singleton<ItemBar>
 {
     public int ItemNumber
     {

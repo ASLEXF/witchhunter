@@ -12,7 +12,7 @@ public class PlayerInventory : Singleton<PlayerInventory>
 {
     public bool IsFull
     {
-        get { return Backpack.Instance.IsFull && ItemsUI.Instance.IsFull; }
+        get { return Backpack.Instance.IsFull && ItemBar.Instance.IsFull; }
     }
 
     public async Task AddItem(int id, int count = 1)
@@ -38,9 +38,9 @@ public class PlayerInventory : Singleton<PlayerInventory>
                 ComsumableItem oldComsumableItem = (ComsumableItem)oldItem;
                 oldComsumableItem.amount += newComsumableItem.amount;
             }
-            else if (!ItemsUI.Instance.IsFull)
+            else if (!ItemBar.Instance.IsFull)
             {
-                ItemsUI.Instance.AddItem(newComsumableItem.DeepCopy());
+                ItemBar.Instance.AddItem(newComsumableItem.DeepCopy());
             }
             else if (!IsFull)
             {
@@ -60,9 +60,9 @@ public class PlayerInventory : Singleton<PlayerInventory>
                 MaterialItem oldComsumableItem = (MaterialItem)oldItem;
                 oldComsumableItem.amount += newMaterialItem.amount;
             }
-            else if (!ItemsUI.Instance.IsFull)
+            else if (!ItemBar.Instance.IsFull)
             {
-                ItemsUI.Instance.AddItem(newMaterialItem.DeepCopy());
+                ItemBar.Instance.AddItem(newMaterialItem.DeepCopy());
             }
             else if (!IsFull)
             {
@@ -76,9 +76,9 @@ public class PlayerInventory : Singleton<PlayerInventory>
         else if (newItem is WeaponItem)
         {
             WeaponItem newWeaponItem = (WeaponItem)newItem;
-            if (!ItemsUI.Instance.IsFull)
+            if (!ItemBar.Instance.IsFull)
             {
-                ItemsUI.Instance.AddItem(newWeaponItem.DeepCopy());
+                ItemBar.Instance.AddItem(newWeaponItem.DeepCopy());
             }
             else if (!IsFull)
             {
@@ -96,9 +96,9 @@ public class PlayerInventory : Singleton<PlayerInventory>
             {
                 Backpack.Instance.AddItem(newImportantItem.DeepCopy());
             }
-            else if (!ItemsUI.Instance.IsFull)
+            else if (!ItemBar.Instance.IsFull)
             {
-                ItemsUI.Instance.AddItem(newImportantItem.DeepCopy());
+                ItemBar.Instance.AddItem(newImportantItem.DeepCopy());
             }
             else
             {
@@ -111,9 +111,9 @@ public class PlayerInventory : Singleton<PlayerInventory>
             {
                 Backpack.Instance.AddItem(newItem.DeepCopy());
             }
-            else if (!ItemsUI.Instance.IsFull)
+            else if (!ItemBar.Instance.IsFull)
             {
-                ItemsUI.Instance.AddItem(newItem.DeepCopy());
+                ItemBar.Instance.AddItem(newItem.DeepCopy());
             }
             else
             {
@@ -126,7 +126,7 @@ public class PlayerInventory : Singleton<PlayerInventory>
 
     public Item? FindItem(int itemID)
     {
-        Item itemUI = ItemsUI.Instance.FindItem(itemID);
+        Item itemUI = ItemBar.Instance.FindItem(itemID);
         if (itemUI != null)
         {
             return itemUI;

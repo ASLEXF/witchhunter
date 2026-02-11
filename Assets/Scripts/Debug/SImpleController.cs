@@ -5,7 +5,7 @@ using UnityEngine;
 public class SimpleController : MonoBehaviour
 {
     Rigidbody2D rb;
-    [SerializeField] ItemsUI itemsUI;
+    [SerializeField] ItemBar itemsUI;
     [SerializeField] Backpack Backpack;
 
     float speed = 10;
