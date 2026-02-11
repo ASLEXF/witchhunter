@@ -311,10 +311,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (value.started)
         {
-            if (Backpack.Instance.gameObject.activeSelf)
-                Backpack.Instance.Hide();
-            else
-                Backpack.Instance.Show();
+            Backpack.Instance.ShowOrHide();
         }
     }
 

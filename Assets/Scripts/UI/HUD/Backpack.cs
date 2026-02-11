@@ -112,6 +112,18 @@ public class Backpack : Singleton<Backpack>, IDropHandler
         return null;
     }
 
+    public void ShowOrHide()
+    {
+        if (image.enabled)
+        {
+            Hide();
+        }
+        else
+        {
+            Show();
+        }
+    }
+
     public void Show()
     {
         updateItemsUI();
