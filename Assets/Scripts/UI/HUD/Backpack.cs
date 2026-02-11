@@ -27,21 +27,28 @@ public class Backpack : Singleton<Backpack>, IDropHandler
         }
     }
 
+    public bool IsEmpty
+    {
+        get
+        {
+            return ItemNumber == 0;
+        }
+    }
+
+    Image image;
+
     [SerializeField] ItemUI[] itemUIs;
     [SerializeField] int maxNumber = 4;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        image = GetComponent<Image>();
+    }
 
     private void Start()
     {
         initializeItems();
-
-        if (DebugMode.IsDebugMode)
-        {
-            ShowItemsUI();
-        }
-        else
-        {
-            HideItemsUI();
-        }
     }
 
     private void OnEnable()
@@ -63,7 +70,10 @@ public class Backpack : Singleton<Backpack>, IDropHandler
             itemUIs[i] = transform.GetChild(i).GetComponent<ItemUI>();
         }
 
-        gameObject.SetActive(false);
+        if (IsEmpty)
+        {
+            Hide();
+        }
     }
 
     private void updateItemsUI()
@@ -102,15 +112,23 @@ public class Backpack : Singleton<Backpack>, IDropHandler
         return null;
     }
 
-    public void ShowItemsUI()
+    public void Show()
     {
         updateItemsUI();
-        gameObject.SetActive(true);
+        image.enabled = true;
+        foreach (ItemUI itemUI in itemUIs)
+        {
+            itemUI.gameObject.SetActive(true);
+        }
     }
 
-    public void HideItemsUI()
+    public void Hide()
     {
-        gameObject.SetActive(false);
+        image.enabled = false;
+        foreach (ItemUI itemUI in itemUIs)
+        {
+            itemUI.gameObject.SetActive(false);
+        }
     }
 
     public void OnDrop(PointerEventData eventData)

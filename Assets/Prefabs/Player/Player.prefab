@@ -666,7 +666,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 25537933
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 761507a65094b864282a5aac7a6cd6eb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.49019608}
   m_FlipX: 0
@@ -825,10 +825,10 @@ MonoBehaviour:
     m_ActionName: Exploration/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerInteract, Assembly-CSharp
-        m_MethodName: Interact
-        m_Mode: 1
+      - m_Target: {fileID: 1165992582217251717}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -857,10 +857,10 @@ MonoBehaviour:
     m_ActionName: Battle/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1165992582217251717}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: OnAttackL
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -936,9 +936,10 @@ MonoBehaviour:
   currentSpeed: 0
   minSpeed: 2
   maxSpeed: 5
-  canMove: 1
+  CanMove: 1
   Acceleration: 5
   Deceleration: 0.6
+  CanAttack: 1
 --- !u!114 &1110450235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1301,7 +1302,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 25537933
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.2784314}
   m_FlipX: 0

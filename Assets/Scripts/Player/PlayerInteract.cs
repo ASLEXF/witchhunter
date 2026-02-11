@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
 {
+    [SerializeField] GameObject UI_WorldSpace;
     [SerializeField] UIInteract DropItemUI, NPCTalkUI, NPCCollectUI, NPCPickUpUI, InteractiveUI;
 
     Collider2D currentCollider;
@@ -26,6 +27,12 @@ public class PlayerInteract : MonoBehaviour
 #if !UNITY_EDITOR
         spriteRenderer.enabled = false;
 #endif
+        UI_WorldSpace = GameObject.Find("UI_WorldSpace");
+        DropItemUI = UI_WorldSpace.transform.Find("DropItemCanvas").GetComponent<UIInteract>();
+        NPCTalkUI = UI_WorldSpace.transform.Find("NPCTalkCanvas").GetComponent<UIInteract>();
+        NPCCollectUI = UI_WorldSpace.transform.Find("NPCCollectCanvas").GetComponent<UIInteract>();
+        NPCPickUpUI = UI_WorldSpace.transform.Find("NPCPickUpCanvas").GetComponent<UIInteract>();
+        InteractiveUI = UI_WorldSpace.transform.Find("InteractiveCanvas").GetComponent<UIInteract>();
     }
 
     private void Update()

@@ -27,7 +27,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                     {
                         if ( instance == null )
                         {
-                            Debug.Log("make new game object " + typeof(T).Name);
+                            Debug.Log("create new game object " + typeof(T).Name);
                             GameObject singletonObj = new GameObject(typeof(T).Name);
                             instance = singletonObj.AddComponent<T>();
                             //DontDestroyOnLoad(singletonObj);

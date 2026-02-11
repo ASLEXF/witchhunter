@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 8575123913239448133}
   - component: {fileID: 3663790501861885904}
   m_Layer: 5
-  m_Name: NPC Talk Canvas
+  m_Name: NPCTalkCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -809,7 +809,7 @@ GameObject:
   - component: {fileID: 5084901359708142450}
   - component: {fileID: 2911756750944943099}
   m_Layer: 5
-  m_Name: Interactive Canvas
+  m_Name: InteractiveCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -924,7 +924,7 @@ GameObject:
   - component: {fileID: 6701214156326896976}
   - component: {fileID: 8785388451105686580}
   m_Layer: 5
-  m_Name: NPC Pick Up Canvas
+  m_Name: NPCPickUpCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1209,7 +1209,7 @@ GameObject:
   - component: {fileID: 6645666408279116160}
   - component: {fileID: 6160188792741337513}
   m_Layer: 5
-  m_Name: NPC Collect Canvas
+  m_Name: NPCCollectCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1458,7 +1458,7 @@ GameObject:
   - component: {fileID: 4841980719564600387}
   - component: {fileID: 3747071580041978900}
   m_Layer: 5
-  m_Name: Drop Item Canvas
+  m_Name: DropItemCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

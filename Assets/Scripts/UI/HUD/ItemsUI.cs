@@ -30,18 +30,32 @@ public class ItemsUI : Singleton<ItemsUI>
         }
     }
 
+    public bool IsEmpty
+    {
+        get
+        {
+            return ItemNumber == 0;
+        }
+    }
+
+    Image image;
+
     [SerializeField] ItemUI[] itemUIs;
     [SerializeField] int maxNumber = 7;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        image = GetComponent<Image>();
+    }
 
     private void Start()
     {
         initializeItems();
 
-        HideItemsUI();
-
-        GameEvents.Instance.OnBattleModeStarted += ShowItemsUI;
-        GameEvents.Instance.OnExplorationModeStarted += ShowItemsUI;
-        GameEvents.Instance.OnStoryModeStarted += HideItemsUI;
+        GameEvents.Instance.OnBattleModeStarted += Show;
+        GameEvents.Instance.OnExplorationModeStarted += Show;
+        GameEvents.Instance.OnStoryModeStarted += Hide;
 
         GameEvents.Instance.OnItemsUpdated += updateItemsUI;
     }
@@ -54,7 +68,10 @@ public class ItemsUI : Singleton<ItemsUI>
             itemUIs[i] = transform.GetChild(i).GetComponent<ItemUI>();
         }
 
-        gameObject.SetActive(false);
+        if (IsEmpty)
+        {
+            Hide();
+        }
     }
 
     private void updateItemsUI()
@@ -80,6 +97,7 @@ public class ItemsUI : Singleton<ItemsUI>
         if (result)
         {
             GameEvents.Instance.ItemsUpdated();
+            Show();
         }
             
         return result;
@@ -96,22 +114,30 @@ public class ItemsUI : Singleton<ItemsUI>
         return null;
     }
 
-    public void ShowItemsUI()
+    public void Show()
     {
         updateItemsUI();
-        gameObject.SetActive(true);
+        image.enabled = true;
+        foreach (ItemUI itemUI in itemUIs)
+        {
+            itemUI.gameObject.SetActive(true);
+        }
     }
 
-    public void HideItemsUI()
+    public void Hide()
     {
-        gameObject.SetActive(false);
+        image.enabled = false;
+        foreach (ItemUI itemUI in itemUIs)
+        {
+            itemUI.gameObject.SetActive(false);
+        }
     }
 
     private void OnDestroy()
     {
-        GameEvents.Instance.OnBattleModeStarted -= ShowItemsUI;
-        GameEvents.Instance.OnExplorationModeStarted -= ShowItemsUI;
-        GameEvents.Instance.OnStoryModeStarted -= HideItemsUI;
+        GameEvents.Instance.OnBattleModeStarted -= Show;
+        GameEvents.Instance.OnExplorationModeStarted -= Show;
+        GameEvents.Instance.OnStoryModeStarted -= Hide;
 
         GameEvents.Instance.OnItemsUpdated -= updateItemsUI;
     }
