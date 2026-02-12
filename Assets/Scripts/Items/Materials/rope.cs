@@ -6,7 +6,7 @@ public class rope : MonoBehaviour, IItem
 {
     public MaterialItem item;
 
-    private void Start()
+    private void Awake()
     {
         item = new MaterialItem(8, "Rope", "a rope, can be used to make something", "Assets/Addressables/Icons/rope.png", 1);
     }
