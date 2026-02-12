@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 [RequireComponent(typeof(Image))]
-public class ItemUI : MonoBehaviour, IDropHandler
+public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] Item _item;
     Image image;
@@ -44,6 +44,15 @@ public class ItemUI : MonoBehaviour, IDropHandler
         image = GetComponent<Image>();
         _amount = transform.Find("Amount").GetComponent<TMP_Text>();
         draggableItem = GetComponent<DraggableItem>();
+    }
+
+    private void OnDisable()
+    {
+        // Ensure we don't permanently block attacks if the UI is hidden while clicking.
+        if (PlayerController.Instance != null)
+        {
+            PlayerController.Instance.SetUIAttackBlocked(false);
+        }
     }
 
     private void Start()
@@ -152,6 +161,22 @@ public class ItemUI : MonoBehaviour, IDropHandler
             }
             draggableItem.OnEndDrag(eventData);
             GameEvents.Instance.ItemsUpdated();
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (PlayerController.Instance != null)
+        {
+            PlayerController.Instance.SetUIAttackBlocked(true);
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (PlayerController.Instance != null)
+        {
+            PlayerController.Instance.SetUIAttackBlocked(false);
         }
     }
 }

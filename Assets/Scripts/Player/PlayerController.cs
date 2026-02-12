@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.Timeline;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : Singleton<PlayerController>
@@ -156,7 +157,19 @@ public class PlayerController : Singleton<PlayerController>
 
     #region Input System
 
-    public bool CanAttack = true;
+    [SerializeField] bool canAttack = true;
+    bool uiAttackBlocked = false;
+
+    public bool CanAttack
+    {
+        get => canAttack && !uiAttackBlocked;
+        set => canAttack = value;
+    }
+
+    public void SetUIAttackBlocked(bool blocked)
+    {
+        uiAttackBlocked = blocked;
+    }
     bool isChargingL, isChargingR = false;
     bool isChargingCompletedL, isChargingCompletedR = false;
     float chargingTimeL, chargingTimeR;
@@ -184,7 +197,7 @@ public class PlayerController : Singleton<PlayerController>
         };
         attackActionL.canceled += OnAttackLCanceled => {
             // canceled while charging not completed
-            StopCoroutine(CheckIsLongPressingCoroutineL);
+            if (CheckIsLongPressingCoroutineL != null) StopCoroutine(CheckIsLongPressingCoroutineL);
             if (CheckIsChargingCoroutineL != null) StopCoroutine(CheckIsChargingCoroutineL);
 
             if (CanAttack)
@@ -215,7 +228,7 @@ public class PlayerController : Singleton<PlayerController>
             if (!isChargingCompletedR)
             {
                 // canceled while charging not completed
-                StopCoroutine(CheckIsLongPressingCoroutineR);
+                if (CheckIsLongPressingCoroutineR != null) StopCoroutine(CheckIsLongPressingCoroutineR);
                 if (CheckIsChargingCoroutineR != null) StopCoroutine(CheckIsChargingCoroutineR);
 
                 if (CanAttack)
@@ -227,7 +240,6 @@ public class PlayerController : Singleton<PlayerController>
                     }
                     else
                     {
-
                         _attack.AttackR();
                     }
                 }
@@ -242,6 +254,9 @@ public class PlayerController : Singleton<PlayerController>
     IEnumerator CheckIsLongPressingL()
     {
         yield return new WaitForSeconds(longPressDuration);
+        // In case UI blocking (or other CanAttack changes) happened after press started,
+        // abort heavy attack if we are no longer allowed to attack.
+        if (!CanAttack) yield break;
         isChargingL = true;
         _attack.ChargingAttackL();
         if (maxChargingTime > 0)
@@ -260,6 +275,9 @@ public class PlayerController : Singleton<PlayerController>
     IEnumerator CheckIsLongPressingR()
     {
         yield return new WaitForSeconds(longPressDuration);
+        // In case UI blocking (or other CanAttack changes) happened after press started,
+        // abort heavy attack if we are no longer allowed to attack.
+        if (!CanAttack) yield break;
         isChargingR = true;
         _attack.ChargingAttackR();
         if (maxChargingTime > 0)

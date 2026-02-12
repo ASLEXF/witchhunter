@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] GameObject UI_WorldSpace;
@@ -19,6 +20,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
+        currentCollider = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 

@@ -1,5 +1,5 @@
 /* sample */
-# nullable enable
+#nullable enable
 
 using System;
 using System.Collections;
@@ -92,13 +92,13 @@ public class PlayerInventory : Singleton<PlayerInventory>
         else if (newItem is ImportantItem)
         {
             ImportantItem newImportantItem = (ImportantItem)newItem;
-            if (!IsFull)
-            {
-                Backpack.Instance.AddItem(newImportantItem.DeepCopy());
-            }
-            else if (!ItemBar.Instance.IsFull)
+            if (!ItemBar.Instance.IsFull)
             {
                 ItemBar.Instance.AddItem(newImportantItem.DeepCopy());
+            }
+            else if (!Backpack.Instance.IsFull)
+            {
+                Backpack.Instance.AddItem(newImportantItem.DeepCopy());
             }
             else
             {
@@ -107,13 +107,13 @@ public class PlayerInventory : Singleton<PlayerInventory>
         }
         else
         {
-            if (!IsFull)
-            {
-                Backpack.Instance.AddItem(newItem.DeepCopy());
-            }
-            else if (!ItemBar.Instance.IsFull)
+            if (!ItemBar.Instance.IsFull)
             {
                 ItemBar.Instance.AddItem(newItem.DeepCopy());
+            }
+            else if (!Backpack.Instance.IsFull)
+            {
+                Backpack.Instance.AddItem(newItem.DeepCopy());
             }
             else
             {
