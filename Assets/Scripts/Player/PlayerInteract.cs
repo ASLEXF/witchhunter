@@ -9,9 +9,10 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] GameObject UI_WorldSpace;
     [SerializeField] UIInteract DropItemUI, NPCTalkUI, NPCCollectUI, NPCPickUpUI, InteractiveUI;
 
-    Collider2D currentCollider;
     SpriteRenderer spriteRenderer;
     InteractTypeEnum type;
+
+    [SerializeField] Collider2D currentCollider;
     [SerializeField] private List<Collider2D> DropItemColliders = new List<Collider2D>();
     [SerializeField] public List<Collider2D> NPCColliders = new List<Collider2D>();
     [SerializeField] private List<Collider2D> InteractiveColliders = new List<Collider2D>();
@@ -39,10 +40,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        if (DebugMode.IsDebugMode && Input.GetKeyDown(KeyCode.E))
-        {
-            Interact();
-        }
+
     }
 
     private void OnEnable()
@@ -208,24 +206,24 @@ public class PlayerInteract : MonoBehaviour
         if (currentCollider != null)
         {
             Debug.Log($"interact gameObject {currentCollider.gameObject}");
-            GameObject gameObject = currentCollider.transform.root.gameObject;
+            GameObject interactObj = currentCollider.gameObject;
             switch (type)
             {
                 case InteractTypeEnum.DropItem:
                 {
-                    DroppedItem script = gameObject.GetComponentInChildren<DroppedItem>();
+                    DroppedItem script = interactObj.GetComponentInChildren<DroppedItem>();
                     if (script != null)
                     {
                         script.Interacted();
                     }
 
-                    // game object get destroyed
+                    // game object get destroyed in DroppedItem.Interacted() after being picked up
 
                     break;
                 }
                 case InteractTypeEnum.NPC:
                 {
-                    NPCInteract script = gameObject.GetComponentInChildren<NPCInteract>();
+                    NPCInteract script = interactObj.GetComponentInChildren<NPCInteract>();
                     if (script != null)
                     {
                         script.Interacted();
@@ -238,7 +236,7 @@ public class PlayerInteract : MonoBehaviour
                 }
                 case InteractTypeEnum.Interactive:
                 {
-                    Interactive script = gameObject.GetComponentInChildren<Interactive>();
+                    Interactive script = interactObj.GetComponentInChildren<Interactive>();
                     if (script != null)
                     {
                         script.Interacted();

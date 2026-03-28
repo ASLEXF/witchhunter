@@ -28,6 +28,7 @@ public class PlayerController : Singleton<PlayerController>
         _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _animator = transform.GetChild(0).GetComponent<Animator>();
         _attack = transform.GetChild(0).GetComponent<PlayerAttack>();
+        _interact = transform.GetComponentInChildren<PlayerInteract>();
         playerInput = GetComponent<PlayerInput>();
     }
 
