@@ -15,11 +15,11 @@ public class DroppedItem : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
+        gameObject.tag = "DropItem";
     }
 
     private void Start()
     {
-        gameObject.tag = "DropItem";
         interactable = true;
     }
 
@@ -27,7 +27,7 @@ public class DroppedItem : MonoBehaviour
     {
         if (interactable)
         {
-            if (!PlayerInventory.Instance.IsFull || !ItemBar.Instance.IsFull)
+            if (!PlayerInventory.Instance.IsFull)
             {
                 PlayerInventory.Instance.AddItem(gameObject.GetComponent<IItem>().GetItem());
                 Destroy(gameObject);
