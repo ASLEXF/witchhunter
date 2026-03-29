@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -25,12 +23,12 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
     {
         if (itemUI.Empty) return;
 
-        if (itemUI.Item is ComsumableItem)
+        if (itemUI.Item is ConsumableItem)
         {
-            ComsumableItem comsumableItem = itemUI.Item as ComsumableItem;
+            ConsumableItem consumableItem = itemUI.Item as ConsumableItem;
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                comsumableItem.Use(itemUI.Index);
+                consumableItem.Use(itemUI.Index);
                 GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
             }
 

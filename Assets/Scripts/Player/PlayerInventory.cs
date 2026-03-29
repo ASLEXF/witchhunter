@@ -29,13 +29,13 @@ public class PlayerInventory : Singleton<PlayerInventory>
             throw new ArgumentNullException(nameof(newItem), "Item cannot be null.");
         }
 
-        if (newItem is ComsumableItem)
+        if (newItem is ConsumableItem)
         {
-            ComsumableItem newComsumableItem = (ComsumableItem)newItem;  // cast to avoid nullable check
+            ConsumableItem newComsumableItem = (ConsumableItem)newItem;  // cast to avoid nullable check
             ItemUI? itemUI = FindItemUI(newComsumableItem.id);
             if (itemUI != null)
             {
-                ComsumableItem oldComsumableItem = (ComsumableItem)itemUI.Item;
+                ConsumableItem oldComsumableItem = (ConsumableItem)itemUI.Item;
                 oldComsumableItem.amount += newComsumableItem.amount;
                 itemUI.UpdateAmount(oldComsumableItem.amount);
             }

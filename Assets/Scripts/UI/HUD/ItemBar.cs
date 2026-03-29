@@ -89,25 +89,19 @@ public class ItemBar : Singleton<ItemBar>
         }
     }
 
-    public bool AddItem(Item newItem)
+    public void AddItem(Item newItem)
     {
-        bool result = false;
         for (int i = 0; i < maxNumber; i++)
         {
             if (itemUIs[i].Empty)
             {
                 itemUIs[i].Item = newItem;
-                result =  true;
+                GameEvents.Instance.ItemsUpdated(i);
                 break;
             }
         }
-        if (result)
-        {
-            GameEvents.Instance.ItemsUpdated();
-            Show();
-        }
-            
-        return result;
+
+        Show();
     }
 
     public ItemUI FindItemUI(int itemID)

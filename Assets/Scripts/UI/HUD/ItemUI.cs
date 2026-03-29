@@ -67,30 +67,39 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
     {
         if (_item != null && _item.id != 0)
         {
-            updateSprite(_item.icon);
-            if (_item is ComsumableItem)
+            if (_item is ConsumableItem c && c.amount <= 0)
             {
-                ComsumableItem comsumableItem = _item as ComsumableItem;
-                UpdateAmount(comsumableItem.amount);
+                UpdateAmount(0);
             }
-            else if (_item is MaterialItem)
+            else if (_item is MaterialItem m && m.amount <= 0)
             {
-                MaterialItem materialItem = _item as MaterialItem;
-                UpdateAmount(materialItem.amount);
-            }
-            else if (_item == PlayerHand.Instance.WeaponL)
-            {
-                _amount.text = "L";
-            }
-            else if (_item == PlayerHand.Instance.WeaponR)
-            {
-                _amount.text = "R";
+                UpdateAmount(0);
             }
             else
             {
-                _amount.text = "";
+                updateSprite(_item.icon);
+                if (_item is ConsumableItem comsumableItem)
+                {
+                    UpdateAmount(comsumableItem.amount);
+                }
+                else if (_item is MaterialItem materialItem)
+                {
+                    UpdateAmount(materialItem.amount);
+                }
+                else if (_item == PlayerHand.Instance.WeaponL)
+                {
+                    _amount.text = "L";
+                }
+                else if (_item == PlayerHand.Instance.WeaponR)
+                {
+                    _amount.text = "R";
+                }
+                else
+                {
+                    _amount.text = "";
+                }
+                draggableItem.enabled = true;
             }
-            draggableItem.enabled = true;
         }
         else
         {
@@ -135,8 +144,8 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         {
             updateSprite("Assets/Addressables/Icons/SquareWithBorder.png");
             _item = null;
-            image.sprite = null;
             _amount.text = "";
+            draggableItem.enabled = false;
         }
     }
 

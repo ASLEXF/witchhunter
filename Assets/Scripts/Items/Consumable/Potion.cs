@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Potion : MonoBehaviour, IItem
 {
-    public ComsumableItem item;
+    public ConsumableItem item;
 
     private void Awake()
     {
-        item = new ComsumableItem(9, "Potion", "add 1 max hp", "Assets/Addressables/Icons/potion.png", 1);
+        item = new ConsumableItem(9, "Potion", "add 1 max hp", "Assets/Addressables/Icons/potion.png", 1);
         item.onUse = item => { PlayerHealth.Instance.AddMaxHealth(1); };
     }
 

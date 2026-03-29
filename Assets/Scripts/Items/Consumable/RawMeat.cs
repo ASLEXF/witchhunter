@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class RawMeat : MonoBehaviour, IItem
 {
-    public ComsumableItem item;
+    public ConsumableItem item;
 
     private void Awake()
     {
-        item = new ComsumableItem(2, "raw meat", "heal 1 hp", "Assets/Addressables/Icons/raw_meat.png", 1);
+        item = new ConsumableItem(2, "raw meat", "heal 1 hp", "Assets/Addressables/Icons/raw_meat.png", 1);
         item.onUse = item =>
         {
             PlayerHealth.Instance.Heal(1);

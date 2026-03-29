@@ -41,9 +41,9 @@ public class ItemManager : Singleton<ItemManager>
 
                         if (amount != 1)
                         {
-                            if (item is ComsumableItem)
+                            if (item is ConsumableItem)
                             {
-                                ComsumableItem comsumableItem = (ComsumableItem)item;
+                                ConsumableItem comsumableItem = (ConsumableItem)item;
                                 comsumableItem.amount = amount;
                             }
                             else if (item is MaterialItem)

@@ -99,12 +99,12 @@ public class Backpack : Singleton<Backpack>, IDropHandler
             if (itemUIs[i].Empty)
             {
                 itemUIs[i].Item = newItem;
+                GameEvents.Instance.ItemsUpdated(i);
                 result = true;
                 break;
             }
         }
-        if (result)
-            GameEvents.Instance.ItemsUpdated();
+            
         return result;
     }
 

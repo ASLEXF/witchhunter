@@ -72,17 +72,17 @@ public class WeaponItem: Item
     }
 }
 
-public class ComsumableItem: Item
+public class ConsumableItem: Item
 {
     public int amount;
 
-    public ComsumableItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true, 1)
+    public ConsumableItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true, 1)
     {
         this.amount = amount;
     }
 
-    public System.Action<ComsumableItem> onUse = DefaultUse;
-    private static void DefaultUse(ComsumableItem item)
+    public System.Action<ConsumableItem> onUse = DefaultUse;
+    private static void DefaultUse(ConsumableItem item)
     {
         Debug.LogWarning($"DefaultUsing Item: {item.itemName}");
         if (item.amount > 0)
@@ -100,9 +100,9 @@ public class ComsumableItem: Item
         onUse?.Invoke(this);
     }
 
-    public new ComsumableItem DeepCopy()
+    public new ConsumableItem DeepCopy()
     {
-        ComsumableItem copy = new ComsumableItem(id, itemName, description, icon, amount);
+        ConsumableItem copy = new ConsumableItem(id, itemName, description, icon, amount);
         copy.onUse = onUse;
         return copy;
     }
