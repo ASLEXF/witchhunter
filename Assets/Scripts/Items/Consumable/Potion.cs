@@ -9,10 +9,22 @@ public class Potion : MonoBehaviour, IItem
     private void Awake()
     {
         item = new ComsumableItem(9, "Potion", "add 1 max hp", "Assets/Addressables/Icons/potion.png", 1);
-        item.Use = item => { PlayerHealth.Instance.AddMaxHealth(1); };
+        item.onUse = item => { PlayerHealth.Instance.AddMaxHealth(1); };
     }
 
-    public void Use() => PlayerHealth.Instance.Heal(1);
+    public void Use() => item.Use();
 
     public Item GetItem() => item;
 }
+
+//public class Potion : ComsumableItem
+//{
+//    public Potion() : base(9, "Potion", "add 1 max hp", "Assets/Addressables/Icons/potion.png", 1)
+//    {
+//    }
+
+//    public override void Use()
+//    {
+//        PlayerHealth.Instance.AddMaxHealth(1);
+//    }
+//}

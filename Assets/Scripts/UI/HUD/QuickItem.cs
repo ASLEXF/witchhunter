@@ -30,7 +30,7 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
             ComsumableItem comsumableItem = itemUI.Item as ComsumableItem;
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                comsumableItem.Use(comsumableItem);
+                comsumableItem.Use(itemUI.Index);
                 GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
             }
 

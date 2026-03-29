@@ -17,6 +17,7 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
     DraggableItem draggableItem;
 
     private int _index;
+
     public Item Item
     {
         get { return _item; }
@@ -48,7 +49,7 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
 
     private void OnDisable()
     {
-        // Ensure we don't permanently block attacks if the UI is hidden while clicking.
+        // Player Input: Ensure we don't permanently block attacks if the UI is hidden while clicking.
         if (PlayerController.Instance != null)
         {
             PlayerController.Instance.SetUIAttackBlocked(false);
@@ -58,6 +59,8 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
     private void Start()
     {
         draggableItem.enabled = false;
+
+        _index = transform.GetSiblingIndex();
     }
 
     public void UpdateUI()
@@ -68,12 +71,12 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
             if (_item is ComsumableItem)
             {
                 ComsumableItem comsumableItem = _item as ComsumableItem;
-                updateAmount(comsumableItem.amount);
+                UpdateAmount(comsumableItem.amount);
             }
             else if (_item is MaterialItem)
             {
                 MaterialItem materialItem = _item as MaterialItem;
-                updateAmount(materialItem.amount);
+                UpdateAmount(materialItem.amount);
             }
             else if (_item == PlayerHand.Instance.WeaponL)
             {
@@ -122,7 +125,7 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         }
     }
 
-    private void updateAmount(int amount)
+    public void UpdateAmount(int amount)
     {
         if (amount > 0)
         {

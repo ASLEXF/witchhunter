@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -7,12 +8,16 @@ public class GameManager : Singleton<GameManager>
     public bool isInitiated = false;
     public int Stage = 1;
 
-    void Start()
+    async Task Start()
     {
-        StartCoroutine(GameInitialize());
+        // load sprite assets
+        await AssetPreloader.PreloadAllIcons();
+
+        // load the first scene
+        StartCoroutine(FirstSceneInitialize());
     }
 
-    IEnumerator GameInitialize()
+    IEnumerator FirstSceneInitialize()
     {
         if (!DebugMode.IsDebugMode)
             PlayerController.Instance.HideThePlayer();
@@ -27,16 +32,16 @@ public class GameManager : Singleton<GameManager>
 
     private void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //    RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
-        //    if (hit.collider != null)
-        //    {
-        //        Debug.Log("Clicked on: " + hit.transform.name);
-        //    }
-        //}
+            if (hit.collider != null)
+            {
+                Debug.Log("Clicked on: " + hit.transform.name);
+            }
+        }
     }
 
     public void StartExplorationMode()

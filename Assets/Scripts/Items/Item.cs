@@ -81,17 +81,30 @@ public class ComsumableItem: Item
         this.amount = amount;
     }
 
-    public System.Action<ComsumableItem> Use = DefaultUse;
+    public System.Action<ComsumableItem> onUse = DefaultUse;
     private static void DefaultUse(ComsumableItem item)
     {
         Debug.LogWarning($"DefaultUsing Item: {item.itemName}");
-        item.amount--;
+        if (item.amount > 0)
+            item.amount--;
         GameEvents.Instance.ItemsUpdated();
+    }
+
+    public void Use(int i = -1)
+    {
+        if (amount < 1) return;
+
+        if (amount > 0)
+            amount--;
+        GameEvents.Instance.ItemsUpdated(i);
+        onUse?.Invoke(this);
     }
 
     public new ComsumableItem DeepCopy()
     {
-        return new ComsumableItem(id, itemName, description, icon, amount);
+        ComsumableItem copy = new ComsumableItem(id, itemName, description, icon, amount);
+        copy.onUse = onUse;
+        return copy;
     }
 }
 
@@ -106,7 +119,7 @@ public class ImportantItem: Item
     }
 }
 
-public class MaterialItem: Item
+public class MaterialItem: Item 
 {
     public int amount;
 

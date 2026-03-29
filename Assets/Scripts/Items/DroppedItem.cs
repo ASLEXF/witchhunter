@@ -30,6 +30,7 @@ public class DroppedItem : MonoBehaviour
             if (!PlayerInventory.Instance.IsFull)
             {
                 PlayerInventory.Instance.AddItem(gameObject.GetComponent<IItem>().GetItem());
+                //PlayerInventory.Instance.AddItem(gameObject.GetComponent<Item>());
                 Destroy(gameObject);
                 //isDrop = false;
                 //spriteRenderer.enabled = false;

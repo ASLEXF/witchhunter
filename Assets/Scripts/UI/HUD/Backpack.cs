@@ -53,13 +53,13 @@ public class Backpack : Singleton<Backpack>, IDropHandler
 
     private void OnEnable()
     {
-        GameEvents.Instance.OnItemsUpdated += updateItemsUI;
+        GameEvents.Instance.OnItemsUpdated += num => updateItemsUI(num);
     }
 
     private void OnDestroy()
     {
         if (GameEvents.HasInstance)
-        { GameEvents.Instance.OnItemsUpdated -= updateItemsUI; }
+        { GameEvents.Instance.OnItemsUpdated -= num => updateItemsUI(num); }
     }
 
     private void initializeItems()
@@ -76,11 +76,18 @@ public class Backpack : Singleton<Backpack>, IDropHandler
         }
     }
 
-    private void updateItemsUI()
+    private void updateItemsUI(int hint = -1)
     {
-        for (int i = 0; i < maxNumber; i++)
+        if (hint == -1)
         {
-            itemUIs[i].UpdateUI();
+            for (int i = 0; i < maxNumber; i++)
+            {
+                itemUIs[i].UpdateUI();
+            }
+        }
+        else if (hint >= 0 && hint < maxNumber)
+        {
+            itemUIs[hint].UpdateUI();
         }
     }
 
@@ -101,12 +108,12 @@ public class Backpack : Singleton<Backpack>, IDropHandler
         return result;
     }
 
-    public Item FindItem(int itemID)
+    public ItemUI FindItemUI(int itemID)
     {
         for (int i = 0; i < maxNumber; i++)
         {
             if (itemUIs[i].Item != null && itemUIs[i].Item.id == itemID)
-                return itemUIs[i].Item;
+                return itemUIs[i];
         }
 
         return null;

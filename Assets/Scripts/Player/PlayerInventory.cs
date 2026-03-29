@@ -32,11 +32,12 @@ public class PlayerInventory : Singleton<PlayerInventory>
         if (newItem is ComsumableItem)
         {
             ComsumableItem newComsumableItem = (ComsumableItem)newItem;  // cast to avoid nullable check
-            Item? oldItem = FindItem(newComsumableItem.id);
-            if (oldItem != null)
+            ItemUI? itemUI = FindItemUI(newComsumableItem.id);
+            if (itemUI != null)
             {
-                ComsumableItem oldComsumableItem = (ComsumableItem)oldItem;
+                ComsumableItem oldComsumableItem = (ComsumableItem)itemUI.Item;
                 oldComsumableItem.amount += newComsumableItem.amount;
+                itemUI.UpdateAmount(oldComsumableItem.amount);
             }
             else if (!ItemBar.Instance.IsFull)
             {
@@ -54,11 +55,12 @@ public class PlayerInventory : Singleton<PlayerInventory>
         else if (newItem is MaterialItem)
         {
             MaterialItem newMaterialItem = (MaterialItem)newItem;
-            Item? oldItem = FindItem(newItem.id);
-            if (oldItem != null)
+            ItemUI? itemUI = FindItemUI(newItem.id);
+            if (itemUI != null)
             {
-                MaterialItem oldComsumableItem = (MaterialItem)oldItem;
+                MaterialItem oldComsumableItem = (MaterialItem)itemUI.Item;
                 oldComsumableItem.amount += newMaterialItem.amount;
+                itemUI.UpdateAmount(oldComsumableItem.amount);
             }
             else if (!ItemBar.Instance.IsFull)
             {
@@ -124,15 +126,15 @@ public class PlayerInventory : Singleton<PlayerInventory>
         GameEvents.Instance.ItemsUpdated();
     }
 
-    public Item? FindItem(int itemID)
+    public ItemUI? FindItemUI(int itemID)
     {
-        Item itemUI = ItemBar.Instance.FindItem(itemID);
+        ItemUI itemUI = ItemBar.Instance.FindItemUI(itemID);
         if (itemUI != null)
         {
             return itemUI;
         }
 
-        itemUI = Backpack.Instance.FindItem(itemID);
+        itemUI = Backpack.Instance.FindItemUI(itemID);
         if (itemUI != null)
         {
             return itemUI;

@@ -97,11 +97,11 @@ public class GameEvents : Singleton<GameEvents>
 
     #region Items
 
-    public event Action OnItemsUpdated;
+    public event Action<int> OnItemsUpdated;
 
     public event Action OnAddItemWhenInventoryFull;
 
-    public void ItemsUpdated() => OnItemsUpdated?.Invoke();
+    public void ItemsUpdated(int i = -1) => OnItemsUpdated?.Invoke(i);
 
     public void AddItemWhenInventoryFull() => OnAddItemWhenInventoryFull?.Invoke();
 

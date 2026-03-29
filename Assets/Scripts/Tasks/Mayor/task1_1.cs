@@ -30,12 +30,12 @@ public class task1_1 : MonoBehaviour, ITask
 
     public bool CheckFinish()
     {
-        Item item = PlayerInventory.Instance.FindItem(3);  // fang
+        ItemUI itemUI = PlayerInventory.Instance.FindItemUI(3);  // fang
 
-        if (item is null)
+        if (itemUI is null)
             return false;
 
-        MaterialItem materialItem = item as MaterialItem;
+        MaterialItem materialItem = itemUI.Item as MaterialItem;
         if (materialItem.amount > 4)
         {
             materialItem.amount -= 5;
