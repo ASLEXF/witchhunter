@@ -14,11 +14,12 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     private Rigidbody2D rb;
     private BoxCollider2D collider;
 
-    private int posIndex = -1;
+    // arrow position for animation
+    private int posIndex = 0;
     private Vector3[] positions = new Vector3[] {
-        new Vector3(0.227f, 0.578f, 0),
-        new Vector3(0.268f, 0.71f, 0),
-        new Vector3(0.191f, 0.81f, 0)
+        new Vector3(0.352f, 0.656f, 0),  // bow_1
+        new Vector3(0.341f, 0.682f, 0),  // bow_3
+        new Vector3(0.216f, 0.786f, 0)  // bow_4
     };
     private Vector3[] rotations = new Vector3[]
     {
@@ -26,6 +27,8 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         new Vector3(0, 0, 2.385f),
         new Vector3(0, 0, 0)
     };
+
+    // floor height for checking if the arrow should stick onto the ground
     private float _floorHeight = 0;
 
     private void Awake()
@@ -40,6 +43,8 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     {
         spriteRenderer.enabled = false;
         rb.gravityScale = 0;
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = true;
         collider.enabled = false;
     }
 
@@ -47,10 +52,9 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     {
         if (!collider.isActiveAndEnabled) return;
 
-        if (transform.position.y == _floorHeight)
+        if (transform.position.y <= _floorHeight)
         {
-            collider.enabled = false;
-            rb.gravityScale = 0;
+            stickOnto(null);
             return;
         }
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
@@ -67,24 +71,27 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
     public Item GetItem() => item;
 
-    public void UpdatePosition()
+    public void UpdatePosition(bool reset = false)
     {
-        if (posIndex == -1)
+        if (reset)
         {
+            transform.localPosition = positions[0];
+            transform.localRotation = Quaternion.Euler(rotations[0]);
             spriteRenderer.enabled = true;
-            posIndex++;
+            posIndex = 1;
+            return;
         }
-
-        if (posIndex < 2)
+        
+        if (posIndex < 3)
         {
-            transform.position = positions[posIndex];
-            transform.rotation = Quaternion.Euler(rotations[posIndex]);
+            transform.localPosition = positions[posIndex];
+            transform.localRotation = Quaternion.Euler(rotations[posIndex]);
             posIndex++;
         }
         else
         {
             // interupted
-            posIndex = -1;
+            posIndex = 0;
         }
     }
 
@@ -94,8 +101,12 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         {
             force = new Vector2(1, 0);
         }
+
+        transform.SetParent(Environment.Instance.gameObject.transform);
         _floorHeight = floorHeight;
-        spriteRenderer.enabled = true; // debug
+
+        spriteRenderer.enabled = true;
+        rb.isKinematic = false;
         rb.constraints = RigidbodyConstraints2D.None;
         rb.gravityScale = 0.6f;
         collider.enabled = true;
@@ -104,8 +115,24 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
     private void stickOnto(GameObject obj)
     {
-        transform.SetParent(obj.transform);
+        // Set the parent to follow
+        if (obj != null)
+            transform.SetParent(obj.transform);
+        else
+            transform.SetParent(Environment.Instance.gameObject.transform);
+        rb.isKinematic = true;
+
+        // Disable collider and physics
         collider.enabled = false;
         rb.gravityScale = 0;
+        rb.velocity = Vector2.zero;
+
+        // Randomly rotate a bit, if it's not sticking onto ground
+        if (obj != null)
+            transform.rotation = Quaternion.Euler(0, 0, Random.Range(-.75f, .75f));
+
+        // TODO: damage calculation
+        // TODO: Randomly Consumed
+        // TODO: destroy after some time
     }
 }

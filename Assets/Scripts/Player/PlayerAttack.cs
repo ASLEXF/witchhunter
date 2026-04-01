@@ -58,7 +58,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    #region Animation Events
+    #region Animation
 
     private void MeetChargingTime()
     {
@@ -168,9 +168,19 @@ public class PlayerAttack : MonoBehaviour
         PlayerController.Instance.CanAttack = false;
     }
 
+    private void startArchery()
+    {
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(true);
+    }
+
+    private void updateArchery()
+    {
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition();
+    }
+
     private void generateProjectile()
     {
-        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().Shoot(new Vector2(5, 0), transform.position.y);
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().Shoot(new Vector2(10, 0), transform.position.y - 2.0f);
     }
 
     #endregion

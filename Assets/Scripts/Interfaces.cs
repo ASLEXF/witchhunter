@@ -12,7 +12,7 @@ public interface IConsumableItem
 
 public interface IProjectile
 {
-    void UpdatePosition();
+    void UpdatePosition(bool reset = false);
 
     void Shoot(Vector2 force, float floorHeight);
 }
