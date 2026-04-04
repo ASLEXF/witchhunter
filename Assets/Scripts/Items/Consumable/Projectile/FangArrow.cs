@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class IronArrow : MonoBehaviour, IItem, IProjectile
+public class FangArrow : MonoBehaviour, IItem, IProjectile
 {
     public Item item;
     private SpriteRenderer spriteRenderer;
@@ -31,7 +31,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     // floor height for checking if the arrow should stick onto the ground
     private float height = 0;
 
-    //damage
+    // damage
     public int damage = 1;
 
     // random deviation
@@ -40,7 +40,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     [SerializeField] private float rotationDeviation = 0.75f;  // maximum random rotation deviation in degrees
 
     // randomly consumed chance
-    [SerializeField] private float consumedChance = 0.5f;
+    [SerializeField] private float consumedChance = 0.6f;
 
     private void Awake()
     {

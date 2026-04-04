@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class IronArrow : MonoBehaviour, IItem, IProjectile
+public class BoneArrow : MonoBehaviour, IItem, IProjectile
 {
     public Item item;
     private SpriteRenderer spriteRenderer;
@@ -31,16 +31,16 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     // floor height for checking if the arrow should stick onto the ground
     private float height = 0;
 
-    //damage
+    // damage
     public int damage = 1;
 
     // random deviation
     [SerializeField] private float heightDeviation = 1.0f;
-    [SerializeField] private float guidingStrength = 0.5f;  // how much the arrow will be guided towards the target
+    [SerializeField] private float guidingStrength = 0.3f;  // how much the arrow will be guided towards the target
     [SerializeField] private float rotationDeviation = 0.75f;  // maximum random rotation deviation in degrees
 
     // randomly consumed chance
-    [SerializeField] private float consumedChance = 0.5f;
+    [SerializeField] private float consumedChance = 0.8f;
 
     private void Awake()
     {
@@ -89,7 +89,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         if (reset)
         {
             transform.localPosition = new Vector3(
-                positions[0].x * direction.x, 
+                positions[0].x * direction.x,
                 positions[0].y,
                 positions[0].z
             );
@@ -98,7 +98,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
             posIndex = 1;
             return;
         }
-        
+
         if (posIndex < 3)
         {
             transform.localPosition = new Vector3(

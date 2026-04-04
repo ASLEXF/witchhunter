@@ -30,5 +30,17 @@
     {
         "id": 12,
         "prefab": "Assets/Prefabs/Items/cleaver.prefab"
+    },
+    {
+        "id": 13,
+        "prefab": "Assets/Prefabs/Items/arrow_FWI.prefab"
+    },
+    {
+        "id": 14,
+        "prefab": "Assets/Prefabs/Items/arrow_FWF.prefab"
+    },
+    {
+        "id": 15,
+        "prefab": "Assets/Prefabs/Items/arrow_FBF.prefab"
     }
 ]

@@ -170,17 +170,33 @@ public class PlayerAttack : MonoBehaviour
 
     private void startArchery()
     {
-        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(true);
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(PlayerController.Instance.Direction, true);
+        
+        // add arrow to hand
     }
 
     private void updateArchery()
     {
-        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition();
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(PlayerController.Instance.Direction);
+    }
+
+    private Vector2 arrowSpeed;
+
+    private void setArrowSpeedLow()
+    {
+        arrowSpeed = new Vector2(8.0f, 0) * PlayerController.Instance.Direction.x;
+        // TODO: set low damage
+    }
+    
+    private void setArrowSpeedHigh()
+    {
+        arrowSpeed = new Vector2(16.0f, 0) * PlayerController.Instance.Direction.x;
+        // TODO: set high damage
     }
 
     private void generateProjectile()
     {
-        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().Shoot(new Vector2(10, 0), transform.position.y - 2.0f);
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().Shoot(arrowSpeed, transform.position.y - 2.0f);
     }
 
     #endregion

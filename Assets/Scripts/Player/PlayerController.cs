@@ -8,8 +8,24 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : Singleton<PlayerController>
 {
+    private Vector2 direction;
 
-    Vector2 facePosition;
+    public Vector2 Direction
+    {
+        get => direction;
+        set
+        {
+            direction = value;
+            if (direction.x > 0.1f)
+            {
+                _spriteRenderer.flipX = false;
+            }
+            else if (direction.x < -0.1f)
+            {
+                _spriteRenderer.flipX = true;
+            }
+        }
+    }
 
     public Vector3 FormerPosition; // create transition when teleport
 
@@ -125,14 +141,16 @@ public class PlayerController : Singleton<PlayerController>
 
     void TurnThePlayer()
     {
-        float horizontalInput = Input.GetAxisRaw("Horizontal");
-        if (horizontalInput > 0f)
+        // TODO: 4/8 direction support
+        if (_rawInputMovement.x > 0.1f)
         {
             _spriteRenderer.flipX = false;
+            direction = Vector2.right;
         }
-        else if (horizontalInput < 0f)
+        else if (_rawInputMovement.x < -0.1f)
         {
             _spriteRenderer.flipX = true;
+            direction = Vector2.left;
         }
     }
 
