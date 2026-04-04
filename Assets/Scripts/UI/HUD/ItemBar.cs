@@ -1,3 +1,5 @@
+# nullable enable
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -104,7 +106,7 @@ public class ItemBar : Singleton<ItemBar>
         Show();
     }
 
-    public ItemUI FindItemUI(int itemID)
+    public ItemUI? FindItemUI(int itemID)
     {
         for (int i = 0; i < maxNumber; i++)
         {

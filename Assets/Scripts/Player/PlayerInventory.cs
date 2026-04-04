@@ -1,4 +1,3 @@
-/* sample */
 #nullable enable
 
 using System;
@@ -128,7 +127,7 @@ public class PlayerInventory : Singleton<PlayerInventory>
 
     public ItemUI? FindItemUI(int itemID)
     {
-        ItemUI itemUI = ItemBar.Instance.FindItemUI(itemID);
+        ItemUI? itemUI = ItemBar.Instance.FindItemUI(itemID);
         if (itemUI != null)
         {
             return itemUI;
@@ -140,6 +139,28 @@ public class PlayerInventory : Singleton<PlayerInventory>
             return itemUI;
         }
         
+        return null;
+    }
+
+    public Item? FindItem(int itemID, bool inQuickItem = false)
+    {
+        if (inQuickItem)
+        {
+            ItemUI? itemUI = ItemBar.Instance.FindItemUI(itemID);
+            if (itemUI != null)
+            {
+                return itemUI.Item;
+            }
+        }
+        else
+        {
+            ItemUI? itemUI = FindItemUI(itemID);
+            if (itemUI != null)
+            {
+                return itemUI.Item;
+            }
+        }
+
         return null;
     }
 

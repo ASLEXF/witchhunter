@@ -1,3 +1,5 @@
+# nullable enable
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -108,7 +110,7 @@ public class Backpack : Singleton<Backpack>, IDropHandler
         return result;
     }
 
-    public ItemUI FindItemUI(int itemID)
+    public ItemUI? FindItemUI(int itemID)
     {
         for (int i = 0; i < maxNumber; i++)
         {
