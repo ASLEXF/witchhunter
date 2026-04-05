@@ -1,12 +1,14 @@
+#nullable enable
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHand : Singleton<PlayerHand>
 {
-    [SerializeField] private WeaponItem weaponL;
+    [SerializeField] private WeaponItem? weaponL;
 
-    public WeaponItem WeaponL
+    public WeaponItem? WeaponL
     {
         get { return weaponL; }
     }
@@ -16,9 +18,9 @@ public class PlayerHand : Singleton<PlayerHand>
         get { return weaponL == null; }
     }
 
-    [SerializeField] private WeaponItem weaponR;
+    [SerializeField] private WeaponItem? weaponR;
 
-    public WeaponItem WeaponR
+    public WeaponItem? WeaponR
     {
         get { return weaponR; }
     }
@@ -31,21 +33,28 @@ public class PlayerHand : Singleton<PlayerHand>
     public void EquipL(WeaponItem item)
     {
         weaponL = item;
-        GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
+    }
+
+    public void UnequipL()
+    {
+        weaponL = null;
     }
 
     public void EquipR(WeaponItem item)
     {
         weaponR = item;
-        GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
+    }
+
+    public void UnequipR()
+    {
+        weaponR = null;
     }
 
     public void SwapLR()
     {
-        WeaponItem temp = weaponL;
+        WeaponItem? temp = weaponL;
         weaponL = weaponR;
         weaponR = temp;
-        GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
     }
 
 }

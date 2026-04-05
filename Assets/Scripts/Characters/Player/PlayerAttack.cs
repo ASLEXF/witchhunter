@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     Animator animator;
-    Rigidbody2D rb;
 
     Vector3 attackDirection;
     Coroutine attackResetter;
@@ -21,12 +20,9 @@ public class PlayerAttack : MonoBehaviour
     //private float moveDistance = 0f;
     private float elapsedTime = 0f;
 
-    private int attackCounter = 0;
-
     void Awake()
     {
         animator = GetComponent<Animator>();
-        //rb = PlayerController.Instance.GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -58,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    #region Animation
+    #region Triggered by animation
 
     private void MeetChargingTime()
     {
@@ -68,7 +64,9 @@ public class PlayerAttack : MonoBehaviour
 
     public void AttackL()
     {
-        animator.SetTrigger(Animator.StringToHash("SwordAttack"));
+        if (PlayerHand.Instance.IsLEmpty) return;
+
+        PlayerHand.Instance.WeaponL.Attack();
     }
 
     public void ChargingAttackL()
@@ -215,6 +213,8 @@ public class PlayerAttack : MonoBehaviour
     #endregion
 
     #region Counter
+
+    private int attackCounter = 0;
 
     public void ResetAttackCounter()
     {
