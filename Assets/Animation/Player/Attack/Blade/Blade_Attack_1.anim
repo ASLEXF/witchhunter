@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword_Charge_Attack
+  m_Name: Blade_Attack_1
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: c9237b750fee0ce40891c8b40cc7ca4c, type: 3}
-    - time: 0.18333334
-      value: {fileID: 21300000, guid: f82c09788b3e9004d98f343141190dd6, type: 3}
-    - time: 0.4
-      value: {fileID: 21300000, guid: 99b8910c70cde5846a19ec53da89c47b, type: 3}
+      value: {fileID: 21300000, guid: cb96d995e921ae9438f8462f246e84e0, type: 3}
+    - time: 0.23333333
+      value: {fileID: 21300000, guid: f7c04282afecb444cada7fa695eff5cc, type: 3}
+    - time: 0.3
+      value: {fileID: 21300000, guid: f515852e7a4ef12459d1c72f85d6907c, type: 3}
+    - time: 0.43333334
+      value: {fileID: 21300000, guid: 2d7226c4496a1424397974e912e08f8a, type: 3}
     - time: 0.5833333
-      value: {fileID: 21300000, guid: 76efb3a8807161f4dbfb1a2845e56917, type: 3}
+      value: {fileID: 21300000, guid: 2d7226c4496a1424397974e912e08f8a, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,10 +52,11 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: c9237b750fee0ce40891c8b40cc7ca4c, type: 3}
-    - {fileID: 21300000, guid: f82c09788b3e9004d98f343141190dd6, type: 3}
-    - {fileID: 21300000, guid: 99b8910c70cde5846a19ec53da89c47b, type: 3}
-    - {fileID: 21300000, guid: 76efb3a8807161f4dbfb1a2845e56917, type: 3}
+    - {fileID: 21300000, guid: cb96d995e921ae9438f8462f246e84e0, type: 3}
+    - {fileID: 21300000, guid: f7c04282afecb444cada7fa695eff5cc, type: 3}
+    - {fileID: 21300000, guid: f515852e7a4ef12459d1c72f85d6907c, type: 3}
+    - {fileID: 21300000, guid: 2d7226c4496a1424397974e912e08f8a, type: 3}
+    - {fileID: 21300000, guid: 2d7226c4496a1424397974e912e08f8a, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -94,27 +97,41 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.033333335
-    functionName: EnableSwordChargeAttackTrigger
+    functionName: MoveOnAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.18333334
-    functionName: DisableSwordChargeAttackTrigger
+  - time: 0.23333333
+    functionName: EnableSwordAttack1Trigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.38333333
+  - time: 0.3
+    functionName: AttackEndHandler
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.31666666
+    functionName: DisableSwordAttack1Trigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.53333336
     functionName: canAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.4
+  - time: 0.5833333
     functionName: canMove
     data: 
     objectReferenceParameter: {fileID: 0}

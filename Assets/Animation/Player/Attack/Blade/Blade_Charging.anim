@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Sword_Attack_1
+  m_Name: Blade_Charging
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,15 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: cb96d995e921ae9438f8462f246e84e0, type: 3}
-    - time: 0.23333333
-      value: {fileID: 21300000, guid: f7c04282afecb444cada7fa695eff5cc, type: 3}
-    - time: 0.3
-      value: {fileID: 21300000, guid: f515852e7a4ef12459d1c72f85d6907c, type: 3}
-    - time: 0.43333334
-      value: {fileID: 21300000, guid: 2d7226c4496a1424397974e912e08f8a, type: 3}
-    - time: 0.5833333
-      value: {fileID: 21300000, guid: 2d7226c4496a1424397974e912e08f8a, type: 3}
+      value: {fileID: 21300000, guid: 05be3f145a4a58646bdc7db85e80ee2b, type: 3}
+    - time: 0.11666667
+      value: {fileID: 21300000, guid: 687e6e67b6dd79d47a04b7489bb2c0bd, type: 3}
+    - time: 1
+      value: {fileID: 21300000, guid: 687e6e67b6dd79d47a04b7489bb2c0bd, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -52,17 +48,15 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: cb96d995e921ae9438f8462f246e84e0, type: 3}
-    - {fileID: 21300000, guid: f7c04282afecb444cada7fa695eff5cc, type: 3}
-    - {fileID: 21300000, guid: f515852e7a4ef12459d1c72f85d6907c, type: 3}
-    - {fileID: 21300000, guid: 2d7226c4496a1424397974e912e08f8a, type: 3}
-    - {fileID: 21300000, guid: 2d7226c4496a1424397974e912e08f8a, type: 3}
+    - {fileID: 21300000, guid: 05be3f145a4a58646bdc7db85e80ee2b, type: 3}
+    - {fileID: 21300000, guid: 687e6e67b6dd79d47a04b7489bb2c0bd, type: 3}
+    - {fileID: 21300000, guid: 687e6e67b6dd79d47a04b7489bb2c0bd, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.59999996
+    m_StopTime: 1.0166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -83,55 +77,20 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: stopAttacking
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.016666668
     functionName: stopMovement
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.033333335
-    functionName: MoveOnAttack
+  - time: 0.11666667
+    functionName: MeetChargingTime
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.23333333
-    functionName: EnableSwordAttack1Trigger
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.3
-    functionName: AttackEndHandler
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.31666666
-    functionName: DisableSwordAttack1Trigger
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.53333336
-    functionName: canAttack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5833333
+  - time: 1
     functionName: canMove
     data: 
     objectReferenceParameter: {fileID: 0}
