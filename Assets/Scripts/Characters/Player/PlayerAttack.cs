@@ -9,11 +9,6 @@ public class PlayerAttack : MonoBehaviour
     Animator animator;
 
     Vector3 attackDirection;
-    Coroutine attackResetter;
-
-    public GameObject SwordAttack1;
-    public GameObject SwordAttack2;
-    public GameObject SwordChargeAttack;
 
     public float moveDuration = 0f;
     public float moveSpeed = 0f;
@@ -54,6 +49,58 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    #region Called by input
+
+    public void AttackL()
+    {
+        if (PlayerHand.Instance.IsLEmpty) return;
+
+        weaponAnimationStructure = PlayerHand.Instance.WeaponL.Attack();
+        handleWeaponAnimationStructure();
+    }
+
+    public void ChargingAttackL()
+    {
+        if (PlayerHand.Instance.IsLEmpty) return;
+
+        weaponAnimationStructure = PlayerHand.Instance.WeaponL.ChargingAttack();
+        handleWeaponAnimationStructure();
+    }
+
+    public void ChargeAttackL(float chargingTime)
+    {
+        if (PlayerHand.Instance.IsLEmpty) return;
+
+        weaponAnimationStructure = PlayerHand.Instance.WeaponL.ChargeAttack();
+        handleWeaponAnimationStructure();
+    }
+
+    public void AttackR()
+    {
+        if (PlayerHand.Instance.IsREmpty) return;
+
+        weaponAnimationStructure = PlayerHand.Instance.WeaponR.Attack();
+        handleWeaponAnimationStructure();
+    }
+
+    public void ChargingAttackR()
+    {
+        if (PlayerHand.Instance.IsREmpty) return;
+
+        weaponAnimationStructure = PlayerHand.Instance.WeaponR.ChargingAttack();
+        handleWeaponAnimationStructure();
+    }
+
+    public void ChargeAttackR(float chargingTime)
+    {
+        if (PlayerHand.Instance.IsREmpty) return;
+
+        weaponAnimationStructure = PlayerHand.Instance.WeaponR.ChargeAttack();
+        handleWeaponAnimationStructure();
+    }
+
+    #endregion
+
     #region Triggered by animation
 
     private void MeetChargingTime()
@@ -62,72 +109,14 @@ public class PlayerAttack : MonoBehaviour
         animator.SetTrigger(Animator.StringToHash("MeetChargingTime"));
     }
 
-    public void AttackL()
-    {
-        if (PlayerHand.Instance.IsLEmpty) return;
-
-        PlayerHand.Instance.WeaponL.Attack();
-    }
-
-    public void ChargingAttackL()
-    {
-        animator.SetTrigger(Animator.StringToHash("SwordCharging"));
-    }
-
-    public void ChargeAttackL(float chargingTime)
-    {
-        animator.SetTrigger(Animator.StringToHash("SwordChargeAttack"));
-    }
-
     public void StopChargingL()
     {
         //animator.SetBool(Animator.StringToHash("SwordCharging"), false);
     }
 
-    public void AttackR()
-    {
-        //animator.SetTrigger(Animator.StringToHash("Support"));
-    }
-
-    public void ChargingAttackR()
-    {
-        animator.SetTrigger(Animator.StringToHash("BowCharging"));
-    }
-
-    public void ChargeAttackR(float chargingTime)
-    {
-        animator.SetTrigger(Animator.StringToHash("BowShoot"));
-    }
-
     public void StopChargingR()
     {
         //animator.SetBool(Animator.StringToHash("BowCharging"), false);
-    }
-
-    public void AttackEndHandler()
-    {
-        if (attackCounter < 1)
-        {
-            attackCounter++;
-            if (attackResetter != null) StopCoroutine(attackResetter);
-            attackResetter = StartCoroutine(resetAttackCounter());
-        }
-        else
-        {
-            attackCounter = 0;
-            if (attackResetter != null) StopCoroutine(attackResetter);
-        }
-
-        animator.SetInteger("SwordCounter", attackCounter);
-
-        //DisableAttackTrigger();
-    }
-
-    IEnumerator resetAttackCounter()
-    {
-        yield return new WaitForSeconds(2);
-
-        ResetAttackCounter();
     }
 
     public void MoveOnAttack()
@@ -166,6 +155,21 @@ public class PlayerAttack : MonoBehaviour
         PlayerController.Instance.CanAttack = false;
     }
 
+    private int comboCount;
+
+    public void AttackEndHandler()
+    {
+        if (weaponAnimationStructure.integerName == null) return;
+
+        attackCounter++;
+        if (attackResetter != null) StopCoroutine(attackResetter);
+        attackResetter = StartCoroutine(resetAttackCounter());
+        if (attackCounter >= comboCount)
+            attackCounter = 0;
+
+        animator.SetInteger(weaponAnimationStructure.integerName, attackCounter);
+    }
+
     private void startArchery()
     {
         transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(PlayerController.Instance.Direction, true);
@@ -197,9 +201,11 @@ public class PlayerAttack : MonoBehaviour
         transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().Shoot(arrowSpeed, transform.position.y - 2.0f);
     }
 
-    #endregion
+    #region Triggers
 
-    #region Trigger
+    public GameObject SwordAttack1;
+    public GameObject SwordAttack2;
+    public GameObject SwordChargeAttack;
 
     void EnableSwordAttack1Trigger() => SwordAttack1.SetActive(true);
     void EnableSwordAttack2Trigger() => SwordAttack2.SetActive(true);
@@ -209,28 +215,46 @@ public class PlayerAttack : MonoBehaviour
     void DisableSwordAttack2Trigger() => SwordAttack2.SetActive(false);
     void DisableSwordChargeAttackTrigger() => SwordChargeAttack.SetActive(false);
 
+    #endregion
 
     #endregion
 
     #region Counter
 
     private int attackCounter = 0;
+    Coroutine attackResetter;
 
     public void ResetAttackCounter()
     {
         attackCounter = 0;
-        animator.SetInteger("SwordCounter", attackCounter);
+        animator.SetInteger(weaponAnimationStructure.integerName, attackCounter);
+    }
+
+    IEnumerator resetAttackCounter()
+    {
+        yield return new WaitForSeconds(2);
+
+        ResetAttackCounter();
     }
 
     #endregion
 
-    #region Weapon
+    #region Trigger Animation
 
-    //private WeaponBase GetWeapon(int index)
-    //{
-    //    WeaponBase weapon = null;
-    //    return weapon;
-    //}
+    private WeaponAnimationStructure weaponAnimationStructure;
+
+    private void handleWeaponAnimationStructure()
+    {
+        if (!weaponAnimationStructure.hasAttack) return;
+
+        if (weaponAnimationStructure.integerName != null)
+        {
+            comboCount = weaponAnimationStructure.comboCount;
+        }
+
+        if (weaponAnimationStructure.triggerName != null)
+            animator.SetTrigger(weaponAnimationStructure.triggerName);
+    }
 
     #endregion
 }

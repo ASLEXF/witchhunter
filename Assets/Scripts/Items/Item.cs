@@ -1,7 +1,7 @@
 /* sample */
 using UnityEngine;
 
-
+[SerializeField]
 public class Item
 {
     public int id;
@@ -11,9 +11,10 @@ public class Item
     public bool isConsumable;
     public bool isSalable;
     public bool isMaterial;
+    public bool isThrowable;
     public int prise;
 
-    public Item(int id = 0, string name = "test", string description = "test", string icon = "", bool isConsumable = false, bool isSalable = false, int prise = 0)
+    public Item(int id = 0, string name = "test", string description = "test", string icon = "", bool isConsumable = false, bool isSalable = false, bool isThrowable = true, int prise = 0)
     {
         this.id = id;
         this.itemName = name;
@@ -30,45 +31,102 @@ public class Item
     }
 }
 
-
+[SerializeField]
 public class WeaponItem: Item
 {
-    public int damage;
-    public int additionalDamage;  // 用于计算蓄力伤害
-    public float distance;  // 远程攻击距离
-    public float attackInternal;  // 攻击最小间隔
-    public bool isTurnInstant;  // 朝不同方向攻击时，是否瞬间转向
-    public bool hasChargingTime;  // 是否有蓄力过程
-    public float maxChargingTime;  // 最大蓄力时长
-    public int attackNumber;  // 最大攻击段数
-
-    public WeaponItem(int id, string itemName, string description, string icon, int damage, int additionalDamage, float distance, float attackInternal, bool isTurnInstant, bool hasChargingTime, float maxChargeTime, int attackNumber) : base(id, itemName, description, icon, false, false, 0)
+    public struct WeaponAttackInfo
     {
-        this.damage = damage;
-        this.additionalDamage = additionalDamage;
-        this.distance = distance;
-        this.attackInternal = attackInternal;
-        this.isTurnInstant = isTurnInstant;
-        this.hasChargingTime = hasChargingTime;
-        this.maxChargingTime = maxChargeTime;
-        this.attackNumber = attackNumber;
+        public bool hasAttack;
+        public int damage;
+        public int comboCount;
+        public string animationTriggerName;
+        public string animationIntegerName;
     }
 
-    public int GetDamage(float intervalSeconds)
+    public struct WeaponChargingAttackInfo
     {
-        if (hasChargingTime)
-        {
-            return Mathf.RoundToInt(intervalSeconds > maxChargingTime ? additionalDamage : damage + intervalSeconds * additionalDamage / maxChargingTime);
-        }
-        else
-        {
-            return damage;
-        }
+        public bool hasAttack;
+        public int damage;
+        public int comboCount;
+        public string animationTriggerName;
     }
+
+    public struct WeaponChargeAttackInfo
+    {
+        public bool hasAttack;
+        public int damage;
+        public int additionalDamage;
+        public int comboCount;
+        public string animationTriggerName;
+    }
+
+    public WeaponAttackInfo weaponAttackInfo;
+    public WeaponChargingAttackInfo weaponChargingAttackInfo;
+    public WeaponChargeAttackInfo weaponChargeAttackInfo;
+
+    public WeaponItem(int id, string itemName, string description, string icon, WeaponAttackInfo weaponAttackInfo,WeaponChargingAttackInfo weaponChargingAttackInfo, WeaponChargeAttackInfo weaponChargeAttackInfo) : base(id, itemName, description, icon, false, false, false, 0)
+    {
+        this.weaponAttackInfo = weaponAttackInfo;
+        this.weaponChargeAttackInfo = weaponChargeAttackInfo;
+    }
+
+    #region Attack
+
+
+    public WeaponAnimationStructure Attack()
+    {
+        return new WeaponAnimationStructure
+        {
+            hasAttack = weaponAttackInfo.hasAttack,
+            damage = weaponAttackInfo.damage,
+            comboCount = weaponAttackInfo.comboCount,
+            triggerName = weaponAttackInfo.animationTriggerName,
+            integerName = weaponAttackInfo.animationIntegerName
+        };
+    }
+
+    #endregion
+
+    #region Charge Attack
+
+    public WeaponAnimationStructure ChargingAttack()
+    {
+        return new WeaponAnimationStructure
+        {
+            hasAttack = weaponChargingAttackInfo.hasAttack,
+            damage = weaponChargingAttackInfo.damage,
+            triggerName = weaponChargingAttackInfo.animationTriggerName
+        };
+    }
+
+    public WeaponAnimationStructure ChargeAttack()
+    {
+        return new WeaponAnimationStructure
+        {
+            hasAttack = weaponChargeAttackInfo.hasAttack,
+            damage = weaponChargeAttackInfo.damage + weaponChargeAttackInfo.additionalDamage,
+            triggerName = weaponChargeAttackInfo.animationTriggerName
+        };
+    }
+
+    #endregion
+
+    //public int GetDamage(float intervalSeconds)
+    //{
+    //    if (weaponChargeAttackInfo.hasChargeAttack)
+    //    {
+    //        return Mathf.RoundToInt(intervalSeconds > maxChargingTime ? additionalDamage : damage + intervalSeconds * additionalDamage / maxChargingTime);
+    //    }
+    //    else
+    //    {
+    //        return weaponAttackInfo.damage;
+    //    }
+    //}
 
     public new WeaponItem DeepCopy()
     {
-        return new WeaponItem(id, itemName, description, icon, damage, additionalDamage, distance, attackInternal, isTurnInstant, hasChargingTime, maxChargingTime, attackNumber);
+        WeaponItem copy = new WeaponItem(id, itemName, description, icon, weaponAttackInfo, weaponChargingAttackInfo, weaponChargeAttackInfo);
+        return copy;
     }
 }
 
@@ -76,7 +134,7 @@ public class ConsumableItem: Item
 {
     public int amount;
 
-    public ConsumableItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true, 1)
+    public ConsumableItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true, true, 1)
     {
         this.amount = amount;
     }
@@ -110,7 +168,7 @@ public class ConsumableItem: Item
 
 public class ImportantItem: Item
 {
-    public ImportantItem(int id, string name, string description, string icon) : base(id, name, description, icon, false, false, 0)
+    public ImportantItem(int id, string name, string description, string icon) : base(id, name, description, icon, false, false, false, 0)
     { }
 
     public new ImportantItem DeepCopy()
@@ -123,7 +181,7 @@ public class MaterialItem: Item
 {
     public int amount;
 
-    public MaterialItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true, 1)
+    public MaterialItem(int id, string name, string description, string icon, int amount) : base(id, name, description, icon, true, true, true, 1)
     {
         this.amount = amount;
     }

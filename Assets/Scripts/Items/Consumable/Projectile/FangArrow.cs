@@ -44,7 +44,7 @@ public class FangArrow : MonoBehaviour, IItem, IProjectile
 
     private void Awake()
     {
-        item = new Item(13, "iron arrow", "", "Assets/Addressables/Icons/iron_arrow.png", false, true, 2);
+        item = new ConsumableItem(13, "iron arrow", "", "Assets/Addressables/Icons/iron_arrow.png", 1);
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();

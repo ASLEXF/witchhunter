@@ -29,7 +29,6 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 consumableItem.Use(itemUI.Index);
-                GameEvents.Instance.ItemsUpdated();  // TODO: optimize here
             }
 
             return;
@@ -42,7 +41,7 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
                 if (PlayerHand.Instance.WeaponL != null 
                     && itemUI.Item.id == PlayerHand.Instance.WeaponL.id)
                 {
-                    // pass
+                    PlayerHand.Instance.UnequipL();
                 }
                 else if (PlayerHand.Instance.WeaponR != null 
                     && itemUI.Item.id == PlayerHand.Instance.WeaponR.id)
@@ -59,7 +58,7 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
                 if (PlayerHand.Instance.WeaponR != null 
                     && itemUI.Item.id == PlayerHand.Instance.WeaponR.id)
                 {
-                    // pass
+                    PlayerHand.Instance.UnequipR();
                 }
                 else if (PlayerHand.Instance.WeaponL != null 
                     && itemUI.Item.id == PlayerHand.Instance.WeaponL.id)
@@ -72,6 +71,8 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
                 }
             }
         }
+
+        GameEvents.Instance.ItemsUpdated(itemUI.Index);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

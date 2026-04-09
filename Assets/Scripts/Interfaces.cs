@@ -5,14 +5,26 @@ public interface IItem
     Item GetItem();
 }
 
-public interface IConsumableItem
+public interface IConsumableItem: IItem
 {
-    void UseItem();
+    //void UseItem();
 }
 
-public interface IProjectile
+public interface IWeaponItem: IItem
+{
+    //WeaponAnimationStructure Attack();
+
+    //WeaponAnimationStructure ChargingAttack();
+}
+
+public interface IProjectile: IItem
 {
     void UpdatePosition(Vector2 direction, bool reset = false);
 
     void Shoot(Vector2 force, float floorHeight);
+}
+
+public interface  ICharacterAnimation
+{
+    void AttackAnimation();
 }

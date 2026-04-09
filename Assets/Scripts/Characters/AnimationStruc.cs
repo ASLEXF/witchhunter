@@ -9,6 +9,9 @@ public struct AnimationStruc
 [System.Serializable]
 public struct WeaponAnimationStructure
 {
+    public bool hasAttack;
     public int damage;
+    public int comboCount;
     public string? triggerName;
+    public string? integerName;
 }
