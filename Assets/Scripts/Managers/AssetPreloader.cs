@@ -8,7 +8,7 @@ public static class AssetPreloader
     {
         string[] icons =
         {
-            "Assets/Addressables/Icons/SquareWithBorder.png",
+            "Icons/SquareWithBorder.png",
         };
 
         foreach (string icon in icons)

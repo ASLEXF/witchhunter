@@ -12,7 +12,7 @@ public class cleaver : MonoBehaviour, IItem
             12, 
             "cleaver", 
             "found in the basement", 
-            "Assets/Addressables/Icons/cleaver.png",
+            "Icons/cleaver.png",
             new WeaponItem.WeaponAttackInfo
             {
                 hasAttack = true,

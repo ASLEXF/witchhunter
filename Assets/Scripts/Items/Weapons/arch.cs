@@ -12,7 +12,7 @@ public class arch : MonoBehaviour, IWeaponItem
             11,
             "arch",
             "initial weapon",
-            "Assets/Addressables/Icons/arch.png",
+            "Icons/arch.png",
             new WeaponItem.WeaponAttackInfo
             {
                 hasAttack = false,

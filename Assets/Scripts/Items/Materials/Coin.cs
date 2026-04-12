@@ -8,7 +8,7 @@ public class Coin : MonoBehaviour, IItem
 
     private void Awake()
     {
-        item = new MaterialItem(1, "Coin", "collected then buy things from mechant", "Assets/Addressables/Icons/coin1.png", 1);
+        item = new MaterialItem(1, "Coin", "collected then buy things from mechant", "Icons/coin1.png", 1);
     }
 
     public Item GetItem() => item;

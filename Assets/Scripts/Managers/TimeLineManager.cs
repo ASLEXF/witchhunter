@@ -120,7 +120,7 @@ public class TimeLineManager : Singleton<TimeLineManager>
 
     public void LoadPlayableAsset(string fileName)
     {
-        string file = "Assets/Addressables/Timelines/" + fileName + ".playable";
+        string file = "Timelines/" + fileName + ".playable";
         Addressables.LoadAssetAsync<PlayableAsset>(file).Completed += handle =>
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)

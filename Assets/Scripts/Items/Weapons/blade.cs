@@ -12,7 +12,7 @@ public class blade : MonoBehaviour, IWeaponItem
             10, 
             "blade", 
             "initial weapon", 
-            "Assets/Addressables/Icons/blade.png",
+            "Icons/blade.png",
             new WeaponItem.WeaponAttackInfo
             {
                 hasAttack = true,
