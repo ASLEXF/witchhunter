@@ -18,22 +18,27 @@ MonoBehaviour:
   m_GUID: 422ab638b77c80e4da38f8efa432ddec
   m_SerializeEntries:
   - m_GUID: 06f083aa7e57c724aa7078f0b2753e28
-    m_Address: Assets/Addressables/Timelines
+    m_Address: Timelines
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1d99254faf650ac4aa8f1e21762b87d4
-    m_Address: Assets/Prefabs/Items
+    m_Address: Prefabs/Items
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2cade99675b8d154d8b019ce6623a357
-    m_Address: Assets/Addressables/Icons
+    m_Address: Icons
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 825a36042eb72e64598842cf3720a9f5
+    m_Address: Camera
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bd49876661662e340bfd6d8ad59e67b9
-    m_Address: Assets/Addressables/StoryScripts
+    m_Address: StoryScripts
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
