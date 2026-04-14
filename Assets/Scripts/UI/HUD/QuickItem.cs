@@ -38,37 +38,19 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                if (PlayerHand.Instance.WeaponL != null 
-                    && itemUI.Item.id == PlayerHand.Instance.WeaponL.id)
-                {
-                    PlayerHand.Instance.UnequipL();
-                }
-                else if (PlayerHand.Instance.WeaponR != null 
-                    && itemUI.Item.id == PlayerHand.Instance.WeaponR.id)
-                {
-                    PlayerHand.Instance.SwapLR();
-                }
-                else
-                {
-                    PlayerHand.Instance.EquipL(itemUI.Item as WeaponItem);
-                }
+                PlayerHand.Instance.EquipL(itemUI.Item as WeaponItem);
             }
             else if (eventData.button == PointerEventData.InputButton.Right)
             {
-                if (PlayerHand.Instance.WeaponR != null 
-                    && itemUI.Item.id == PlayerHand.Instance.WeaponR.id)
-                {
-                    PlayerHand.Instance.UnequipR();
-                }
-                else if (PlayerHand.Instance.WeaponL != null 
-                    && itemUI.Item.id == PlayerHand.Instance.WeaponL.id)
-                {
-                    PlayerHand.Instance.SwapLR();
-                }
-                else
-                {
-                    PlayerHand.Instance.EquipR(itemUI.Item as WeaponItem);
-                }
+                PlayerHand.Instance.EquipR(itemUI.Item as WeaponItem);
+            }
+        }
+
+        if (itemUI.Item is ProjectileItem)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                PlayerHand.Instance.EquipProjectile(itemUI.Item as ProjectileItem);
             }
         }
 

@@ -85,13 +85,13 @@ public class ScriptReader : Singleton<ScriptReader>
 
     public void LoadTextAsset(string fileName)
     {
-        string file = "Assets/Addressables/StoryScripts/" + fileName + ".txt";
+        string file = "StoryScripts/" + fileName + ".txt";
         Addressables.LoadAssetAsync<TextAsset>(file).Completed += handle => OnTextAssetLoaded(handle, fileName);
     }
 
     public void LoadAndStartTextAsset(string fileName)
     {
-        string file = "Assets/Addressables/StoryScripts/" + fileName + ".txt";
+        string file = "StoryScripts/" + fileName + ".txt";
         Addressables.LoadAssetAsync<TextAsset>(file).Completed += handle => OnTextAssetLoadedThenStart(handle, fileName);
     }
 

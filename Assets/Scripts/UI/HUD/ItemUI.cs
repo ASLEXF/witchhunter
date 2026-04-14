@@ -6,7 +6,6 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 [RequireComponent(typeof(Image))]
 public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointerUpHandler
@@ -47,6 +46,13 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         draggableItem = GetComponent<DraggableItem>();
     }
 
+    private void Start()
+    {
+        draggableItem.enabled = false;
+
+        _index = transform.GetSiblingIndex();
+    }
+
     private void OnDisable()
     {
         // Player Input: Ensure we don't permanently block attacks if the UI is hidden while clicking.
@@ -56,11 +62,9 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         }
     }
 
-    private void Start()
+    private void OnDestroy()
     {
-        draggableItem.enabled = false;
-
-        _index = transform.GetSiblingIndex();
+        Addressables.Release(_spriteHandle);
     }
 
     public void UpdateUI()
@@ -75,6 +79,10 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
             {
                 UpdateAmount(0);
             }
+            else if (_item is ProjectileItem p && p.amount <= 0)
+            {
+                UpdateAmount(0);
+            }
             else
             {
                 updateSprite(_item.icon);
@@ -86,6 +94,10 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
                 {
                     UpdateAmount(materialItem.amount);
                 }
+                else if (_item is ProjectileItem projectileItem)
+                {
+                    UpdateAmount(projectileItem.amount);
+                }
                 else if (_item == PlayerHand.Instance.WeaponL)
                 {
                     _amount.text = "L";
@@ -93,6 +105,10 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
                 else if (_item == PlayerHand.Instance.WeaponR)
                 {
                     _amount.text = "R";
+                }
+                else if (_item == PlayerHand.Instance.Projectile)
+                {
+                    _amount.text = "E";
                 }
                 else
                 {
@@ -103,7 +119,7 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         }
         else
         {
-            updateSprite("Assets/Addressables/Icons/SquareWithBorder.png");
+            updateSprite("Icons/SquareWithBorder.png");
             _item = null;
             _amount.text = "";
             draggableItem.enabled = false;
@@ -111,12 +127,15 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         updateKey();
     }
 
+    private AsyncOperationHandle<Sprite> _spriteHandle;
+
     private void updateSprite(string icon)
     {
         if (icon != null && icon != "")
         {
             Addressables.LoadAssetAsync<Sprite>(icon).Completed += handle =>
             {
+                _spriteHandle = handle;
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
                     image.sprite = handle.Result;
@@ -142,7 +161,7 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         }
         else
         {
-            updateSprite("Assets/Addressables/Icons/SquareWithBorder.png");
+            updateSprite("Icons/SquareWithBorder.png");
             _item = null;
             _amount.text = "";
             draggableItem.enabled = false;

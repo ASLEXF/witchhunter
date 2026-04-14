@@ -8,7 +8,7 @@ public class RawMeat : MonoBehaviour, IItem
 
     private void Awake()
     {
-        item = new ConsumableItem(2, "raw meat", "heal 1 hp", "Assets/Addressables/Icons/raw_meat.png", 1);
+        item = new ConsumableItem(2, "raw meat", "heal 1 hp", "Icons/raw_meat.png", 1);
         item.onUse = item =>
         {
             PlayerHealth.Instance.Heal(1);

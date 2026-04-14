@@ -8,7 +8,7 @@ public class Potion : MonoBehaviour, IItem
 
     private void Awake()
     {
-        item = new ConsumableItem(9, "Potion", "add 1 max hp", "Assets/Addressables/Icons/potion.png", 1);
+        item = new ConsumableItem(9, "Potion", "add 1 max hp", "Icons/potion.png", 1);
         item.onUse = item => { PlayerHealth.Instance.AddMaxHealth(1); };
     }
 
@@ -16,15 +16,3 @@ public class Potion : MonoBehaviour, IItem
 
     public Item GetItem() => item;
 }
-
-//public class Potion : ComsumableItem
-//{
-//    public Potion() : base(9, "Potion", "add 1 max hp", "Assets/Addressables/Icons/potion.png", 1)
-//    {
-//    }
-
-//    public override void Use()
-//    {
-//        PlayerHealth.Instance.AddMaxHealth(1);
-//    }
-//}
