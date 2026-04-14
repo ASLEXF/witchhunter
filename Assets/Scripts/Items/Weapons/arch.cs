@@ -25,7 +25,8 @@ public class arch : MonoBehaviour, IWeaponItem
                 hasAttack = true,
                 damage = 0,
                 comboCount = 1,
-                animationTriggerName = "BowCharging"
+                animationTriggerName = "BowCharging",
+                attackCondition = AttackCondition.HasArrow
             },
             new WeaponItem.WeaponChargeAttackInfo
             {
@@ -33,7 +34,8 @@ public class arch : MonoBehaviour, IWeaponItem
                 damage = 1,
                 additionalDamage = 1,
                 comboCount = 1,
-                animationTriggerName = "BowShoot"
+                animationTriggerName = "BowShoot",
+                attackCondition = AttackCondition.HasArrow
             }
         );
     }

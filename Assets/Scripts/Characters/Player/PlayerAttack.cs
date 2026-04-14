@@ -172,9 +172,9 @@ public class PlayerAttack : MonoBehaviour
 
     private void startArchery()
     {
+        if (PlayerHand.Instance.IsProjectileEmpty) return;
+
         transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(PlayerController.Instance.Direction, true);
-        
-        // add arrow to hand
     }
 
     private void updateArchery()
@@ -252,8 +252,28 @@ public class PlayerAttack : MonoBehaviour
             comboCount = weaponAnimationStructure.comboCount;
         }
 
-        if (weaponAnimationStructure.triggerName != null)
+        if (weaponAnimationStructure.triggerName != null &&
+            checkCondition(weaponAnimationStructure.attackCondition))
+        {
+            if (weaponAnimationStructure.attackCondition == AttackCondition.HasArrow)
+            {
+                startArchery();
+            }
             animator.SetTrigger(weaponAnimationStructure.triggerName);
+        }
+            
+    }
+
+    private bool checkCondition(AttackCondition? attackCondition)
+    {
+        if (attackCondition == null) return true;
+        switch (attackCondition)
+        {
+            case AttackCondition.HasArrow:
+                return !PlayerHand.Instance.IsProjectileEmpty;
+            default:
+                return true;
+        }
     }
 
     #endregion

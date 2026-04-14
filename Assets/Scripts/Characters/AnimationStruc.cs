@@ -14,4 +14,5 @@ public struct WeaponAnimationStructure
     public int comboCount;
     public string? triggerName;
     public string? integerName;
+    public AttackCondition? attackCondition;
 }
