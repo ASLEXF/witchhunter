@@ -14,6 +14,8 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     private Rigidbody2D rb;
     private BoxCollider2D _collider;
 
+    public bool isShooting { get; private set; } = false;
+
     // arrow position for animation
     private int posIndex = 0;
     private Vector3[] positions = new Vector3[] {
@@ -44,7 +46,14 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
     private void Awake()
     {
-        item = new ConsumableItem(13, "iron arrow", "", "Assets/Addressables/Icons/iron_arrow.png", 1);
+        item = new ProjectileItem(
+            13, 
+            "iron arrow", 
+            "", 
+            "Icons/iron_arrow.png", 
+            "Prefabs/Items/iron_arrow.prefab",
+            1
+        );
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();
@@ -52,16 +61,14 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
     private void Start()
     {
-        spriteRenderer.enabled = false;
         rb.gravityScale = 0;
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
-        _collider.enabled = false;
     }
 
     private void FixedUpdate()
     {
-        if (!_collider.isActiveAndEnabled) return;
+        if (!_collider.isActiveAndEnabled || !isShooting) return;
 
         if (transform.position.y <= height)
         {

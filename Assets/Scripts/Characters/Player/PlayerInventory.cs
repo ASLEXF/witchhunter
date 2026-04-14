@@ -34,9 +34,9 @@ public class PlayerInventory : Singleton<PlayerInventory>
             ItemUI? itemUI = FindItemUI(newComsumableItem.id);
             if (itemUI != null)
             {
-                ConsumableItem oldComsumableItem = (ConsumableItem)itemUI.Item;
-                oldComsumableItem.amount += newComsumableItem.amount;
-                itemUI.UpdateAmount(oldComsumableItem.amount);
+                ConsumableItem old = (ConsumableItem)itemUI.Item;
+                old.amount += newComsumableItem.amount;
+                itemUI.UpdateAmount(old.amount);
             }
             else if (!ItemBar.Instance.IsFull)
             {
@@ -57,9 +57,9 @@ public class PlayerInventory : Singleton<PlayerInventory>
             ItemUI? itemUI = FindItemUI(newItem.id);
             if (itemUI != null)
             {
-                MaterialItem oldComsumableItem = (MaterialItem)itemUI.Item;
-                oldComsumableItem.amount += newMaterialItem.amount;
-                itemUI.UpdateAmount(oldComsumableItem.amount);
+                MaterialItem old = (MaterialItem)itemUI.Item;
+                old.amount += newMaterialItem.amount;
+                itemUI.UpdateAmount(old.amount);
             }
             else if (!ItemBar.Instance.IsFull)
             {
@@ -68,6 +68,29 @@ public class PlayerInventory : Singleton<PlayerInventory>
             else if (!IsFull)
             {
                 Backpack.Instance.AddItem(newMaterialItem.DeepCopy());
+            }
+            else
+            {
+                HandleInventoryFull();
+            }
+        }
+        else if (newItem is ProjectileItem)
+        {
+            ProjectileItem newProjectileItem = (ProjectileItem)newItem;
+            ItemUI? itemUI = FindItemUI(newItem.id);
+            if (itemUI != null)
+            {
+                ProjectileItem old = (ProjectileItem)itemUI.Item;
+                old.amount += newProjectileItem.amount;
+                itemUI.UpdateAmount(old.amount);
+            }
+            else if (!ItemBar.Instance.IsFull)
+            {
+                ItemBar.Instance.AddItem(newProjectileItem.DeepCopy());
+            }
+            else if (!IsFull)
+            {
+                Backpack.Instance.AddItem(newProjectileItem.DeepCopy());
             }
             else
             {

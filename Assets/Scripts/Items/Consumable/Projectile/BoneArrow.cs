@@ -44,7 +44,14 @@ public class BoneArrow : MonoBehaviour, IItem, IProjectile
 
     private void Awake()
     {
-        item = new ConsumableItem(13, "iron arrow", "", "Assets/Addressables/Icons/iron_arrow.png", 1);
+        item = new ProjectileItem(
+            15, 
+            "bone arrow", 
+            "", 
+            "Icons/bone_arrow.png", 
+            "Prefabs/Items/bone_arrow.prefab",
+            1
+        );
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<BoxCollider2D>();

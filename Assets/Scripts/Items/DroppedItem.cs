@@ -22,6 +22,7 @@ public class DroppedItem : MonoBehaviour
     {
         interactable = true;
         boxCollider.enabled = true;
+        boxCollider.isTrigger = true;
     }
 
     public void Interacted()

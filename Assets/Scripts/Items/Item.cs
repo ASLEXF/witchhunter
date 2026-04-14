@@ -41,6 +41,7 @@ public class WeaponItem: Item
         public int comboCount;
         public string animationTriggerName;
         public string animationIntegerName;
+        public AttackCondition attackCondition;
     }
 
     public struct WeaponChargingAttackInfo
@@ -49,6 +50,7 @@ public class WeaponItem: Item
         public int damage;
         public int comboCount;
         public string animationTriggerName;
+        public AttackCondition attackCondition;
     }
 
     public struct WeaponChargeAttackInfo
@@ -58,6 +60,7 @@ public class WeaponItem: Item
         public int additionalDamage;
         public int comboCount;
         public string animationTriggerName;
+        public AttackCondition attackCondition;
     }
 
     public WeaponAttackInfo weaponAttackInfo;
@@ -81,7 +84,8 @@ public class WeaponItem: Item
             damage = weaponAttackInfo.damage,
             comboCount = weaponAttackInfo.comboCount,
             triggerName = weaponAttackInfo.animationTriggerName,
-            integerName = weaponAttackInfo.animationIntegerName
+            integerName = weaponAttackInfo.animationIntegerName,
+            attackCondition = weaponAttackInfo.attackCondition
         };
     }
 
@@ -95,7 +99,8 @@ public class WeaponItem: Item
         {
             hasAttack = weaponChargingAttackInfo.hasAttack,
             damage = weaponChargingAttackInfo.damage,
-            triggerName = weaponChargingAttackInfo.animationTriggerName
+            triggerName = weaponChargingAttackInfo.animationTriggerName,
+            attackCondition = weaponChargingAttackInfo.attackCondition
         };
     }
 
@@ -105,7 +110,8 @@ public class WeaponItem: Item
         {
             hasAttack = weaponChargeAttackInfo.hasAttack,
             damage = weaponChargeAttackInfo.damage + weaponChargeAttackInfo.additionalDamage,
-            triggerName = weaponChargeAttackInfo.animationTriggerName
+            triggerName = weaponChargeAttackInfo.animationTriggerName,
+            attackCondition = weaponChargeAttackInfo.attackCondition
         };
     }
 
@@ -142,10 +148,7 @@ public class ConsumableItem: Item
     public System.Action<ConsumableItem> onUse = DefaultUse;
     private static void DefaultUse(ConsumableItem item)
     {
-        Debug.LogWarning($"DefaultUsing Item: {item.itemName}");
-        if (item.amount > 0)
-            item.amount--;
-        GameEvents.Instance.ItemsUpdated();
+        Debug.LogWarning($"DefaultUsing Consumable Item: {item.itemName}");
     }
 
     public void Use(int i = -1)
@@ -161,6 +164,41 @@ public class ConsumableItem: Item
     public new ConsumableItem DeepCopy()
     {
         ConsumableItem copy = new ConsumableItem(id, itemName, description, icon, amount);
+        copy.onUse = onUse;
+        return copy;
+    }
+}
+
+public class ProjectileItem: Item
+{
+    public string prefab;
+    public int amount;
+
+    public ProjectileItem(int id, string name, string description, string icon, string prefab, int amount) : base(id, name, description, icon, false, false, true, 0)
+    {
+        this.prefab = prefab;
+        this.amount = amount;
+    }
+
+    public System.Action<ProjectileItem> onUse = DefaultUse;
+    private static void DefaultUse(ProjectileItem item)
+    {
+        Debug.LogWarning($"DefaultUsing Projectile Item: {item.itemName}");
+    }
+
+    public void Use(int i = -1)
+    {
+        if (amount < 1) return;
+
+        if (amount > 0)
+            amount--;
+        GameEvents.Instance.ItemsUpdated(i);
+        onUse?.Invoke(this);
+    }
+
+    public new ProjectileItem DeepCopy()
+    {
+        ProjectileItem copy = new ProjectileItem(id, itemName, description, icon, prefab, amount);
         copy.onUse = onUse;
         return copy;
     }
