@@ -24,6 +24,8 @@ public interface IProjectile: IItem
 {
     void UpdatePosition(Vector2 direction, bool reset = false);
 
+    void SetDamage(int damage);
+
     void Shoot(Vector2 force, float floorHeight);
 }
 

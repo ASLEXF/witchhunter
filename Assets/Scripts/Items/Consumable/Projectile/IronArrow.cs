@@ -133,6 +133,11 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         }
     }
 
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
+    }
+
     public void Shoot(Vector2 force, float heightFromGround)
     {
         if (force == null)
@@ -179,7 +184,15 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         if (obj != null)
             transform.rotation = Quaternion.Euler(0, 0, Random.Range(-rotationDeviation, rotationDeviation));
 
-        // TODO: damage calculation
+        // Deal damage
+        if (obj != null && obj.CompareTag("Enemy"))
+        {
+            NPCHealth enemyHealth = obj.GetComponentInChildren<NPCHealth>();
+            if (enemyHealth != null)
+            {
+                enemyHealth.TakeDamage(damage);
+            }
+        }
 
         // Randomly Consumed
         float random = Random.value;

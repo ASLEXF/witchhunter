@@ -189,13 +189,13 @@ public class PlayerAttack : MonoBehaviour
     private void setArrowSpeedLow()
     {
         arrowSpeed = new Vector2(8.0f, 0) * PlayerController.Instance.Direction.x;
-        // TODO: set low damage
+        PlayerHand.Instance.SetProjectile(1);
     }
     
     private void setArrowSpeedHigh()
     {
         arrowSpeed = new Vector2(16.0f, 0) * PlayerController.Instance.Direction.x;
-        // TODO: set high damage
+        PlayerHand.Instance.SetProjectile(2);
     }
 
     private void generateProjectile()

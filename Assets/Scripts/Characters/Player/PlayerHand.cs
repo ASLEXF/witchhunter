@@ -14,7 +14,7 @@ public class PlayerHand : Singleton<PlayerHand>
     }
 
     private AsyncOperationHandle<GameObject> _prefabHandle;
-    private GameObject projectileObj;
+    private GameObject? projectileObj;
 
     private void addToHand(ProjectileItem item)
     {
@@ -161,6 +161,11 @@ public class PlayerHand : Singleton<PlayerHand>
     {
         removeFromHand(projectile);
         projectile = null;
+    }
+
+    public void SetProjectile(int damage)
+    {
+        projectileObj.GetComponent<IProjectile>().SetDamage(damage);
     }
 
     private void tryEquipProjectile()
