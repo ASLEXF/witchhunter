@@ -89,6 +89,10 @@ public class BoneArrow : MonoBehaviour, IItem, IProjectile
 
     public Item GetItem() => item;
 
+    public void Hide() => gameObject.SetActive(false);
+
+    public void Show() => gameObject.SetActive(true);
+
     public void UpdatePosition(Vector2 direction, bool reset = false)
     {
         spriteRenderer.flipX = direction.x < 0;

@@ -89,8 +89,20 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
     public Item GetItem() => item;
 
+    public void Hide()
+    {
+        spriteRenderer.enabled = false;
+        _collider.enabled = false;
+    }
+    
+    public void Show()
+    {
+        spriteRenderer.enabled = true;
+    }
+
     public void UpdatePosition(Vector2 direction, bool reset = false)
     {
+        spriteRenderer.sortingOrder = 1;
         spriteRenderer.flipX = direction.x < 0;
 
         if (reset)
@@ -127,29 +139,35 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     {
         if (force == null)
         {
-            force = new Vector2(0, 1);
+            force = new Vector2(10, 0);
         }
-
+        // Set the parent to environment to avoid being affected by player's movement
         transform.SetParent(Environment.Instance.gameObject.transform);
         height = heightFromGround;
-
+        // Enable physics and collider
         spriteRenderer.enabled = true;
         rb.isKinematic = false;
         rb.constraints = RigidbodyConstraints2D.None;
         rb.gravityScale = 0.6f;
         _collider.enabled = true;
         rb.AddForce(force, ForceMode2D.Impulse);
+        isShooting = true;
+        // Add another arrow if the player has more in the inventory
+        PlayerHand.Instance.Projectile = null;
+        ItemBar.Instance.UpdateProjectile(item.id);
     }
 
     private void stickOnto(GameObject obj)
     {
+        isShooting = false;
         // Set the parent to follow
         if (obj != null)
             transform.SetParent(obj.transform);
         else
             transform.SetParent(Environment.Instance.gameObject.transform);
         rb.isKinematic = true;
-
+        // Set sorting order to be behind entities
+        spriteRenderer.sortingOrder = 0;
         // Disable collider and physics
         _collider.enabled = false;
         rb.gravityScale = 0;

@@ -26,6 +26,7 @@ public class blade : MonoBehaviour, IWeaponItem
                 hasAttack = true,
                 damage = 0,
                 comboCount = 1,
+                maxChargingTime = 1.2f,
                 animationTriggerName = "BladeChargingAttack"
             },
             new WeaponItem.WeaponChargeAttackInfo
@@ -40,6 +41,10 @@ public class blade : MonoBehaviour, IWeaponItem
     }
 
     public Item GetItem() => item;
+
+    public void Hide() => gameObject.SetActive(false);
+
+    public void Show() => gameObject.SetActive(true);
 
     public WeaponAnimationStructure Attack() => item.Attack();
 

@@ -3,6 +3,9 @@ using UnityEngine;
 public interface IItem
 {
     Item GetItem();
+
+    void Hide();
+    void Show();
 }
 
 public interface IConsumableItem: IItem

@@ -12,4 +12,8 @@ public class Coin : MonoBehaviour, IItem
     }
 
     public Item GetItem() => item;
+
+    public void Hide() => gameObject.SetActive(false);
+
+    public void Show() => gameObject.SetActive(true);
 }

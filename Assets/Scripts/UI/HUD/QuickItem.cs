@@ -54,7 +54,7 @@ public class QuickItem : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
             }
         }
 
-        GameEvents.Instance.ItemsUpdated(itemUI.Index);
+        GameEvents.Instance.ItemsUpdated();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

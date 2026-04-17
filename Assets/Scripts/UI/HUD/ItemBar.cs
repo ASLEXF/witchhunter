@@ -54,12 +54,22 @@ public class ItemBar : Singleton<ItemBar>
     private void Start()
     {
         initializeItems();
+    }
 
+    private void OnEnable()
+    {
         GameEvents.Instance.OnBattleModeStarted += Show;
         GameEvents.Instance.OnExplorationModeStarted += Show;
         GameEvents.Instance.OnStoryModeStarted += Hide;
-
         GameEvents.Instance.OnItemsUpdated += num => updateItemsUI(num);
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.Instance.OnBattleModeStarted -= Show;
+        GameEvents.Instance.OnExplorationModeStarted -= Show;
+        GameEvents.Instance.OnStoryModeStarted -= Hide;
+        GameEvents.Instance.OnItemsUpdated -= num => updateItemsUI(num);
     }
 
     private void initializeItems()
@@ -117,6 +127,30 @@ public class ItemBar : Singleton<ItemBar>
         return null;
     }
 
+    public void UpdateProjectile(int itemID, int number = 1)
+    {
+        for (int i = 0; i < maxNumber; i++)
+        {
+            Item item = itemUIs[i].Item;
+            if (item != null && item.id == itemID)
+            {
+                if (item is ProjectileItem projectileItem)
+                {
+                    projectileItem.amount -= number;
+                    GameEvents.Instance.ItemsUpdated(i);
+                    if (projectileItem.amount > 0)
+                    {
+                        PlayerHand.Instance.EquipProjectile(projectileItem);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Unknown item type for function ItemAmountMinus()");
+                }
+            }
+        }
+    }
+
     public void Show()
     {
         updateItemsUI();
@@ -134,14 +168,5 @@ public class ItemBar : Singleton<ItemBar>
         {
             itemUI.gameObject.SetActive(false);
         }
-    }
-
-    private void OnDestroy()
-    {
-        GameEvents.Instance.OnBattleModeStarted -= Show;
-        GameEvents.Instance.OnExplorationModeStarted -= Show;
-        GameEvents.Instance.OnStoryModeStarted -= Hide;
-
-        GameEvents.Instance.OnItemsUpdated -= updateItemsUI;
     }
 }

@@ -175,7 +175,7 @@ public class PlayerController : Singleton<PlayerController>
     #endregion
 
     #region Input System
-
+    [Header("Input")]
     [SerializeField] bool canAttack = true;
     bool uiAttackBlocked = false;
 
@@ -193,7 +193,7 @@ public class PlayerController : Singleton<PlayerController>
     bool isChargingCompletedL, isChargingCompletedR = false;
     float chargingTimeL, chargingTimeR;
 
-    float longPressDuration = 0.3f;
+    [SerializeField] float longPressDuration = 0.3f;
     float maxChargingTime = 1.0f;
     float pressStartTime;
 
@@ -209,6 +209,8 @@ public class PlayerController : Singleton<PlayerController>
         attackActionL = playerInput.actions.FindActionMap("Battle").FindAction("AttackL");
         attackActionL.started += OnAttackLStarted => {
             if (!CanAttack) return;
+            if (!PlayerHand.Instance.IsLEmpty)
+                maxChargingTime = PlayerHand.Instance.WeaponL.weaponChargingAttackInfo.maxChargingTime;
             if (CheckIsLongPressingCoroutineR != null) StopCoroutine(CheckIsLongPressingCoroutineR);
             if (CheckIsChargingCoroutineR != null) StopCoroutine(CheckIsChargingCoroutineR);
             pressStartTime = Time.time;
@@ -237,6 +239,8 @@ public class PlayerController : Singleton<PlayerController>
         attackActionR.started += OnAttackRStarted =>
         {
             if (!CanAttack) return;
+            if (!PlayerHand.Instance.IsREmpty)
+                maxChargingTime = PlayerHand.Instance.WeaponR.weaponChargingAttackInfo.maxChargingTime;
             if (CheckIsLongPressingCoroutineL != null)  StopCoroutine(CheckIsLongPressingCoroutineL);
             if (CheckIsChargingCoroutineL != null) StopCoroutine(CheckIsChargingCoroutineL);
             pressStartTime = Time.time;
@@ -316,25 +320,6 @@ public class PlayerController : Singleton<PlayerController>
     {
         _rawInputMovement = value.ReadValue<Vector2>();
     }
-
-    //public void OnAttackL(InputAction.CallbackContext value)
-    //{
-    //    Debug.Log("Attack L");
-    //    if (value.started)
-    //    {
-    //        canMove = false;
-    //        _attack.AttackL();
-    //    }
-    //}
-
-    //public void OnSupport(InputAction.CallbackContext value)
-    //{
-    //    if (value.started)
-    //    {
-    //        canMove = false;
-    //        _attack.Support();
-    //    }
-    //}
 
     public void OnInteract(InputAction.CallbackContext value)
     {

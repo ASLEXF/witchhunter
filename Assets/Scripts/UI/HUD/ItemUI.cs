@@ -23,10 +23,9 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         set { _item = value; }
     }
 
-    public TMP_Text Amount
+    public int Amount
     {
-        get { return _amount; }
-        set { _amount = value; }
+        get { return int.Parse(_amount.text); }
     }
 
     public int Index

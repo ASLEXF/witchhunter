@@ -25,7 +25,7 @@ public class PlayerHand : Singleton<PlayerHand>
             {
                 GameObject obj = Instantiate(handle.Result);
                 obj.transform.SetParent(transform);
-                // Do something with the instantiated object
+                obj.GetComponent<IItem>().Hide();
             }
             else
             {
@@ -138,6 +138,7 @@ public class PlayerHand : Singleton<PlayerHand>
     public ProjectileItem? Projectile
     {
         get { return projectile; }
+        set { projectile = value; }
     }
 
     public bool IsProjectileEmpty

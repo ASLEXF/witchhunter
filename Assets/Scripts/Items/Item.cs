@@ -49,6 +49,7 @@ public class WeaponItem: Item
         public bool hasAttack;
         public int damage;
         public int comboCount;
+        public float maxChargingTime;
         public string animationTriggerName;
         public AttackCondition attackCondition;
     }
@@ -67,9 +68,17 @@ public class WeaponItem: Item
     public WeaponChargingAttackInfo weaponChargingAttackInfo;
     public WeaponChargeAttackInfo weaponChargeAttackInfo;
 
-    public WeaponItem(int id, string itemName, string description, string icon, WeaponAttackInfo weaponAttackInfo,WeaponChargingAttackInfo weaponChargingAttackInfo, WeaponChargeAttackInfo weaponChargeAttackInfo) : base(id, itemName, description, icon, false, false, false, 0)
+    public WeaponItem(
+        int id, 
+        string itemName, 
+        string description, 
+        string icon, 
+        WeaponAttackInfo weaponAttackInfo,
+        WeaponChargingAttackInfo weaponChargingAttackInfo, 
+        WeaponChargeAttackInfo weaponChargeAttackInfo) : base(id, itemName, description, icon, false, false, false, 0)
     {
         this.weaponAttackInfo = weaponAttackInfo;
+        this.weaponChargingAttackInfo = weaponChargingAttackInfo;
         this.weaponChargeAttackInfo = weaponChargeAttackInfo;
     }
 
@@ -131,7 +140,15 @@ public class WeaponItem: Item
 
     public new WeaponItem DeepCopy()
     {
-        WeaponItem copy = new WeaponItem(id, itemName, description, icon, weaponAttackInfo, weaponChargingAttackInfo, weaponChargeAttackInfo);
+        WeaponItem copy = new WeaponItem(
+            id, 
+            itemName, 
+            description, 
+            icon, 
+            weaponAttackInfo, 
+            weaponChargingAttackInfo, 
+            weaponChargeAttackInfo
+        );
         return copy;
     }
 }

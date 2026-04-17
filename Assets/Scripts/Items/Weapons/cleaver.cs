@@ -40,5 +40,9 @@ public class cleaver : MonoBehaviour, IItem
 
     public Item GetItem() => item;
 
+    public void Hide() => gameObject.SetActive(false);
+
+    public void Show() => gameObject.SetActive(true);
+
     public WeaponAnimationStructure Attack() => item.Attack();
 }

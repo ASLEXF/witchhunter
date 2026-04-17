@@ -179,6 +179,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void updateArchery()
     {
+        if (PlayerHand.Instance.IsProjectileEmpty) return;
+
         transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(PlayerController.Instance.Direction);
     }
 
@@ -247,7 +249,8 @@ public class PlayerAttack : MonoBehaviour
     {
         if (!weaponAnimationStructure.hasAttack) return;
 
-        if (weaponAnimationStructure.integerName != null)
+        if (weaponAnimationStructure.integerName != null &&
+            weaponAnimationStructure.comboCount > 1)
         {
             comboCount = weaponAnimationStructure.comboCount;
         }
