@@ -4,13 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enermy
   - UI
   - NPC
   - DropItem
   - Interactive
   - Cover
   - SpawnPoint
+  - Enemy
   layers:
   - Default
   - TransparentFX

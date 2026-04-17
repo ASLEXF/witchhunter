@@ -26,6 +26,7 @@ public class PlayerHand : Singleton<PlayerHand>
                 GameObject obj = Instantiate(handle.Result);
                 obj.transform.SetParent(transform);
                 obj.GetComponent<IItem>().Hide();
+                obj.GetComponent<DroppedItem>().enabled = false;
             }
             else
             {

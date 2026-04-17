@@ -257,7 +257,7 @@ public class PlayerInteract : MonoBehaviour
         {
             DropItemColliders.Add(collision);
         }
-        else if ((collision.CompareTag("NPC") || collision.CompareTag("Enermy")) && collision.transform.root.GetComponentInChildren<NPCInteract>().isInteractable)
+        else if ((collision.CompareTag("NPC") || collision.CompareTag("Enemy")) && collision.transform.root.GetComponentInChildren<NPCInteract>().isInteractable)
         {
             NPCColliders.Add(collision);
         }

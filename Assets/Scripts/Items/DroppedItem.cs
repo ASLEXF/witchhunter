@@ -18,11 +18,18 @@ public class DroppedItem : MonoBehaviour
         gameObject.tag = "DropItem";
     }
 
-    private void Start()
+    private void OnEnable()
     {
         interactable = true;
         boxCollider.enabled = true;
         boxCollider.isTrigger = true;
+    }
+
+    private void OnDisable()
+    {
+        interactable = false;
+        boxCollider.enabled = false;
+        boxCollider.isTrigger = false;
     }
 
     public void Interacted()

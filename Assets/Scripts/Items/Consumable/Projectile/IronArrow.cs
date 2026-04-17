@@ -81,10 +81,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enermy"))
-        {
-            stickOnto(collision.gameObject);
-        }
+        stickOnto(collision.gameObject);
     }
 
     public Item GetItem() => item;
@@ -98,6 +95,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
     public void Show()
     {
         spriteRenderer.enabled = true;
+        _collider.enabled = false;
     }
 
     public void UpdatePosition(Vector2 direction, bool reset = false)
@@ -144,12 +142,15 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         // Set the parent to environment to avoid being affected by player's movement
         transform.SetParent(Environment.Instance.gameObject.transform);
         height = heightFromGround;
+        // Enable component
+        gameObject.GetComponent<DroppedItem>().enabled = true;
         // Enable physics and collider
         spriteRenderer.enabled = true;
         rb.isKinematic = false;
         rb.constraints = RigidbodyConstraints2D.None;
         rb.gravityScale = 0.6f;
         _collider.enabled = true;
+        _collider.isTrigger = false;
         rb.AddForce(force, ForceMode2D.Impulse);
         isShooting = true;
         // Add another arrow if the player has more in the inventory
@@ -172,6 +173,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         _collider.enabled = false;
         rb.gravityScale = 0;
         rb.velocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePosition;
 
         // Randomly rotate a bit, if it's not sticking onto ground
         if (obj != null)
