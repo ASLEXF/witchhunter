@@ -27,6 +27,7 @@ public class PlayerHand : Singleton<PlayerHand>
                 obj.transform.SetParent(transform);
                 obj.GetComponent<IItem>().Hide();
                 obj.GetComponent<DroppedItem>().enabled = false;
+                projectileObj = obj;
             }
             else
             {
@@ -165,7 +166,7 @@ public class PlayerHand : Singleton<PlayerHand>
 
     public void SetProjectile(int damage)
     {
-        projectileObj.GetComponent<IProjectile>().SetDamage(damage);
+        projectileObj!.GetComponent<IProjectile>().SetDamage(damage);
     }
 
     private void tryEquipProjectile()

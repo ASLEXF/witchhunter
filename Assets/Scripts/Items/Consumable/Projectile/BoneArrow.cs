@@ -127,6 +127,11 @@ public class BoneArrow : MonoBehaviour, IItem, IProjectile
         }
     }
 
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
+    }
+
     public void Shoot(Vector2 force, float heightFromGround)
     {
         if (force == null)
