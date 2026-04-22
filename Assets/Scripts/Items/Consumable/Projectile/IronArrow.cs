@@ -79,8 +79,11 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!collision.isTrigger || !isShooting) return;
+        if (collision.gameObject.CompareTag("Player")) return;  // avoid sticking onto player
+
         stickOnto(collision.gameObject);
     }
 
@@ -158,6 +161,8 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         _collider.isTrigger = false;
         rb.AddForce(force, ForceMode2D.Impulse);
         isShooting = true;
+        // Set layer to projectile to avoid certain collisions
+        gameObject.layer = LayerMask.NameToLayer("Projectile");
         // Add another arrow if the player has more in the inventory
         PlayerHand.Instance.Projectile = null;
         ItemBar.Instance.UpdateProjectile(item.id);
@@ -179,7 +184,8 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         rb.gravityScale = 0;
         rb.velocity = Vector2.zero;
         rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePosition;
-
+        // Set layer to default to interact with environment
+        gameObject.layer = LayerMask.NameToLayer("Default");
         // Randomly rotate a bit, if it's not sticking onto ground
         if (obj != null)
             transform.rotation = Quaternion.Euler(0, 0, Random.Range(-rotationDeviation, rotationDeviation));
@@ -187,10 +193,10 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         // Deal damage
         if (obj != null && obj.CompareTag("Enemy"))
         {
-            NPCHealth enemyHealth = obj.GetComponentInChildren<NPCHealth>();
-            if (enemyHealth != null)
+            NPCAttacked attacked = obj.GetComponentInChildren<NPCAttacked>();
+            if (attacked != null)
             {
-                enemyHealth.TakeDamage(damage);
+                attacked.GetAttacked(damage, 0, _collider);
             }
         }
 

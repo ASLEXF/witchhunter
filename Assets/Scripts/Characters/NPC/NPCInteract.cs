@@ -29,7 +29,7 @@ public class NPCInteract : MonoBehaviour
     private void Awake()
     {
         status = transform.parent.Find("Status").GetComponent<NPCStatusEffect>();
-        spriteRenderer = transform.parent.GetChild(0).GetComponent<SpriteRenderer>();
+        spriteRenderer = transform.parent.Find("Animator").GetComponent<SpriteRenderer>();
 
         Transform? tasksTransform = transform.parent.Find("Tasks");
         if (tasksTransform is null)
@@ -45,6 +45,9 @@ public class NPCInteract : MonoBehaviour
 
     private void loadInteractable(string raceName)
     {
+        if (string.IsNullOrEmpty(raceName))
+            return;
+
         if (File.Exists(interactConfigFilePath))
         {
             string json = File.ReadAllText(interactConfigFilePath);

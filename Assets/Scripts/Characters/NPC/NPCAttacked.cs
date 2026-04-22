@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,13 +8,18 @@ using UnityEngine.AI;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 public class NPCAttacked : MonoBehaviour
 {
-    NPCController controller;
-    Animator animator;
-    NPCHealth health;
-    NPCStatusEffect statusEffect;
+    [SerializeField] private GameObject damageNumberPrefab;
+
+    NPCController? controller;
+    Animator? animator;
+    Collider2D _collider;
+    NPCHealth? health;
+    NPCStatusEffect? statusEffect;
+    DamageNumber? damageNumber;
 
     // knockback
     Vector3 _position;
@@ -21,8 +28,15 @@ public class NPCAttacked : MonoBehaviour
     {
         controller = transform.parent.GetComponent<NPCController>();
         animator = GetComponent<Animator>();
+        _collider = GetComponent<Collider2D>();
         health = transform.parent.GetChild(1).GetComponent<NPCHealth>();
         statusEffect = transform.parent.GetChild(1).GetComponent<NPCStatusEffect>();
+        damageNumber = transform.parent.GetComponentInChildren<DamageNumber>();
+    }
+
+    private void Start()
+    {
+        _collider.isTrigger = true;
     }
 
     private void Update()
@@ -37,21 +51,34 @@ public class NPCAttacked : MonoBehaviour
         //controller.gameObject.transform.position = Vector3.Lerp(controller.gameObject.transform.position, targetPosition, lerpTime);
     }
 
-    public void GetAttacked(int damage, float force, PolygonCollider2D PlayerCollider)
+    public void GetAttacked(int damage, float force, Collider2D PlayerCollider)
     {
-        if (!health.isInvincible && !statusEffect.Dead)
+        if (statusEffect != null && statusEffect.Dead) return;
+
+        if (health != null)
         {
             health.TakeDamage(damage);
-
-            Vector3 position = transform.position - PlayerCollider.bounds.center;
-            position.z = 0;  // prevent wrong displacements
-            _position += position.normalized * force;  // add all forces if get attacked at the same time
-
-            //knockback();
-            getStunned();
-
-            animator.SetTrigger("GetAttacked");
         }
+
+        if (statusEffect != null)
+        {
+            getStunned();
+        }
+
+        if (animator != null) animator.SetTrigger("GetAttacked");
+
+        if (damageNumberPrefab != null)
+        {
+            GameObject dn = Instantiate(damageNumberPrefab, transform.position, Quaternion.identity);
+            dn.GetComponent<DamageNumber>().Initialize(damage, true);
+        }
+
+        // Calculate the knockback direction and magnitude
+        Vector3 position = transform.position - PlayerCollider.bounds.center;
+        position.z = 0;  // prevent wrong displacements
+        _position += position.normalized * force;  // add all forces if get attacked at the same time
+
+        //knockback();
     }
 
     private void knockback()
@@ -65,12 +92,15 @@ public class NPCAttacked : MonoBehaviour
     private IEnumerator MoveToTarget()
     {
         float elapsedTime = 0f;
-        float duration = 1f;
-        Vector3 targetPosition = controller.gameObject.transform.position + _position;
+        float duration = 1f;  // duration of the knockback effect
+        Vector3 targetPosition = controller != null ? controller.gameObject.transform.position + _position : Vector3.zero;
         while (elapsedTime < duration)
         {
             float t = elapsedTime / duration;
-            controller.gameObject.transform.position = Vector3.Lerp(controller.gameObject.transform.position, targetPosition, t);
+            if (controller != null)
+            {
+                controller.gameObject.transform.position = Vector3.Lerp(controller.gameObject.transform.position, targetPosition, t);
+            }
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -82,13 +112,13 @@ public class NPCAttacked : MonoBehaviour
 
     private void getStunned()
     {
-        controller.StopAllCoroutines();
-        controller.GetComponent<NavMeshAgent>().ResetPath();
-        statusEffect.Stunned = true;
+        controller?.StopAllCoroutines();
+        controller?.GetComponent<NavMeshAgent>()?.ResetPath();
+        if (statusEffect != null) statusEffect.Stunned = true;
     }
 
     void stopStunned()
     {
-        statusEffect.Stunned = false;
+        if (statusEffect != null) statusEffect.Stunned = false;
     }
 }

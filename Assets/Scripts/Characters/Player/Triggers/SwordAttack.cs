@@ -20,7 +20,9 @@ public class SwordAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enermy"))
+        if (!collision.isTrigger) return;
+
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             if (collision.name == "Animator")
             {

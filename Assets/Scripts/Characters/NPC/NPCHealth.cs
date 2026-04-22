@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,16 +8,16 @@ using UnityEngine.InputSystem.XR;
 
 public class NPCHealth : MonoBehaviour
 {
-    NPCController controller;
-    NPCStatusEffect statusEffect;
-    Animator animator;
+    NPCController? controller;
+    NPCStatusEffect? statusEffect;
+    Animator? animator;
 
     PolygonCollider2D _collider;
-    NPCAttack NPCAttack;
-    NPCAttacked NPCAttacked;
-    NPCInteract NPCInteract;
-    GameObject ranges;
-    GameObject triggers;
+    NPCAttack? NPCAttack;
+    NPCAttacked? NPCAttacked;
+    NPCInteract? NPCInteract;
+    GameObject? ranges;
+    GameObject? triggers;
 
     public bool isInvincible = false;
 
@@ -37,13 +39,13 @@ public class NPCHealth : MonoBehaviour
     {
         controller = transform.GetComponentInParent<NPCController>();
         statusEffect = GetComponent<NPCStatusEffect>();
-        animator = transform.parent.GetChild(0).GetComponent<Animator>();
+        animator = transform.parent.GetComponentInChildren<Animator>();
 
         _collider = transform.parent.GetComponent<PolygonCollider2D>();
-        NPCAttack = transform.parent.GetChild(0).GetComponent<NPCAttack>();
-        NPCAttacked = transform.parent.GetChild(0).GetComponent<NPCAttacked>();
-        ranges = transform.parent.GetChild(2).gameObject;
-        triggers = transform.parent.GetChild(3).gameObject;
+        NPCAttack = transform.parent.GetComponentInChildren<NPCAttack>();
+        NPCAttacked = transform.parent.GetComponentInChildren<NPCAttacked>();
+        ranges = transform.parent.Find("Ranges")?.gameObject;
+        triggers = transform.parent.Find("Triggers")?.gameObject;
     }
 
     private void Start()
@@ -54,10 +56,8 @@ public class NPCHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (isInvincible) return;
-
         int resultHealth = currentHealth - damage;
-        if (resultHealth < 0)
+        if (resultHealth < 0 && !isInvincible)
         {
             Die();
         }
@@ -72,17 +72,17 @@ public class NPCHealth : MonoBehaviour
 
     public void Die()
     {
-        statusEffect.SetDead();
-        controller.Die();
+        statusEffect?.SetDead();
+        controller?.Die();
 
-        animator.SetBool("IsDead", true);
-        NPCAttack.enabled = false;
-        NPCAttacked.enabled = false;
+        animator?.SetBool("IsDead", true);
+        if (NPCAttack != null) NPCAttack.enabled = false;
+        if (NPCAttacked != null) NPCAttacked.enabled = false;
 
-        NPCInteract.UpdateIsInteractable();
+        NPCInteract?.UpdateIsInteractable();
 
-        ranges.SetActive(false);
-        triggers.SetActive(false);
+        ranges?.SetActive(false);
+        triggers?.SetActive(false);
     }
 
     public void Heal(int heal)

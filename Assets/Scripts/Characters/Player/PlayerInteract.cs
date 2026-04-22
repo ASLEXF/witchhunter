@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -79,19 +81,19 @@ public class PlayerInteract : MonoBehaviour
             type = InteractTypeEnum.NPC;
             currentCollider = NPCColliders[0];
 
-            if (currentCollider.GetComponentInChildren<NPCStatusEffect>().Alive)
+            if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().Alive)
             {
                 ShowUI(NPCTalkUI);
                 HideUI(NPCCollectUI);
                 HideUI(NPCPickUpUI);
             }
-            else if (currentCollider.GetComponentInChildren<NPCStatusEffect>().DeadItem)
+            else if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().DeadItem)
             {
                 HideUI(NPCTalkUI);
                 ShowUI(NPCCollectUI);
                 HideUI(NPCPickUpUI);
             }
-            else if (currentCollider.GetComponentInChildren<NPCStatusEffect>().DeadEmpty)
+            else if (currentCollider.transform.parent.GetComponentInChildren<NPCStatusEffect>().DeadEmpty)
             {
                 HideUI(NPCTalkUI);
                 HideUI(NPCCollectUI);
@@ -159,7 +161,7 @@ public class PlayerInteract : MonoBehaviour
         }
 
         Vector3 UIOffset = new Vector3();
-        GameObject gameObject = currentCollider.transform.root.gameObject;
+        GameObject gameObject = currentCollider.transform.parent.gameObject;
         switch (type)
         {
             case InteractTypeEnum.DropItem:
@@ -253,11 +255,13 @@ public class PlayerInteract : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!collision.isTrigger) return;
+
         if (collision.CompareTag("DropItem"))
         {
             DropItemColliders.Add(collision);
         }
-        else if ((collision.CompareTag("NPC") || collision.CompareTag("Enemy")) && collision.transform.root.GetComponentInChildren<NPCInteract>().isInteractable)
+        else if ((collision.CompareTag("NPC") || collision.CompareTag("Enemy")) && collision.transform.parent.GetComponentInChildren<NPCInteract>().isInteractable)
         {
             NPCColliders.Add(collision);
         }
@@ -272,11 +276,13 @@ public class PlayerInteract : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
+        if (!collision.isTrigger) return;
+
         if (collision.CompareTag("DropItem"))
         {
             DropItemColliders.Remove(collision);
         }
-        else if (collision.CompareTag("NPC") && collision.transform.root.GetComponentInChildren<NPCInteract>().isInteractable)
+        else if (collision.CompareTag("NPC") && collision.transform.parent.GetComponentInChildren<NPCInteract>().isInteractable)
         {
             NPCColliders.Remove(collision);
         }
