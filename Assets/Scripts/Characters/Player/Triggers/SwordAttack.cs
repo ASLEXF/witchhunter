@@ -13,21 +13,33 @@ public class SwordAttack : MonoBehaviour
         PlayerCollider = transform.parent.parent.GetComponent<PolygonCollider2D>();
     }
 
-    private void Start()
+    private void OnDisable()
     {
-        gameObject.SetActive(false);
+        hitColliders.Clear();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!collision.isTrigger) return;
+    #region Hitbox trigger
 
-        if (collision.gameObject.CompareTag("Enemy"))
+    List<Collider2D> hitColliders = new List<Collider2D>();
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Debug.Log("Sword hit: " + collision.name);
+        if (
+            !collision.isTrigger 
+            || hitColliders.Contains(collision)
+            || !collision.CompareTag("Enemy")
+        )
+            return;
+
+        
+
+        if (collision.name == "Animator")
         {
-            if (collision.name == "Animator")
-            {
-                collision.GetComponent<NPCAttacked>().GetAttacked(damage, force, PlayerCollider);
-            }
+            collision.GetComponent<NPCAttacked>().GetAttacked(damage, force, PlayerCollider);
+            hitColliders.Add(collision);
         }
     }
+
+    #endregion
 }
