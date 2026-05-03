@@ -9,44 +9,69 @@ using UnityEngine;
 /// </summary>
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T instance;
+    private static T _instance;
     private static readonly object _lock = new object();
-    public static bool HasInstance => instance != null;
+    public static bool HasInstance => _instance != null;
 
     public static T Instance
     {
         get
         {
-            if (instance == null)
+            if (_instance == null)
             {
-                instance = FindObjectOfType<T>();
+                _instance = FindObjectOfType<T>();
 
-                if (instance == null)
+                if (_instance == null)
                 {
                     lock (_lock)
                     {
-                        if ( instance == null )
+                        if ( _instance == null )
                         {
                             Debug.Log("create new game object " + typeof(T).Name);
                             GameObject singletonObj = new GameObject(typeof(T).Name);
-                            instance = singletonObj.AddComponent<T>();
+                            _instance = singletonObj.AddComponent<T>();
                         }
                     }
                 }
             }
-            return instance;
+            return _instance;
         }
     }
 
     protected virtual void Awake()
     {
-        if ( instance == null )
+        if ( _instance == null )
         {
-            instance = this as T;
+            _instance = this as T;
         }
-        else if (instance != this)
+        else if (_instance != this)
         {
             Destroy(gameObject);
+        }
+    }
+}
+
+public class SingletonNotMono<T> where T : class, new()
+{
+    private static T _instance;
+    private static readonly object _lock = new object();
+    public static bool HasInstance => _instance != null;
+
+    public static T Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new T();
+                    }
+                }
+            }
+            return _instance;
         }
     }
 }
