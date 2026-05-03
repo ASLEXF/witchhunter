@@ -2682,7 +2682,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "TODO\n\u88C5\u5907\u6B66\u5668\u5230\u624B\u4E0A\n\u5C04\u7BAD\u65F6\u4ECE\u5FEB\u6377\u7269\u54C1\u4F7F\u7528arrow\nprojectile\n\u4E22\u5F03\u9053\u5177"
+  m_Text: "TODO\n\u4E22\u5F03\u9053\u5177"
 --- !u!222 &2138104753
 CanvasRenderer:
   m_ObjectHideFlags: 0

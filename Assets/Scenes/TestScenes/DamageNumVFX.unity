@@ -2826,6 +2826,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2751060558990646741, guid: 7353f0fe05fb5234296de22b104d40ab, type: 3}
+      propertyPath: consumedChance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3925839879421558014, guid: 7353f0fe05fb5234296de22b104d40ab, type: 3}
       propertyPath: m_Name
       value: iron_arrow
@@ -3080,6 +3084,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4067764975526843338, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: bladeStats
+      value: 
+      objectReference: {fileID: 11400000, guid: c0da44772cb580b46b063457d3ac5a02, type: 2}
     - target: {fileID: 5151171349736828537, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3092,6 +3100,18 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6219785114183854332, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7567358572238584464, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: bladeStats
+      value: 
+      objectReference: {fileID: 11400000, guid: c0da44772cb580b46b063457d3ac5a02, type: 2}
+    - target: {fileID: 8985565086445163413, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
+      propertyPath: bladeStats
+      value: 
+      objectReference: {fileID: 11400000, guid: c0da44772cb580b46b063457d3ac5a02, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1340930926, guid: ee6dc456d94eb86498dbe75f5ee99f4f, type: 3}
@@ -3374,6 +3394,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1982418803}
     m_Modifications:
+    - target: {fileID: 476192991048053550, guid: 079e660061857e14581486be08ec1688, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3956740467589379054, guid: 079e660061857e14581486be08ec1688, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.4898267
@@ -4311,6 +4335,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2232891669073690581, guid: ad48de5f9148c034e8126e2dacb83808, type: 3}
+      propertyPath: bladeStats
+      value: 
+      objectReference: {fileID: 11400000, guid: c0da44772cb580b46b063457d3ac5a02, type: 2}
     - target: {fileID: 6113214237850382128, guid: ad48de5f9148c034e8126e2dacb83808, type: 3}
       propertyPath: m_Name
       value: blade
@@ -4540,7 +4568,7 @@ GameObject:
   - component: {fileID: 2060331618}
   m_Layer: 0
   m_Name: DropItem
-  m_TagString: DropItem
+  m_TagString: DroppedItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
