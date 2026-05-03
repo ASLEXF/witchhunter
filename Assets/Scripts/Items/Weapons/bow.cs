@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class arch : MonoBehaviour, IWeaponItem
+public class bow : MonoBehaviour, IWeaponItem
 {
     public WeaponItem item;
 
@@ -10,9 +10,9 @@ public class arch : MonoBehaviour, IWeaponItem
     {
         item = new WeaponItem(
             11,
-            "arch",
+            "bow",
             "initial weapon",
-            "Icons/arch.png",
+            "Icons/bow.png",
             new WeaponItem.WeaponAttackInfo
             {
                 hasAttack = false,

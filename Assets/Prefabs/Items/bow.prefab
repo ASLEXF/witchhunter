@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7748373479640165204}
   - component: {fileID: 1246924856784161263}
   m_Layer: 0
-  m_Name: arch
+  m_Name: bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 25537933
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6e276020abed3ad438b87492ef88d490, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54fe9714a03f4f948ae1befca142f21e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -156,4 +156,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2cf7f2879afd64aa4543dcdbb31eef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDropped: 1
+  interactable: 1
+  UIOffset: {x: 0, y: 0.5, z: 0}

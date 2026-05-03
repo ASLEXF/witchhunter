@@ -5,9 +5,16 @@ using UnityEngine;
 public class blade : MonoBehaviour, IWeaponItem
 {
     public WeaponItem item;
+    [SerializeField] BladeStats bladeStats;
 
     private void Awake()
     {
+        if (bladeStats == null)
+        {
+            Debug.LogWarning("BladeStats is not assigned in the inspector.");
+            return;
+        }
+
         item = new WeaponItem(
             10, 
             "blade", 
@@ -16,7 +23,7 @@ public class blade : MonoBehaviour, IWeaponItem
             new WeaponItem.WeaponAttackInfo
             {
                 hasAttack = true,
-                damage = 2,
+                damage = bladeStats.normalAttackDamage,
                 comboCount = 2,
                 animationTriggerName = "BladeAttack",
                 animationIntegerName = "BladeCounter"
@@ -32,7 +39,7 @@ public class blade : MonoBehaviour, IWeaponItem
             new WeaponItem.WeaponChargeAttackInfo
             {
                 hasAttack = true,
-                damage = 4,
+                damage = bladeStats.heavyAttackDamage,
                 additionalDamage = 0,
                 comboCount = 1,
                 animationTriggerName = "BladeChargeAttack"
