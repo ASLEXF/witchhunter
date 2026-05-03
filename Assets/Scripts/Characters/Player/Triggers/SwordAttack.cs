@@ -5,8 +5,7 @@ using UnityEngine;
 public class SwordAttack : MonoBehaviour
 {
     PolygonCollider2D PlayerCollider;
-    [SerializeField] int damage = 1;
-    [SerializeField] float force = 0.2f;
+    [SerializeField] BladeStats bladeStats;
 
     private void Awake()
     {
@@ -32,11 +31,9 @@ public class SwordAttack : MonoBehaviour
         )
             return;
 
-        
-
         if (collision.name == "Animator")
         {
-            collision.GetComponent<NPCAttacked>().GetAttacked(damage, force, PlayerCollider);
+            collision.GetComponent<NPCAttacked>().GetAttacked(bladeStats.normalAttackDamage, bladeStats.normalAttackForce, PlayerCollider);
             hitColliders.Add(collision);
         }
     }
