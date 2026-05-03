@@ -1,4 +1,3 @@
-/* sample */
 using UnityEngine;
 
 [SerializeField]

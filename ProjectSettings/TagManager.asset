@@ -6,7 +6,7 @@ TagManager:
   tags:
   - UI
   - NPC
-  - DropItem
+  - DroppedItem
   - Interactive
   - Cover
   - SpawnPoint

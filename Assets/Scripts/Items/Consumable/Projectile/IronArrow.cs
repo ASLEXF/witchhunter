@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
 public class IronArrow : MonoBehaviour, IItem, IProjectile
 {
     public Item item;
@@ -54,9 +52,9 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
             "Prefabs/Items/iron_arrow.prefab",
             1
         );
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<BoxCollider2D>();
+        _collider = GetComponentInChildren<BoxCollider2D>();
     }
 
     private void Start()
@@ -151,7 +149,9 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         transform.SetParent(Environment.Instance.gameObject.transform);
         height = heightFromGround;
         // Enable component
-        gameObject.GetComponent<DroppedItem>().enabled = true;
+        var droppedItem = GetComponentInChildren<DroppedItem>(true);
+        if (droppedItem != null)
+            droppedItem.enabled = true;
         // Enable physics and collider
         spriteRenderer.enabled = true;
         rb.isKinematic = false;
@@ -204,7 +204,16 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         float random = Random.value;
         if (random > consumedChance)
         {
-            gameObject.AddComponent<DroppedItem>();
+            Transform spriteChild = transform.Find("Sprite");
+            GameObject host = spriteChild != null ? spriteChild.gameObject : gameObject;
+            var di = host.GetComponent<DroppedItem>();
+            if (di == null)
+                host.AddComponent<DroppedItem>();
+            else
+            {
+                di.enabled = false;
+                di.enabled = true;
+            }
         }
         else
         {

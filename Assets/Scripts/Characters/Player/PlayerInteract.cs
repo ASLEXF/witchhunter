@@ -38,11 +38,8 @@ public class PlayerInteract : MonoBehaviour
         NPCCollectUI = UI_WorldSpace.transform.Find("NPCCollectCanvas").GetComponent<UIInteract>();
         NPCPickUpUI = UI_WorldSpace.transform.Find("NPCPickUpCanvas").GetComponent<UIInteract>();
         InteractiveUI = UI_WorldSpace.transform.Find("InteractiveCanvas").GetComponent<UIInteract>();
-    }
 
-    private void Update()
-    {
-
+        gameObject.tag = "Player";
     }
 
     private void OnEnable()
@@ -189,7 +186,6 @@ public class PlayerInteract : MonoBehaviour
                     {
                         UIOffset = script.UIOffset;
                     }
-
                     break;
                 }
         }
@@ -257,7 +253,7 @@ public class PlayerInteract : MonoBehaviour
     {
         if (!collision.isTrigger) return;
 
-        if (collision.CompareTag("DropItem"))
+        if (collision.CompareTag("DroppedItem"))
         {
             DropItemColliders.Add(collision);
         }
@@ -278,7 +274,7 @@ public class PlayerInteract : MonoBehaviour
     {
         if (!collision.isTrigger) return;
 
-        if (collision.CompareTag("DropItem"))
+        if (collision.CompareTag("DroppedItem"))
         {
             DropItemColliders.Remove(collision);
         }

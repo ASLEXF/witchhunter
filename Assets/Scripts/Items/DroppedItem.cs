@@ -15,7 +15,7 @@ public class DroppedItem : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
-        gameObject.tag = "DropItem";
+        gameObject.tag = "DroppedItem";
     }
 
     private void OnEnable()
@@ -34,13 +34,12 @@ public class DroppedItem : MonoBehaviour
 
     public void Interacted()
     {
-        if (interactable)
-        {
-            if (!PlayerInventory.Instance.IsFull)
-            {
-                PlayerInventory.Instance.AddItem(gameObject.GetComponent<IItem>().GetItem());
-                Destroy(gameObject);
-            }
-        }
+        if (!interactable || PlayerInventory.Instance.IsFull) return;
+
+        var item = GetComponentInParent<IItem>();
+        if (item == null)
+            return;
+        PlayerInventory.Instance.AddItem(item.GetItem());
+        Destroy(transform.parent.gameObject);
     }
 }
