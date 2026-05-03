@@ -209,13 +209,25 @@ public class PlayerAttack : MonoBehaviour
     public GameObject SwordAttack2;
     public GameObject SwordChargeAttack;
 
-    void EnableSwordAttack1Trigger() => SwordAttack1.SetActive(true);
-    void EnableSwordAttack2Trigger() => SwordAttack2.SetActive(true);
-    void EnableSwordChargeAttackTrigger() => SwordChargeAttack.SetActive(true);
+    void EnableBladeAttackTrigger(int type)
+    {
+        if (type == 1)
+            SwordAttack1.SetActive(true);
+        else if (type == 2)
+            SwordAttack2.SetActive(true);
+        else if (type == 3)
+            SwordChargeAttack.SetActive(true);
+    }
 
-    void DisableSwordAttack1Trigger() => SwordAttack1.SetActive(false);
-    void DisableSwordAttack2Trigger() => SwordAttack2.SetActive(false);
-    void DisableSwordChargeAttackTrigger() => SwordChargeAttack.SetActive(false);
+    void DisableBladeAttackTrigger(int type)
+    {
+        if (type == 1)
+            SwordAttack1.SetActive(false);
+        else if (type == 2)
+            SwordAttack2.SetActive(false);
+        else if (type == 3)
+            SwordChargeAttack.SetActive(false);
+    }
 
     #endregion
 

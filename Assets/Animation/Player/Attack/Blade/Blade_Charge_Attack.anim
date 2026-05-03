@@ -94,18 +94,18 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.033333335
-    functionName: EnableSwordChargeAttackTrigger
+    functionName: EnableBladeAttackTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 3
     messageOptions: 0
   - time: 0.18333334
-    functionName: DisableSwordChargeAttackTrigger
+    functionName: DisableBladeAttackTrigger
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
-    intParameter: 0
+    intParameter: 3
     messageOptions: 0
   - time: 0.38333333
     functionName: canAttack
