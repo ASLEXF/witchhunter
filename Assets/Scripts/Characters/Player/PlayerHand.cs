@@ -56,7 +56,7 @@ public class PlayerHand : Singleton<PlayerHand>
 
     public bool IsLEmpty
     {
-        get { return weaponL == null; }
+        get { return weaponL == null || weaponL.id == 0; }
     }
 
     public void EquipL(WeaponItem item)
@@ -99,10 +99,8 @@ public class PlayerHand : Singleton<PlayerHand>
 
     public bool IsREmpty
     {
-        get { return weaponR == null; }
+        get { return weaponR == null || weaponR.id == 0; }
     }
-
-    
 
     public void EquipR(WeaponItem item)
     {
@@ -146,14 +144,14 @@ public class PlayerHand : Singleton<PlayerHand>
 
     public bool IsProjectileEmpty
     {
-        get { return projectile == null; }
+        get { return projectile == null || projectile.id == 0; }
     }
 
     public void EquipProjectile(ProjectileItem item)
     {
         if (item == projectile) return;
 
-        if (projectile != null)
+        if (!IsProjectileEmpty)
             UnequipProjectile();
         projectile = item;
         addToHand(item);
@@ -172,7 +170,7 @@ public class PlayerHand : Singleton<PlayerHand>
 
     private void tryEquipProjectile()
     {
-        if (projectile == null)
+        if (IsProjectileEmpty)
         {
             ProjectileItem? newProjectile = PlayerInventory.Instance.FindItem(13, true) as ProjectileItem;
             if (newProjectile != null)

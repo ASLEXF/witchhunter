@@ -174,14 +174,14 @@ public class PlayerAttack : MonoBehaviour
     {
         if (PlayerHand.Instance.IsProjectileEmpty) return;
 
-        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(PlayerController.Instance.Direction, true);
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>()?.UpdatePosition(PlayerController.Instance.Direction, true);
     }
 
     private void updateArchery()
     {
         if (PlayerHand.Instance.IsProjectileEmpty) return;
 
-        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().UpdatePosition(PlayerController.Instance.Direction);
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>()?.UpdatePosition(PlayerController.Instance.Direction);
     }
 
     private Vector2 arrowSpeed;

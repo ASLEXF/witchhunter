@@ -124,7 +124,7 @@ public class VisualRange : MonoBehaviour
             {
                 continue;
             }
-            else if (hit.collider.CompareTag("Enermy"))
+            else if (hit.collider.CompareTag("Enemy"))
             {
                 continue;
             }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[SerializeField]
+[System.Serializable]
 public class Item
 {
     public int id;
@@ -30,9 +30,10 @@ public class Item
     }
 }
 
-[SerializeField]
+[System.Serializable]
 public class WeaponItem: Item
 {
+    [System.Serializable]
     public struct WeaponAttackInfo
     {
         public bool hasAttack;
@@ -42,7 +43,7 @@ public class WeaponItem: Item
         public string animationIntegerName;
         public AttackCondition attackCondition;
     }
-
+    [System.Serializable]
     public struct WeaponChargingAttackInfo
     {
         public bool hasAttack;
@@ -52,7 +53,7 @@ public class WeaponItem: Item
         public string animationTriggerName;
         public AttackCondition attackCondition;
     }
-
+    [System.Serializable]
     public struct WeaponChargeAttackInfo
     {
         public bool hasAttack;
@@ -185,6 +186,7 @@ public class ConsumableItem: Item
     }
 }
 
+[System.Serializable]
 public class ProjectileItem: Item
 {
     public string prefab;

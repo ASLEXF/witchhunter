@@ -82,14 +82,14 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         _spriteObj.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        Debug.Log("Trigger: " + collision.gameObject.name);
+        Debug.Log("Trigger: " + collider.gameObject.name);
         if (!isShooting) return;
-        if (collision.gameObject.CompareTag("Player")) return;  // avoid sticking onto player
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ignore Raycast")) return;
+        if (collider.gameObject.CompareTag("Player")) return;  // avoid sticking onto player
+        if (collider.gameObject.layer == LayerMask.NameToLayer("Ignore Raycast")) return;
 
-        stickOnto(collision.gameObject);
+        stickOnto(collider.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
