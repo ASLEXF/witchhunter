@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class IronArrow : MonoBehaviour, IItem, IProjectile
 {
-    public Item item;
-    private SpriteRenderer spriteRenderer;
-    private Rigidbody2D rb;
+    public Item _item;
+    private SpriteRenderer _spriteRenderer;
+    private Rigidbody2D _rb;
     private BoxCollider2D _collider;
+
+    private GameObject _spriteObj;
+    private DroppedItem _droppedItem;
 
     public bool isShooting { get; private set; } = false;
 
@@ -41,10 +43,11 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
     // randomly consumed chance
     [SerializeField] private float consumedChance = 0.5f;
+    [SerializeField] private float destroyDelay = 5f;
 
     private void Awake()
     {
-        item = new ProjectileItem(
+        _item = new ProjectileItem(
             13, 
             "iron arrow", 
             "", 
@@ -52,57 +55,66 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
             "Prefabs/Items/iron_arrow.prefab",
             1
         );
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-        _collider = GetComponentInChildren<BoxCollider2D>();
+        _spriteObj = transform.Find("Sprite").gameObject;
+        _spriteRenderer = _spriteObj.GetComponent<SpriteRenderer>();
+        _rb = _spriteObj.GetComponent<Rigidbody2D>();
+        _collider = _spriteObj.GetComponent<BoxCollider2D>();
+        _droppedItem = _spriteObj.GetComponent<DroppedItem>();
     }
 
     private void Start()
     {
-        rb.gravityScale = 0;
-        rb.velocity = Vector2.zero;
-        rb.isKinematic = true;
+        _rb.gravityScale = 0;
+        _rb.velocity = Vector2.zero;
+        _rb.isKinematic = true;
     }
 
     private void FixedUpdate()
     {
         if (!_collider.isActiveAndEnabled || !isShooting) return;
 
-        if (transform.position.y <= height)
+        if (_spriteObj.transform.position.y <= height)
         {
             stickOnto(null);
             return;
         }
-        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
+        float angle = Mathf.Atan2(_rb.velocity.y, _rb.velocity.x) * Mathf.Rad2Deg;
+        _spriteObj.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.isTrigger || !isShooting) return;
+        Debug.Log("Trigger: " + collision.gameObject.name);
+        if (!isShooting) return;
         if (collision.gameObject.CompareTag("Player")) return;  // avoid sticking onto player
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ignore Raycast")) return;
 
         stickOnto(collision.gameObject);
     }
 
-    public Item GetItem() => item;
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collision: " + collision.gameObject.name);
+    }
+
+    public Item GetItem() => _item;
 
     public void Hide()
     {
-        spriteRenderer.enabled = false;
+        _spriteRenderer.enabled = false;
         _collider.enabled = false;
     }
     
     public void Show()
     {
-        spriteRenderer.enabled = true;
+        _spriteRenderer.enabled = true;
         _collider.enabled = false;
     }
 
     public void UpdatePosition(Vector2 direction, bool reset = false)
     {
-        spriteRenderer.sortingOrder = 1;
-        spriteRenderer.flipX = direction.x < 0;
+        _spriteRenderer.sortingOrder = 1;
+        _spriteRenderer.flipX = direction.x < 0;
 
         if (reset)
         {
@@ -112,7 +124,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
                 positions[0].z
             );
             transform.localRotation = Quaternion.Euler(rotations[0]);
-            spriteRenderer.enabled = true;
+            _spriteRenderer.enabled = true;
             posIndex = 1;
             return;
         }
@@ -141,55 +153,52 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
     public void Shoot(Vector2 force, float heightFromGround)
     {
-        if (force == null)
-        {
-            force = new Vector2(10, 0);
-        }
+        // reset from animation state
+        _spriteRenderer.flipX = false;
         // Set the parent to environment to avoid being affected by player's movement
-        transform.SetParent(Environment.Instance.gameObject.transform);
+        transform.SetParent(Environment.Instance.Projectiles.transform);
         height = heightFromGround;
-        // Enable component
-        var droppedItem = GetComponentInChildren<DroppedItem>(true);
-        if (droppedItem != null)
-            droppedItem.enabled = true;
+        // Disable item interaction
+        _droppedItem.enabled = false;
         // Enable physics and collider
-        spriteRenderer.enabled = true;
-        rb.isKinematic = false;
-        rb.constraints = RigidbodyConstraints2D.None;
-        rb.gravityScale = 0.6f;
+        _spriteRenderer.enabled = true;
+        _rb.isKinematic = false;
+        _rb.constraints = RigidbodyConstraints2D.None;
+        _rb.gravityScale = 0.6f;
         _collider.enabled = true;
         _collider.isTrigger = false;
-        rb.AddForce(force, ForceMode2D.Impulse);
+        _rb.AddForce(force, ForceMode2D.Impulse);
         isShooting = true;
         // Set layer to projectile to avoid certain collisions
         gameObject.layer = LayerMask.NameToLayer("Projectile");
         // Add another arrow if the player has more in the inventory
         PlayerHand.Instance.Projectile = null;
-        ItemBar.Instance.UpdateProjectile(item.id);
+        ItemBar.Instance.UpdateProjectile(_item.id);
     }
 
     private void stickOnto(GameObject obj)
     {
+        Debug.Log("Stick onto " + (obj != null ? obj.name : "ground"));
         isShooting = false;
         // Set the parent to follow
         if (obj != null)
             transform.SetParent(obj.transform);
         else
-            transform.SetParent(Environment.Instance.gameObject.transform);
-        rb.isKinematic = true;
-        // Set sorting order to be behind entities
-        spriteRenderer.sortingOrder = 0;
-        // Disable collider and physics
-        _collider.enabled = false;
-        rb.gravityScale = 0;
-        rb.velocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePosition;
+            transform.SetParent(Environment.Instance.Projectiles.transform);
+        _rb.isKinematic = true;
+        // Set sorting order to entity
+        _spriteRenderer.sortingOrder = 0;
+        // Enable item interaction
+        _droppedItem.enabled = true;
+        // Disable physics
+        _rb.gravityScale = 0;
+        _rb.velocity = Vector2.zero;
+        _rb.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePosition;
         // Set layer to default to interact with environment
         gameObject.layer = LayerMask.NameToLayer("Default");
         // Randomly rotate a bit, if it's not sticking onto ground
         if (obj != null)
-            transform.rotation = Quaternion.Euler(0, 0, Random.Range(-rotationDeviation, rotationDeviation));
-
+            _spriteObj.transform.rotation = Quaternion.Euler(0, 0, Random.Range(-rotationDeviation, rotationDeviation));
         // Deal damage
         if (obj != null && obj.CompareTag("Enemy"))
         {
@@ -199,31 +208,15 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
                 attacked.GetAttacked(damage, 0, _collider);
             }
         }
-
         // Randomly Consumed
         float random = Random.value;
-        if (random > consumedChance)
-        {
-            Transform spriteChild = transform.Find("Sprite");
-            GameObject host = spriteChild != null ? spriteChild.gameObject : gameObject;
-            var di = host.GetComponent<DroppedItem>();
-            if (di == null)
-                host.AddComponent<DroppedItem>();
-            else
-            {
-                di.enabled = false;
-                di.enabled = true;
-            }
-        }
-        else
-        {
+        if (random < consumedChance)
             StartCoroutine(destroyAfterSeconds());
-        }
     }
 
-    private IEnumerator destroyAfterSeconds(float seconds = 7f)
+    private IEnumerator destroyAfterSeconds()
     {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(destroyDelay);
         Destroy(gameObject);
     }
 }

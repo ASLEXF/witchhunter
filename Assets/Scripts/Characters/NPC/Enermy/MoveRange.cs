@@ -11,6 +11,11 @@ public class MoveRange : MonoBehaviour
         controller = transform.parent.parent.GetComponent<NPCController>();
     }
 
+    private void Start()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

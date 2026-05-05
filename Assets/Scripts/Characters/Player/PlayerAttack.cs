@@ -200,7 +200,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void generateProjectile()
     {
-        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().Shoot(arrowSpeed, transform.position.y - 2.0f);
+        transform.parent.Find("InHand").GetComponentInChildren<IProjectile>().Shoot(arrowSpeed, transform.position.y);
     }
 
     #region Triggers

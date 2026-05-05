@@ -33,6 +33,11 @@ public class VisualRange : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
     }
 
+    private void Start()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+    }
+
     private void Update()
     {
         syncValues();
