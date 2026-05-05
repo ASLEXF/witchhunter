@@ -204,7 +204,7 @@ public class PlayerInteract : MonoBehaviour
         if (currentCollider != null)
         {
             Debug.Log($"interact gameObject {currentCollider.gameObject}");
-            GameObject interactObj = currentCollider.gameObject;
+            GameObject interactObj = currentCollider.transform.parent.gameObject;
             switch (type)
             {
                 case InteractTypeEnum.DropItem:

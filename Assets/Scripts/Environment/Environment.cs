@@ -6,6 +6,11 @@ public class Environment : Singleton<Environment>
 {
     GameObject projectiles;
 
+    public GameObject Projectiles
+    {
+        get { return projectiles; }
+    }
+
     protected override void Awake()
     {
         base.Awake();

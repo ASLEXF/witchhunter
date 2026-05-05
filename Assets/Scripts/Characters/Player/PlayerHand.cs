@@ -10,7 +10,8 @@ public class PlayerHand : Singleton<PlayerHand>
 {
     private void OnDestroy()
     {
-        Addressables.Release(_prefabHandle);
+        if (_prefabHandle.IsValid())
+            Addressables.Release(_prefabHandle);
     }
 
     private AsyncOperationHandle<GameObject> _prefabHandle;

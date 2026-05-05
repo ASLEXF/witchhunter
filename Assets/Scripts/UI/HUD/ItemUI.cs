@@ -63,7 +63,8 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
 
     private void OnDestroy()
     {
-        Addressables.Release(_spriteHandle);
+        if (_spriteHandle.IsValid())
+            Addressables.Release(_spriteHandle);
     }
 
     public void UpdateUI()
