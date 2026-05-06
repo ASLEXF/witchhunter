@@ -14,8 +14,6 @@ public class DamageNumber : MonoBehaviour
 
     public void Initialize(int damage, bool isCritical = false)
     {
-        Debug.Log(textMesh == null ? "textMesh is NULL" : "textMesh OK: " + textMesh.text);
-
         textMesh.text = damage.ToString();
         textMesh.sortingLayerID = SortingLayer.NameToID("UI");
         textMesh.sortingOrder = 100;  // Ensure it renders above other UI elements
@@ -39,7 +37,6 @@ public class DamageNumber : MonoBehaviour
 
         timer = 0f;
         textMesh.ForceMeshUpdate();
-        Debug.Log(transform.position);
     }
 
     private void Update()

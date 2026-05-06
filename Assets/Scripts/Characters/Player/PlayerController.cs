@@ -27,7 +27,7 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
-    public Vector3 FormerPosition; // create transition when teleport
+    public Vector3 FormerPosition; // create transition for teleport
 
     Rigidbody2D _rb;
     SpriteRenderer _sr, _spriteRenderer;

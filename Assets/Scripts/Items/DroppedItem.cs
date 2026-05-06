@@ -18,6 +18,11 @@ public class DroppedItem : MonoBehaviour
         gameObject.tag = "DroppedItem";
     }
 
+    private void Start()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Item");
+    }
+
     private void OnEnable()
     {
         interactable = true;
