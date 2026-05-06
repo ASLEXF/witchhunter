@@ -12,6 +12,18 @@ public class SwordAttack : MonoBehaviour
         PlayerCollider = transform.parent.parent.GetComponent<PolygonCollider2D>();
     }
 
+    private void OnEnable()
+    {
+        if (PlayerController.Instance.Direction.x < 0)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
+
     private void OnDisable()
     {
         hitColliders.Clear();
