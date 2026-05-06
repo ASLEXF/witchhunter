@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.UIElements;
 
-public class IronArrow : MonoBehaviour, IItem, IProjectile
+public class Arrow : MonoBehaviour, IItem, IProjectile
 {
     public Item _item;
     private SpriteRenderer _spriteRenderer;
@@ -75,26 +75,28 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
 
         if (_spriteObj.transform.position.y <= height)
         {
-            stickOnto(null);
+            stickInto(null);
             return;
         }
         float angle = Mathf.Atan2(_rb.velocity.y, _rb.velocity.x) * Mathf.Rad2Deg;
         _spriteObj.transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    public void Hit(Collider2D other)
     {
-        Debug.Log("Trigger: " + collider.gameObject.name);
         if (!isShooting) return;
-        if (collider.gameObject.CompareTag("Player")) return;  // avoid sticking onto player
-        if (collider.gameObject.layer == LayerMask.NameToLayer("Ignore Raycast")) return;
+        if (other.gameObject.CompareTag("Player")) return;  // avoid sticking onto player
+        if (
+            other.gameObject.layer == LayerMask.NameToLayer("Ignore Raycast")
+            || other.gameObject.layer == LayerMask.NameToLayer("Item")
+        )
+        {
+            Debug.Log("Arrow hit ignored layer: " + other.gameObject.layer);
+            return;
+        }
+                
 
-        stickOnto(collider.gameObject);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Collision: " + collision.gameObject.name);
+        stickInto(other.gameObject);
     }
 
     public Item GetItem() => _item;
@@ -165,6 +167,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         _rb.isKinematic = false;
         _rb.constraints = RigidbodyConstraints2D.None;
         _rb.gravityScale = 0.6f;
+        _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         _collider.enabled = true;
         _collider.isTrigger = false;
         _rb.AddForce(force, ForceMode2D.Impulse);
@@ -176,9 +179,9 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         ItemBar.Instance.UpdateProjectile(_item.id);
     }
 
-    private void stickOnto(GameObject obj)
+    private void stickInto(GameObject obj)
     {
-        Debug.Log("Stick onto " + (obj != null ? obj.name : "ground"));
+        Debug.Log("Stick " + (obj != null ? obj.name : "ground"));
         isShooting = false;
         // Set the parent to follow
         if (obj != null)
@@ -186,7 +189,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         else
             transform.SetParent(Environment.Instance.Projectiles.transform);
         _rb.isKinematic = true;
-        // Set sorting order to entity
+        // Set sorting order
         _spriteRenderer.sortingOrder = 0;
         // Enable item interaction
         _droppedItem.enabled = true;
@@ -198,7 +201,7 @@ public class IronArrow : MonoBehaviour, IItem, IProjectile
         gameObject.layer = LayerMask.NameToLayer("Default");
         // Randomly rotate a bit, if it's not sticking onto ground
         if (obj != null)
-            _spriteObj.transform.rotation = Quaternion.Euler(0, 0, Random.Range(-rotationDeviation, rotationDeviation));
+            _spriteObj.transform.rotation = Quaternion.Euler(0, 0, _spriteObj.transform.rotation.eulerAngles.z + Random.Range(-rotationDeviation, rotationDeviation));
         // Deal damage
         if (obj != null && obj.CompareTag("Enemy"))
         {

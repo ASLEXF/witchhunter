@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.Utilities;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class BoneArrow : MonoBehaviour, IItem, IProjectile
+public class BoneArrow : MonoBehaviour, IItem
 {
     public Item item;
     private SpriteRenderer spriteRenderer;
@@ -77,9 +77,9 @@ public class BoneArrow : MonoBehaviour, IItem, IProjectile
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Hit(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enermy"))
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             stickOnto(collision.gameObject);
         }

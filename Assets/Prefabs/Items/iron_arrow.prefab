@@ -45,6 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9601620d16e8874eaafca61bf1fa0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item:
+    id: 0
+    itemName: 
+    description: 
+    icon: 
+    isConsumable: 0
+    isSalable: 0
+    isMaterial: 0
+    isThrowable: 0
+    prise: 0
   damage: 1
   heightDeviation: 1
   guidingStrength: 0.5
@@ -64,6 +74,7 @@ GameObject:
   - component: {fileID: 1139454906960043582}
   - component: {fileID: 5352874481591397209}
   - component: {fileID: -6452207313984681476}
+  - component: {fileID: 7862465833541907091}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -224,3 +235,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 1
   UIOffset: {x: 0, y: 0.5, z: 0}
+--- !u!114 &7862465833541907091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9000000000000000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f2e1915c068cea46b821e0f5c52e7a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -3,7 +3,6 @@ using UnityEngine;
 public interface IItem
 {
     Item GetItem();
-
     void Hide();
     void Show();
 }
@@ -27,6 +26,8 @@ public interface IProjectile: IItem
     void SetDamage(int damage);
 
     void Shoot(Vector2 force, float floorHeight);
+
+    void Hit(Collider2D other);
 }
 
 public interface  ICharacterAnimation
