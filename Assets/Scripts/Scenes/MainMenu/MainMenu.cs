@@ -5,12 +5,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] private int currentButtonIndex = -1;  // start with -1 to disable this function until get key down
     private ButtonScript[] buttons;
     private bool hasSaveFile = false;
+
+    [SerializeField] private InputActionReference navigateAction;
+    [SerializeField] private InputActionReference submitAction;
+    private float inputCooldown = 0.2f;
+    private float timer;
 
     private void Awake()
     {
@@ -28,46 +34,42 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        timer -= Time.unscaledDeltaTime;
+
+        float nav = navigateAction.action.ReadValue<float>();
+
+        if (timer <= 0f)
         {
-            if (currentButtonIndex == -1)
+            if (nav > 0.5f)
             {
-                currentButtonIndex = 0;
-                selectButton(currentButtonIndex);
+                MoveSelection(-1);
+                timer = inputCooldown;
             }
-            else
+            else if (nav < -0.5f)
             {
-                findNextInteractableButton(-1);
-                selectButton(currentButtonIndex);
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (currentButtonIndex == -1)
-            {
-                currentButtonIndex = 0;
-                selectButton(currentButtonIndex);
-            }
-            else
-            {
-                findNextInteractableButton(1);
-                selectButton(currentButtonIndex);
+                MoveSelection(1);
+                timer = inputCooldown;
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (submitAction.action.WasPressedThisFrame())
         {
-            buttons[currentButtonIndex].Invoke();
+            if (currentButtonIndex >= 0)
+                buttons[currentButtonIndex].Invoke();
         }
     }
 
     private void OnEnable()
     {
+        navigateAction.action.Enable();
+        submitAction.action.Enable();
         GameEvents.Instance.OnButtonHover += Instance_OnButtonHover;
     }
 
     private void OnDisable()
     {
+        navigateAction.action.Disable();
+        submitAction.action.Disable();
         if (GameEvents.HasInstance)
         {
             GameEvents.Instance.OnButtonHover -= Instance_OnButtonHover;
@@ -82,6 +84,20 @@ public class MainMenu : MonoBehaviour
     }
 
     #region Button selection
+
+    private void MoveSelection(int direction)
+    {
+        if (currentButtonIndex == -1)
+        {
+            currentButtonIndex = 0;
+        }
+        else
+        {
+            findNextInteractableButton(direction);
+        }
+
+        selectButton(currentButtonIndex);
+    }
 
     private void findNextInteractableButton(int direction)
     {

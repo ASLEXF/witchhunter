@@ -24,7 +24,7 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler
             }
             else
             {
-                text.color = originalColor * tineColor;
+                text.color = originalColor * tintColor;
             }
         }
     }
@@ -35,7 +35,7 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler
 
     [SerializeField] private int buttonIndex;
     [SerializeField] private Color originalColor;
-    [SerializeField] private Color tineColor = new Color(80, 80, 80, 128);
+    [SerializeField] private Color tintColor = new Color(80, 80, 80, 128);
 
     private void Awake()
     {
@@ -47,8 +47,6 @@ public class ButtonScript : MonoBehaviour, IPointerEnterHandler
 
     private void Start()
     {
-        //Stop();
-
         for (int i = 0; i < transform.parent.childCount; i++) 
         {
             if (transform.parent.GetChild(i).gameObject == gameObject)
