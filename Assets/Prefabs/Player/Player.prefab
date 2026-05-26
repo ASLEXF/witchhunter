@@ -99,39 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c40f0b7302ec54fa7aa7b9621ae353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  force: 1
---- !u!1 &1340930926
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1340930927}
-  m_Layer: 2
-  m_Name: Status Checker
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1340930927
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1340930926}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 299438075738856743}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  bladeStats: {fileID: 11400000, guid: c0da44772cb580b46b063457d3ac5a02, type: 2}
 --- !u!1 &1364941241
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,11 +171,11 @@ GameObject:
   - component: {fileID: 1378200090}
   - component: {fileID: 1378200094}
   - component: {fileID: 1378200093}
-  - component: {fileID: 1378200092}
   - component: {fileID: 1378200091}
   - component: {fileID: 1905897281755863030}
   - component: {fileID: 7897063146895272216}
   - component: {fileID: 805899559013221283}
+  - component: {fileID: 6166842345743416547}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Player
@@ -303,51 +271,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!61 &1378200092
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378200089}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.021130487, y: 0.4560663}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.04}
-    oldSize: {x: 0.36, y: 1}
-    newSize: {x: 0.36, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.36, y: 1}
-  m_EdgeRadius: 0
 --- !u!114 &1378200091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,11 +295,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb6f9f7796662845af4d164c8342c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveDuration: 0
+  moveSpeed: 0
   SwordAttack1: {fileID: 1165992581070900632}
   SwordAttack2: {fileID: 277956863}
   SwordChargeAttack: {fileID: 5342868908981074270}
-  moveDuration: 0
-  moveSpeed: 0
 --- !u!114 &7897063146895272216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,6 +357,58 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!60 &6166842345743416547
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378200089}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.04}
+    oldSize: {x: 0.36, y: 1}
+    newSize: {x: 0.36, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.17999999, y: 0.82}
+      - {x: 0.16, y: 0.96}
+      - {x: -0.08, y: 0.96}
+      - {x: -0.17999999, y: 0.76}
+      - {x: -0.17999999, y: 0.14}
+      - {x: -0.14, y: -0.04}
+      - {x: 0.17999999, y: -0.04}
+  m_UseDelaunayMesh: 0
 --- !u!1 &1165992581012874290
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,8 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c40f0b7302ec54fa7aa7b9621ae353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  force: 1
+  bladeStats: {fileID: 11400000, guid: c0da44772cb580b46b063457d3ac5a02, type: 2}
 --- !u!1 &1165992582217251770
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +596,7 @@ Transform:
   - {fileID: 1364941242}
   - {fileID: 1652381190746260017}
   - {fileID: 7163299554001360510}
+  - {fileID: 5151171349736828537}
   - {fileID: 299438075738856743}
   - {fileID: 7318719690133742712}
   m_Father: {fileID: 0}
@@ -893,10 +868,10 @@ MonoBehaviour:
     m_ActionName: Battle/WeaponSwitch[/Keyboard/1,/Keyboard/2,/Keyboard/3,/Keyboard/4]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerInteract, Assembly-CSharp
-        m_MethodName: Interact
-        m_Mode: 1
+      - m_Target: {fileID: 1165992582217251717}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -908,11 +883,35 @@ MonoBehaviour:
     m_ActionId: 34cdbf9c-4dcb-4013-afc2-ea4733b63d6a
     m_ActionName: Battle/Interact[/Keyboard/e]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1165992582217251717}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnBackpack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7833533d-ac49-424a-9252-f2fda0beb4b5
     m_ActionName: Exploration/Backpack[/Keyboard/tab]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1165992582217251717}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnBackpack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 6db5cb09-8ad6-4d95-9e42-16da992547e3
     m_ActionName: Battle/Backpack[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
@@ -939,7 +938,8 @@ MonoBehaviour:
   CanMove: 1
   Acceleration: 5
   Deceleration: 0.6
-  CanAttack: 1
+  canAttack: 1
+  longPressDuration: 0.3
 --- !u!114 &1110450235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1084,7 +1084,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1165992581012874301}
-  - {fileID: 1340930927}
   m_Father: {fileID: 1165992582217251712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5341025114050002795
@@ -1131,6 +1130,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adcdea0bb75b6334e8a51be2e282ad45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponL:
+    id: 0
+    itemName: 
+    description: 
+    icon: 
+    isConsumable: 0
+    isSalable: 0
+    isMaterial: 0
+    isThrowable: 0
+    prise: 0
+    weaponAttackInfo:
+      hasAttack: 0
+      damage: 0
+      comboCount: 0
+      animationTriggerName: 
+      animationIntegerName: 
+      attackCondition: 0
+    weaponChargingAttackInfo:
+      hasAttack: 0
+      damage: 0
+      comboCount: 0
+      maxChargingTime: 0
+      animationTriggerName: 
+      attackCondition: 0
+    weaponChargeAttackInfo:
+      hasAttack: 0
+      damage: 0
+      additionalDamage: 0
+      comboCount: 0
+      animationTriggerName: 
+      attackCondition: 0
+  weaponR:
+    id: 0
+    itemName: 
+    description: 
+    icon: 
+    isConsumable: 0
+    isSalable: 0
+    isMaterial: 0
+    isThrowable: 0
+    prise: 0
+    weaponAttackInfo:
+      hasAttack: 0
+      damage: 0
+      comboCount: 0
+      animationTriggerName: 
+      animationIntegerName: 
+      attackCondition: 0
+    weaponChargingAttackInfo:
+      hasAttack: 0
+      damage: 0
+      comboCount: 0
+      maxChargingTime: 0
+      animationTriggerName: 
+      attackCondition: 0
+    weaponChargeAttackInfo:
+      hasAttack: 0
+      damage: 0
+      additionalDamage: 0
+      comboCount: 0
+      animationTriggerName: 
+      attackCondition: 0
+  projectile:
+    id: 0
+    itemName: 
+    description: 
+    icon: 
+    isConsumable: 0
+    isSalable: 0
+    isMaterial: 0
+    isThrowable: 0
+    prise: 0
+    prefab: 
+    amount: 0
 --- !u!1 &5342868908981074270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,8 +1299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1c40f0b7302ec54fa7aa7b9621ae353, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
-  force: 2
+  bladeStats: {fileID: 11400000, guid: c0da44772cb580b46b063457d3ac5a02, type: 2}
 --- !u!1 &6219785114183854332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,9 +1312,9 @@ GameObject:
   - component: {fileID: 3519787274704167439}
   - component: {fileID: 1434418426999418775}
   - component: {fileID: 6224669224491026871}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Interact
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1256,11 +1328,11 @@ Transform:
   m_GameObject: {fileID: 6219785114183854332}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalPosition: {x: 0, y: 0.24, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7318719690133742712}
+  m_Father: {fileID: 1165992582217251712}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3519787274704167439
 SpriteRenderer:
@@ -1361,11 +1433,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3388d55a0c2ceeb4586ea944103d48b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI_WorldSpace: {fileID: 0}
   DropItemUI: {fileID: 0}
   NPCTalkUI: {fileID: 0}
   NPCCollectUI: {fileID: 0}
   NPCPickUpUI: {fileID: 0}
   InteractiveUI: {fileID: 0}
+  currentCollider: {fileID: 0}
   DropItemColliders: []
   NPCColliders: []
   InteractiveColliders: []
@@ -1398,7 +1472,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5151171349736828537}
   - {fileID: 1165992581070900635}
   - {fileID: 277956864}
   - {fileID: 8485872740728793390}

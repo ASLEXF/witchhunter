@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7521279750354272872}
-  - component: {fileID: 476192991048053550}
+  - component: {fileID: 6690053190428094172}
   - component: {fileID: 629685654863126424}
   m_Layer: 0
   m_Name: Interact
@@ -33,8 +33,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3956740467589379054}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &476192991048053550
-CircleCollider2D:
+--- !u!61 &6690053190428094172
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -66,8 +66,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Size: {x: 0.6, y: 1}
+  m_EdgeRadius: 0
 --- !u!114 &629685654863126424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInteractable: 1
+  UIOffset: {x: 0, y: 0.5, z: 0}
   file: bulletin_board_1
 --- !u!1 &2795079201249842873
 GameObject:
@@ -285,7 +296,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.028295785, y: 0.3280208}
+  m_Offset: {x: -0.028295785, y: -0.015867472}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.55172414, y: 0.18}
@@ -296,5 +307,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.55355567, y: 0.52630806}
+  m_Size: {x: 0.55355567, y: 0.3640237}
   m_EdgeRadius: 0
