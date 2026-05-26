@@ -14,7 +14,7 @@ public class PlayerInteract : MonoBehaviour
     SpriteRenderer spriteRenderer;
     InteractTypeEnum type;
 
-    [SerializeField] Collider2D currentCollider;
+    [SerializeField] Collider2D? currentCollider;
     [SerializeField] private List<Collider2D> DropItemColliders = new List<Collider2D>();
     [SerializeField] public List<Collider2D> NPCColliders = new List<Collider2D>();
     [SerializeField] private List<Collider2D> InteractiveColliders = new List<Collider2D>();
@@ -277,14 +277,20 @@ public class PlayerInteract : MonoBehaviour
         if (collision.CompareTag("DroppedItem"))
         {
             DropItemColliders.Remove(collision);
+            if (currentCollider == collision)
+                currentCollider = null;
         }
         else if (collision.CompareTag("NPC") && collision.transform.parent.GetComponentInChildren<NPCInteract>().isInteractable)
         {
             NPCColliders.Remove(collision);
+            if (currentCollider == collision)
+                currentCollider = null;
         }
         else if (collision.CompareTag("Interactive"))
         {
             InteractiveColliders.Remove(collision);
+            if (currentCollider == collision)
+                currentCollider = null;
         }
         else return;
 
