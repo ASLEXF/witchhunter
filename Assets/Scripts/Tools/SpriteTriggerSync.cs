@@ -1,36 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
+using UnityEngine.U2D;
 
 [RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
 public class SpriteTriggerSync : MonoBehaviour
 {
     SpriteRenderer spriteRenderer;
-    BoxCollider2D boxCollider;
+    PolygonCollider2D polygonCollider;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        polygonCollider = GetComponent<PolygonCollider2D>();
     }
 
     private void Start()
     {
-        boxCollider.isTrigger = true;
+        polygonCollider.isTrigger = true;
+        UpdateCollider();
     }
 
     private void Update()
     {
+        UpdateCollider();
+    }
+
+    private void UpdateCollider()
+    {
         if (spriteRenderer != null)
         {
-            Bounds spriteBounds = spriteRenderer.bounds;
-            boxCollider.size = spriteBounds.size;
-            boxCollider.offset = spriteBounds.center - transform.position;
+            Sprite sprite = spriteRenderer.sprite;
+            List<Vector2> path = new List<Vector2>();
+            for (int i = 0; i < polygonCollider.pathCount; i++)
+            {
+                path.Clear();
+                sprite.GetPhysicsShape(i, path);
+                polygonCollider.SetPath(i, path.ToArray());
+            }
         }
         else
         {
-            Debug.LogWarning("sprite render not found!");
+            Debug.LogWarning($"Sprite renderer on {transform.parent.name} not found!");
         }
     }
 }
