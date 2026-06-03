@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
@@ -7,7 +9,8 @@ using UnityEngine.InputSystem.XR;
 [RequireComponent(typeof(MeshFilter))]
 public class VisualRange : MonoBehaviour
 {
-    NPCController controller;
+    NPCController? controller;
+    EnemyAIController? enemyController;
 
     [SerializeField][Range(5, 25)] public float distance = 12.0f;
     [SerializeField][Range(8, 48)] public int lineNum = 24;
@@ -28,6 +31,7 @@ public class VisualRange : MonoBehaviour
     private void Awake()
     {
         controller = transform.parent.parent.GetComponent<NPCController>();
+        enemyController = transform.parent.parent.GetComponent<EnemyAIController>();
         _collider = GetComponent<PolygonCollider2D>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshFilter = GetComponent<MeshFilter>();
@@ -52,7 +56,8 @@ public class VisualRange : MonoBehaviour
     private void syncValues()
     {
         //facePosition = transform.GetComponentInParent<NPCController>().facePosition;
-        posToPlayer = controller.posToPlayer;
+        posToPlayer = controller?.PosToPlayer ?? Vector2.zero;
+        posToPlayer = enemyController?.LookPosition ?? Vector2.zero;
     }
 
     private void addPoints()
@@ -184,7 +189,8 @@ public class VisualRange : MonoBehaviour
         {
             if (collider.name == "Player")
             {
-                controller.SeePlayer();
+                controller?.SeePlayer();
+                enemyController?.CanSeePlayer(true);
             }
         }
     }
@@ -195,11 +201,15 @@ public class VisualRange : MonoBehaviour
         {
             if (collider.name == "Player")
             {
-                if (!controller.seePlayer)
+                if (!(controller?.seePlayer ?? false))
                 {
-                    controller.SeePlayer();
+                    controller?.SeePlayer();
+                    enemyController?.CanSeePlayer(true);
                 }
-                controller.targetPosition = getColliderCenter(collider);
+                if (controller != null)
+                    controller.TargetPosition = getColliderCenter();
+                if (enemyController != null)
+                    enemyController.TargetPosition = getColliderCenter();
             }
         }
     }
@@ -208,13 +218,14 @@ public class VisualRange : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            controller.CantSeePlayer();
+            controller?.CantSeePlayer();
+            enemyController?.CanSeePlayer(false);
         }
     }
 
-    private Vector2 getColliderCenter(Collider2D collider)
+    private Vector2 getColliderCenter()
     {
-        PolygonCollider2D polygonCollider = collider as PolygonCollider2D;
+        PolygonCollider2D polygonCollider = _collider;
 
         Vector2[] points = polygonCollider.points;
 
