@@ -4,6 +4,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
 
+
+public enum  PatrolType
+{
+    idle = 0,
+    wander = 1,
+    patrol = 2,
+}
+
 public enum ApproachMethod
 {
     straight = 0,   // find the shortest path
@@ -31,14 +39,15 @@ public class WolfStats : ScriptableObject
     //public float GroundDeceleration = 60;
 
     [Header("Behavior Preferences")]
-    public float decisionInterval = 0.5f;
+    public MinMaxFloat decisionInterval = new MinMaxFloat {min = 0.3f, max = 1.2f};
+    public PatrolType patrolType = PatrolType.wander;
     public ApproachMethod approachMethod = ApproachMethod.straight;
     public float trackTime = 6;
 
     [Header("Behavior Preferences - Wander")]
-    public float wanderTime = 2;
-    public float wanderRadius = 5;
-    public float minDisatnce = 0.2f;
+    public MinMaxFloat wanderTime = new MinMaxFloat {min = 6, max = 12};
+    public MinMaxFloat wanderRadius = new MinMaxFloat {min = 3, max = 7};
+    public float minDistance = 0.2f;
 
     [Header("Behavior Preferences - Normal")]
     [Range(0, 1)] public float normal_moveClose = 0.9f;
@@ -72,6 +81,9 @@ public class WolfStats : ScriptableObject
 
     private void OnValidate()
     {
+        decisionInterval.CheckValidity(nameof(decisionInterval), this);
+        wanderTime.CheckValidity(nameof(wanderTime), this);
+        wanderRadius.CheckValidity(nameof(wanderRadius), this);
         normalize(ref normal_moveClose, ref normal_moveAway, ref normal_attack, ref normal_wait);
         normalize(ref moveRange_moveClose, ref moveRange_moveAway, ref moveRange_attack, ref moveRange_wait);
         normalize(ref longRange_moveClose, ref longRange_moveAway, ref longRange_attack, ref longRange_wait);
