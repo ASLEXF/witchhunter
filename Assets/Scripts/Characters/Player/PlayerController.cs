@@ -65,7 +65,6 @@ public class PlayerController : Singleton<PlayerController>
         _animator.SetBool(Animator.StringToHash("IsMoving"), Mathf.Abs(horizontalInput) > 0f || Mathf.Abs(verticalInput) > 0f);
     }
     private void FixedUpdate()
-
     {
         if (CanMove)
         {

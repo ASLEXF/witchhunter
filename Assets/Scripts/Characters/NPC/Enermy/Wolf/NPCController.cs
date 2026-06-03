@@ -19,8 +19,8 @@ public class NPCController : MonoBehaviour
     NPCStatusEffect statusEffect;
 
     //public Matrix2x2 facePosition = new Matrix2x2(Mathf.PI);
-    public Vector2 targetPosition;
-    [SerializeField] public Vector2 posToPlayer;
+    public Vector2 TargetPosition;
+    [SerializeField] public Vector2 PosToPlayer;
 
     Vector2 originalPosition;
 
@@ -73,7 +73,7 @@ public class NPCController : MonoBehaviour
 
         spriteRenderer.flipX = isFlip;
 
-        if (Time.time >= startTime + stats.decisionInterval)
+        if (Time.time >= startTime + stats.decisionInterval.Value)
         {
             decideBehavior();
             startTime = Time.time;
@@ -216,10 +216,10 @@ public class NPCController : MonoBehaviour
         {
             case ApproachMethod.straight:
                 {
-                    while (Time.time < startTime + stats.decisionInterval)
+                    while (Time.time < startTime + stats.decisionInterval.Value)
                     {
                         animator.SetBool("IsWalking", true);
-                        agent.SetDestination(targetPosition);
+                        agent.SetDestination(TargetPosition);
 
                         yield return null;
                     }
@@ -250,9 +250,9 @@ public class NPCController : MonoBehaviour
         float angle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
         Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
-        while (Time.time < startTime + stats.decisionInterval)
+        while (Time.time < startTime + stats.decisionInterval.Value)
         {
-            Vector3 movement = posToPlayer * direction * stats.runSpeed * Time.deltaTime;
+            Vector3 movement = PosToPlayer * direction * stats.runSpeed * Time.deltaTime;
             //Debug.Log($"{movement}");
             rb.MovePosition(transform.position + movement);
 
@@ -280,23 +280,23 @@ public class NPCController : MonoBehaviour
     private IEnumerator wander()
     {
         Debug.Log($"{gameObject.name} wander");
-        targetPosition = Vector2.zero;
+        TargetPosition = Vector2.zero;
         isWandering = true;
         agent.speed = stats.walkSpeed;
         float startTime = Time.time;
-        
-        Vector2 randomDirection = UnityEngine.Random.insideUnitSphere.ToVector2() * stats.wanderRadius;
+
+        Vector2 randomDirection = UnityEngine.Random.insideUnitSphere.ToVector2() * stats.wanderRadius.Value;
         randomDirection += originalPosition;
         NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, stats.wanderRadius, NavMesh.AllAreas);
-        if (Vector2.Distance(originalPosition, hit.position.ToVector2()) >= stats.minDisatnce)
+        NavMesh.SamplePosition(randomDirection, out hit, stats.wanderRadius.Value, NavMesh.AllAreas);
+        if (Vector2.Distance(originalPosition, hit.position.ToVector2()) >= stats.minDistance)
         {
             animator.SetBool("IsWalking", true);
             agent.SetDestination(hit.position.ToVector2());
-            posToPlayer = (hit.position.ToVector2() - transform.position.ToVector2()).normalized;
+            PosToPlayer = (hit.position.ToVector2() - transform.position.ToVector2()).normalized;
         }
 
-        while (Time.time < startTime + stats.wanderTime)
+        while (Time.time < startTime + stats.wanderTime.Value)
         {
             if (Mathf.Approximately(transform.position.x, hit.position.ToVector2().x) && Mathf.Approximately(transform.position.y, hit.position.ToVector2().y))
                 {
@@ -359,7 +359,7 @@ public class NPCController : MonoBehaviour
         isWandering = false;
         isTracking = true;
 
-        StartCoroutine(track(targetPosition, stats.trackTime));
+        StartCoroutine(track(TargetPosition, stats.trackTime));
     }
 
     public void Alert(PolygonCollider2D PlayerCollider = null)
@@ -378,12 +378,12 @@ public class NPCController : MonoBehaviour
         //}
         if (isMoveRange)
         {
-            targetPosition = PlayerController.Instance.transform.position;
+            TargetPosition = PlayerController.Instance.transform.position;
             SeePlayer();
         }
         else
         {
-            targetPosition = PlayerController.Instance.transform.position;  //  TODO: give a position hint
+            TargetPosition = PlayerController.Instance.transform.position;  //  TODO: give a position hint
             CantSeePlayer();
         }
     }
@@ -391,11 +391,11 @@ public class NPCController : MonoBehaviour
     private void updateTargetPosition()
     {
         if (statusEffect.Stunned) return;
-        if (targetPosition != Vector2.zero)
+        if (TargetPosition != Vector2.zero)
         {
-            posToPlayer = (targetPosition - new Vector2(transform.position.x, transform.position.y)).normalized;
-            Debug.DrawLine(transform.position, targetPosition);
-            if (posToPlayer.x > 0)
+            PosToPlayer = (TargetPosition - new Vector2(transform.position.x, transform.position.y)).normalized;
+            Debug.DrawLine(transform.position, TargetPosition);
+            if (PosToPlayer.x > 0)
             {
                 spriteRenderer.flipX = true;
                 isFlip = true;

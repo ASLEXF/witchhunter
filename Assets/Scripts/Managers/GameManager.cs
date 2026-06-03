@@ -15,6 +15,8 @@ public class GameManager : Singleton<GameManager>
 
         // load the first scene
         StartCoroutine(FirstSceneInitialize());
+
+        //Time.timeScale = 0.3f;
     }
 
     IEnumerator FirstSceneInitialize()

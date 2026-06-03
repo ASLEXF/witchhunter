@@ -18,7 +18,7 @@ public class NPCAttack : MonoBehaviour
 
     public void EnableBiteTrigger()
     {
-        biteTrigger.transform.position = transform.position.ToVector2() + PositionLine.Instance.GetAttackPosition(controller.posToPlayer, stats.bitePostion);
+        biteTrigger.transform.position = transform.position.ToVector2() + PositionLine.Instance.GetAttackPosition(controller.PosToPlayer, stats.bitePostion);
         biteTrigger.SetActive(true);
     }
 
