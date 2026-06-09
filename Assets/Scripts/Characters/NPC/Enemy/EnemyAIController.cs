@@ -19,6 +19,12 @@ public class EnemyAIController : MonoBehaviour
     public Vector2 LookPosition;
 
     // status
+    public bool IsWandering 
+    {
+        get
+        { return currentState == PatrolState && currentState.IsHesitating == false; }
+        private set { }
+    }
     public bool IsAlerted { get; private set; } = false;
 
     // distances
@@ -35,7 +41,7 @@ public class EnemyAIController : MonoBehaviour
     public EnemyAttackState AttackState { get; private set; }
     //public EnemyAttackedState AttackedState { get; private set; }
     public EnemyDeadState DeadState { get; private set; }
-         
+
     // preference
     [SerializeField] public WolfStats Stats;
     [SerializeField] public float DecisionInterval;
@@ -65,8 +71,7 @@ public class EnemyAIController : MonoBehaviour
 
     private void Update()
     {
-        if (!isHesitated)
-            currentState?.Update();
+        currentState?.Update();
     }
 
     private void InitializeNavMeshAgent()
@@ -88,31 +93,6 @@ public class EnemyAIController : MonoBehaviour
         currentState.Enter();
     }
 
-    #region hesitation
-
-    private bool isHesitated = false;
-    private Coroutine hesitateCoroutine;
-
-    public void StartHesitate(float time)
-    {
-        if (hesitateCoroutine != null)
-        {
-            StopCoroutine(hesitateCoroutine);
-        }
-
-        hesitateCoroutine = StartCoroutine(Hesitate(time));
-    }
-
-    private IEnumerator Hesitate(float duration)
-    {
-        isHesitated = true;
-        yield return new WaitForSeconds(duration);
-        isHesitated = false;
-        hesitateCoroutine = null;
-    }
-
-    #endregion
-
     public void CanSeePlayer(bool canSee = true, Vector2 playerPosition = default)
     {
         if (statusEffect.Dead) return;
@@ -120,12 +100,7 @@ public class EnemyAIController : MonoBehaviour
         SeePlayer = canSee;
         if (canSee)
         {
-            if (hesitateCoroutine != null)
-            {
-                StopCoroutine(hesitateCoroutine);
-                isHesitated = false;
-                hesitateCoroutine = null;
-            }
+            currentState?.StopHesitate();
             TargetPosition = playerPosition;
             LookPosition = playerPosition;
         }

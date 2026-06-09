@@ -6,14 +6,20 @@ public class EnemyIdleState : EnemyState
 
     public override void Enter()
     {
-        Debug.Log("Enemy Idle");
+        base.Enter();
+        //Debug.Log("Enemy Idle");
         enemy.Agent.isStopped = true;
         enemy.Animator.SetBool("IsWalking", false);
-        enemy.StartHesitate(enemy.Stats.wanderTime.RandomValue);
+        StartHesitate(enemy.Stats.wanderTime.RandomValue);
     }
 
     public override void Update()
     {
+        base.Update();
+        if (IsHesitating)
+        {
+            return;
+        }
         //if (enemy.seePlayer)
         //{
         //    enemy.ChangeState(enemy.ChaseState);
@@ -25,12 +31,12 @@ public class EnemyIdleState : EnemyState
         //    enemy.ChangeState(enemy.ChaseState);
         //    return;
         //}
-
         enemy.ChangeState(enemy.PatrolState);
     }
 
     public override void Exit()
     {
-        Debug.Log("Exit Idle");
+        base.Exit();
+        //Debug.Log("Exit Idle");
     }
 }

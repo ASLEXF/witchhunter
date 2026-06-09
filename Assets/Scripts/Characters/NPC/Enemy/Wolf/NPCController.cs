@@ -289,7 +289,7 @@ public class NPCController : MonoBehaviour
         randomDirection += originalPosition;
         NavMeshHit hit;
         NavMesh.SamplePosition(randomDirection, out hit, stats.wanderRadius.RandomValue, NavMesh.AllAreas);
-        if (Vector2.Distance(originalPosition, hit.position.ToVector2()) >= stats.minDistance)
+        if (Vector2.Distance(originalPosition, hit.position.ToVector2()) >= agent.stoppingDistance)
         {
             animator.SetBool("IsWalking", true);
             agent.SetDestination(hit.position.ToVector2());

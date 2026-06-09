@@ -6,13 +6,15 @@ public class EnemyChaseState : EnemyState
 
     public override void Enter()
     {
-        enemy.StartHesitate(enemy.DecisionInterval);
+        base.Enter();
+        StartHesitate(enemy.DecisionInterval);
         enemy.Agent.isStopped = false;
         Debug.Log("Enemy Enter Chase");
     }
 
     public override void Update()
     {
+        base.Update();
         if (enemy.IsDead())
         {
             enemy.ChangeState(enemy.DeadState);
@@ -36,6 +38,7 @@ public class EnemyChaseState : EnemyState
 
     public override void Exit()
     {
+        base.Exit();
         Debug.Log("Exit Chase");
     }
 }

@@ -1,5 +1,3 @@
-#nullable enable
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
@@ -10,18 +8,18 @@ using UnityEngine.InputSystem.XR;
 public class VisualRange : MonoBehaviour
 {
     //NPCController? controller;
-    EnemyAIController? enemyController;
-
-    [SerializeField][Range(5, 25)] public float distance = 12.0f;
-    [SerializeField][Range(8, 48)] public int lineNum = 24;
-    [SerializeField][Range(90, 180)] public float range = 90.0f;
-
-    Vector2 facePosition;  // rotate
-    Vector2 posToPlayer;  // rotate
-
+    EnemyAIController enemyController;
     PolygonCollider2D _collider;
     MeshRenderer meshRenderer;
     MeshFilter meshFilter;
+
+    private float range;
+    private float distance;
+    private int lineNum;
+    private float angleSpeed;
+
+    Vector2 facePosition;  // rotate
+    Vector2 posToPlayer;  // rotate
 
     List<Vector2> points = new List<Vector2>();
 
@@ -35,6 +33,11 @@ public class VisualRange : MonoBehaviour
         _collider = GetComponent<PolygonCollider2D>();
         meshRenderer = GetComponent<MeshRenderer>();
         meshFilter = GetComponent<MeshFilter>();
+
+        range = enemyController.Stats.sightAngle;
+        distance = enemyController.Stats.sightDistance;
+        lineNum = enemyController.Stats.sightLineNum;
+        angleSpeed = enemyController.Stats.sightAngleSpeed;
     }
 
     private void Start()
@@ -55,9 +58,12 @@ public class VisualRange : MonoBehaviour
 
     private void syncValues()
     {
-        facePosition = enemyController?.Agent.velocity.normalized ?? Vector2.zero;
+        if (enemyController.IsWandering)
+        {
+            facePosition = Vector2Utility.RotateTowards(facePosition, enemyController.Agent.velocity.normalized, angleSpeed * Mathf.Deg2Rad * Time.deltaTime);
+        }
         //posToPlayer = controller?.PosToPlayer ?? Vector2.zero;
-        posToPlayer = enemyController?.LookPosition ?? Vector2.zero;
+        posToPlayer = enemyController.LookPosition;
     }
 
     private void addPoints()

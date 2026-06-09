@@ -23,20 +23,18 @@ public enum ApproachMethod
 [CreateAssetMenu]
 public class WolfStats : ScriptableObject
 {
-    [Header("Attack - Bite")]
-    public int biteDamage = 1;
-    public Vector2 bitePostion = new Vector2(-0.317f, 0.263f);
-
-    [Header("Attack - Claw")]
-    public int clawDamage = 1;
-    public Vector2 clawPosition = new Vector2(0, 0);
-
     [Header("Movement")]
     public float walkSpeed = 3;
     public float runSpeed = 6;
     public float MaxSpeed = 14;
     public float Acceleration = 12;
     //public float GroundDeceleration = 60;
+
+    [Header("Sight")]
+    [Range(90, 180)] public float sightAngle = 90;
+    [Range(5, 25)] public float sightDistance = 12.0f;
+    [Range(8, 48)] public int sightLineNum = 24;
+    [Range(60, 360)] public float sightAngleSpeed = 90;
 
     [Header("Behavior Preferences")]
     public MinMaxFloat decisionInterval = new MinMaxFloat {Min = 0.3f, Max = 1.2f};
@@ -47,7 +45,6 @@ public class WolfStats : ScriptableObject
     [Header("Behavior Preferences - Wander")]
     public MinMaxFloat wanderTime = new MinMaxFloat {Min = 2f, Max = 6f};
     public MinMaxFloat wanderRadius = new MinMaxFloat {Min = 3f, Max = 7f};
-    public float minDistance = 0.2f;
 
     [Header("Behavior Preferences - Normal")]
     [Range(0, 1)] public float normal_moveClose = 0.9f;
@@ -78,6 +75,14 @@ public class WolfStats : ScriptableObject
     [Range(0, 1)] public float closestRange_moveAway = 0.3f;
     [Range(0, 1)] public float closestRange_attack = 0.7f;
     [Range(0, 1)] public float closestRange_wait = 0;
+
+    [Header("Attack - Bite")]
+    public int biteDamage = 1;
+    public Vector2 bitePostion = new Vector2(-0.317f, 0.263f);
+
+    [Header("Attack - Claw")]
+    public int clawDamage = 1;
+    public Vector2 clawPosition = new Vector2(0, 0);
 
     private void OnValidate()
     {

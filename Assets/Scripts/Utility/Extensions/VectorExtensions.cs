@@ -15,3 +15,33 @@ public static class VectorExtensions
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
     }
 }
+
+public static class Vector2Utility
+{
+    public static Vector2 RotateTowards(
+        Vector2 current,
+        Vector2 target,
+        float maxRadiansDelta
+    )
+    {
+        if (current.sqrMagnitude < 0.0001f)
+            return target.normalized;
+
+        if (target.sqrMagnitude < 0.0001f)
+            return current.normalized;
+
+        float currentAngle = Mathf.Atan2(current.y, current.x);
+        float targetAngle = Mathf.Atan2(target.y, target.x);
+
+        float newAngle = Mathf.MoveTowardsAngle(
+            currentAngle * Mathf.Rad2Deg,
+            targetAngle * Mathf.Rad2Deg,
+            maxRadiansDelta * Mathf.Rad2Deg
+        ) * Mathf.Deg2Rad;
+
+        return new Vector2(
+            Mathf.Cos(newAngle),
+            Mathf.Sin(newAngle)
+        );
+    }
+}
