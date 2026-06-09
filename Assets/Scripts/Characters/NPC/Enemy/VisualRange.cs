@@ -9,7 +9,7 @@ using UnityEngine.InputSystem.XR;
 [RequireComponent(typeof(MeshFilter))]
 public class VisualRange : MonoBehaviour
 {
-    NPCController? controller;
+    //NPCController? controller;
     EnemyAIController? enemyController;
 
     [SerializeField][Range(5, 25)] public float distance = 12.0f;
@@ -30,7 +30,7 @@ public class VisualRange : MonoBehaviour
 
     private void Awake()
     {
-        controller = transform.parent.parent.GetComponent<NPCController>();
+        //controller = transform.parent.parent.GetComponent<NPCController>();
         enemyController = transform.parent.parent.GetComponent<EnemyAIController>();
         _collider = GetComponent<PolygonCollider2D>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -55,8 +55,8 @@ public class VisualRange : MonoBehaviour
 
     private void syncValues()
     {
-        //facePosition = transform.GetComponentInParent<NPCController>().facePosition;
-        posToPlayer = controller?.PosToPlayer ?? Vector2.zero;
+        facePosition = enemyController?.Agent.velocity.normalized ?? Vector2.zero;
+        //posToPlayer = controller?.PosToPlayer ?? Vector2.zero;
         posToPlayer = enemyController?.LookPosition ?? Vector2.zero;
     }
 
@@ -102,7 +102,7 @@ public class VisualRange : MonoBehaviour
         }
         else
         {
-            direction = (new Matrix2x2(Mathf.Atan2(posToPlayer.y, posToPlayer.x)) * new Vector2(1, Mathf.Tan(angle / 180.0f * Mathf.PI))).normalized;
+            direction = (new Matrix2x2(Mathf.Atan2(facePosition.y, facePosition.x)) * new Vector2(1, Mathf.Tan(angle / 180.0f * Mathf.PI))).normalized;
         }
 
         Vector2 point = new Vector2();
@@ -189,8 +189,8 @@ public class VisualRange : MonoBehaviour
         {
             if (collider.name == "Player")
             {
-                controller?.SeePlayer();
-                enemyController?.CanSeePlayer(true);
+                //controller?.SeePlayer();
+                enemyController?.CanSeePlayer(true, collider.transform.position);
             }
         }
     }
@@ -201,13 +201,13 @@ public class VisualRange : MonoBehaviour
         {
             if (collider.name == "Player")
             {
-                if (!(controller?.seePlayer ?? false))
-                {
-                    controller?.SeePlayer();
-                    enemyController?.CanSeePlayer(true);
-                }
-                if (controller != null)
-                    controller.TargetPosition = getColliderCenter();
+                //if (!(controller?.seePlayer ?? false))
+                //{
+                //    controller?.SeePlayer();
+                //}
+                enemyController?.CanSeePlayer(true, collider.transform.position);
+                //if (controller != null)
+                //    controller.TargetPosition = getColliderCenter();
                 if (enemyController != null)
                     enemyController.TargetPosition = getColliderCenter();
             }
@@ -218,7 +218,7 @@ public class VisualRange : MonoBehaviour
     {
         if (collider.CompareTag("Player"))
         {
-            controller?.CantSeePlayer();
+            //controller?.CantSeePlayer();
             enemyController?.CanSeePlayer(false);
         }
     }

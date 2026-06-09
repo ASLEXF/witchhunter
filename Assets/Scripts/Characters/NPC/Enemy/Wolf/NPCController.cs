@@ -73,7 +73,7 @@ public class NPCController : MonoBehaviour
 
         spriteRenderer.flipX = isFlip;
 
-        if (Time.time >= startTime + stats.decisionInterval.Value)
+        if (Time.time >= startTime + stats.decisionInterval.RandomValue)
         {
             decideBehavior();
             startTime = Time.time;
@@ -216,7 +216,7 @@ public class NPCController : MonoBehaviour
         {
             case ApproachMethod.straight:
                 {
-                    while (Time.time < startTime + stats.decisionInterval.Value)
+                    while (Time.time < startTime + stats.decisionInterval.RandomValue)
                     {
                         animator.SetBool("IsWalking", true);
                         agent.SetDestination(TargetPosition);
@@ -250,7 +250,7 @@ public class NPCController : MonoBehaviour
         float angle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
         Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
-        while (Time.time < startTime + stats.decisionInterval.Value)
+        while (Time.time < startTime + stats.decisionInterval.RandomValue)
         {
             Vector3 movement = PosToPlayer * direction * stats.runSpeed * Time.deltaTime;
             //Debug.Log($"{movement}");
@@ -285,10 +285,10 @@ public class NPCController : MonoBehaviour
         agent.speed = stats.walkSpeed;
         float startTime = Time.time;
 
-        Vector2 randomDirection = UnityEngine.Random.insideUnitSphere.ToVector2() * stats.wanderRadius.Value;
+        Vector2 randomDirection = UnityEngine.Random.insideUnitSphere.ToVector2() * stats.wanderRadius.RandomValue;
         randomDirection += originalPosition;
         NavMeshHit hit;
-        NavMesh.SamplePosition(randomDirection, out hit, stats.wanderRadius.Value, NavMesh.AllAreas);
+        NavMesh.SamplePosition(randomDirection, out hit, stats.wanderRadius.RandomValue, NavMesh.AllAreas);
         if (Vector2.Distance(originalPosition, hit.position.ToVector2()) >= stats.minDistance)
         {
             animator.SetBool("IsWalking", true);
@@ -296,7 +296,7 @@ public class NPCController : MonoBehaviour
             PosToPlayer = (hit.position.ToVector2() - transform.position.ToVector2()).normalized;
         }
 
-        while (Time.time < startTime + stats.wanderTime.Value)
+        while (Time.time < startTime + stats.wanderTime.RandomValue)
         {
             if (Mathf.Approximately(transform.position.x, hit.position.ToVector2().x) && Mathf.Approximately(transform.position.y, hit.position.ToVector2().y))
                 {

@@ -9,6 +9,7 @@ public class EnemyIdleState : EnemyState
         Debug.Log("Enemy Idle");
         enemy.Agent.isStopped = true;
         enemy.Animator.SetBool("IsWalking", false);
+        enemy.StartHesitate(enemy.Stats.wanderTime.RandomValue);
     }
 
     public override void Update()

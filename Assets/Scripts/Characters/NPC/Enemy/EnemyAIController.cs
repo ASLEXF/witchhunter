@@ -54,7 +54,7 @@ public class EnemyAIController : MonoBehaviour
         AttackState = new EnemyAttackState(this);
         DeadState = new EnemyDeadState(this);
 
-        DecisionInterval = Stats.decisionInterval.Value;
+        DecisionInterval = Stats.decisionInterval.RandomValue;
     }
 
     private void Start()
@@ -90,7 +90,7 @@ public class EnemyAIController : MonoBehaviour
 
     #region hesitation
 
-    public bool isHesitated = false;
+    private bool isHesitated = false;
     private Coroutine hesitateCoroutine;
 
     public void StartHesitate(float time)
@@ -120,6 +120,12 @@ public class EnemyAIController : MonoBehaviour
         SeePlayer = canSee;
         if (canSee)
         {
+            if (hesitateCoroutine != null)
+            {
+                StopCoroutine(hesitateCoroutine);
+                isHesitated = false;
+                hesitateCoroutine = null;
+            }
             TargetPosition = playerPosition;
             LookPosition = playerPosition;
         }

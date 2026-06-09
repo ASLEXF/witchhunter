@@ -11,6 +11,8 @@ public class EnemyPatrolState : EnemyState
     private Vector3 targetPosition = Vector3.zero;
 
     private Coroutine wanderCoroutine;
+    private float wanderStopTime;
+    private bool wanderFinished;
 
     public override void Enter()
     {
@@ -21,6 +23,7 @@ public class EnemyPatrolState : EnemyState
         }
         //enemy.Agent.enabled = true;
         enemy.Agent.isStopped = false;
+        wanderStopTime = Time.time + enemy.Stats.wanderTime.Max;
     }
 
     public override void Update()
@@ -35,55 +38,29 @@ public class EnemyPatrolState : EnemyState
         //{
         //    wanderCoroutine = enemy.StartCoroutine(Wander());
         //}
+
+        if (wanderFinished || Time.time >= wanderStopTime)
+        {
+            enemy.ChangeState(enemy.IdleState);
+        }
+
         if (!enemy.Agent.hasPath)
         {
             wander();
         }
     }
 
-    //private IEnumerator Wander()
-    //{
-    //    Debug.Log("Wandering...");
-    //    // set a random target position within the wander radius
-    //    Vector3 randomDirection = Random.insideUnitCircle.normalized;
-    //    Vector3 targetPosition = originalPosition + randomDirection * enemy.Stats.wanderRadius.Value;
-    //    // check if the target position is valid
-    //    NavMeshHit hit;
-    //    if (NavMesh.SamplePosition(targetPosition, out hit, enemy.Stats.wanderRadius.Value, NavMesh.AllAreas))
-    //    {
-    //        targetPosition = hit.position;
-    //    }
-    //    else
-    //    {
-    //        targetPosition = originalPosition; // fallback to original position if no valid position found
-    //    }
-    //    // set the agent's destination to the target position
-    //    if (Vector2.Distance(enemy.transform.position, targetPosition) < enemy.Stats.minDistance)
-    //    {
-    //        // skip if already close to the target position
-    //        wanderCoroutine = null;
-    //        yield break;
-    //    }
-    //    enemy.Agent.SetDestination(targetPosition);
-    //    enemy.LookPosition = (targetPosition - enemy.transform.position).normalized;
-    //    Debug.Log($"Wandering to {targetPosition}");
-
-    //    enemy.Animator.SetBool("IsWalking", true);
-
-    //    yield return null;
-
-    //    wanderCoroutine = null;
-    //}
-
     private void wander()
     {
         Debug.Log("Wandering...");
+        // set wander timer
+        wanderStopTime = Time.time + enemy.Stats.wanderTime.RandomValue;
         // set a random target position within the wander radius
         Vector3 randomDirection = Random.insideUnitCircle.normalized;
-        Vector3 targetPosition = originalPosition + randomDirection * enemy.Stats.wanderRadius.Value;
+        Vector3 targetPosition = originalPosition + randomDirection * enemy.Stats.wanderRadius.RandomValue;
         // check if the target position is valid
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(targetPosition, out hit, enemy.Stats.wanderRadius.Value, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(targetPosition, out hit, enemy.Stats.wanderRadius.RandomValue, NavMesh.AllAreas))
         {
             targetPosition = hit.position;
         }
@@ -93,8 +70,11 @@ public class EnemyPatrolState : EnemyState
         }
         // set the agent's destination to the target position
         if (Vector2.Distance(enemy.transform.position, targetPosition) < enemy.Stats.minDistance)
+        {
             // skip if already close to the target position
+            wanderFinished = true;
             return;
+        }
         enemy.Agent.SetDestination(targetPosition);
         enemy.LookPosition = (targetPosition - enemy.transform.position).normalized;
         //Debug.Log($"Wandering to {targetPosition}");
