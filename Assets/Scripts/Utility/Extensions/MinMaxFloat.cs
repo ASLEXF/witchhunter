@@ -4,12 +4,12 @@ using UnityEngine;
 public class MinMaxFloat
 {
     [Min(0f)]
-    public float min = 0f;
+    public float Min = 0f;
 
     [Min(0f)]
-    public float max = 1f;
+    public float Max = 1f;
 
-    public float Value
+    public float RandomValue
     {
         get
         {
@@ -27,13 +27,13 @@ public class MinMaxFloat
 
     private bool _isValid()
     {
-        return min <= max && min >= 0f;
+        return Min <= Max && Min >= 0f;
     }
 
     private float _getRandomValue()
     {
         if (!_isValid())
             return 0f;
-        return Random.Range(min, max);
+        return Random.Range(Min, Max);
     }
 }

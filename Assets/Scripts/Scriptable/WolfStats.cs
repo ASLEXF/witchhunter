@@ -39,14 +39,14 @@ public class WolfStats : ScriptableObject
     //public float GroundDeceleration = 60;
 
     [Header("Behavior Preferences")]
-    public MinMaxFloat decisionInterval = new MinMaxFloat {min = 0.3f, max = 1.2f};
+    public MinMaxFloat decisionInterval = new MinMaxFloat {Min = 0.3f, Max = 1.2f};
     public PatrolType patrolType = PatrolType.wander;
     public ApproachMethod approachMethod = ApproachMethod.straight;
     public float trackTime = 6;
 
     [Header("Behavior Preferences - Wander")]
-    public MinMaxFloat wanderTime = new MinMaxFloat {min = 6, max = 12};
-    public MinMaxFloat wanderRadius = new MinMaxFloat {min = 3, max = 7};
+    public MinMaxFloat wanderTime = new MinMaxFloat {Min = 2f, Max = 6f};
+    public MinMaxFloat wanderRadius = new MinMaxFloat {Min = 3f, Max = 7f};
     public float minDistance = 0.2f;
 
     [Header("Behavior Preferences - Normal")]
