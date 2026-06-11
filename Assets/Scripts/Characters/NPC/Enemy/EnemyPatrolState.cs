@@ -10,12 +10,15 @@ public class EnemyPatrolState : EnemyState
     private Vector3 originalPosition = Vector3.zero;
     private Vector3 targetPosition = Vector3.zero;
 
+    private float lastWanderTime;
     private float wanderStopTime;
+
+    private float _wanderTime;
 
     public override void Enter()
     {
         base.Enter();
-        //Debug.Log("Enemy Patrol");
+        //Debug.Log("Enemy Enter Patrol");
         if (originalPosition == Vector3.zero)
         {
             originalPosition = enemy.transform.position;
@@ -24,7 +27,20 @@ public class EnemyPatrolState : EnemyState
         enemy.Agent.ResetPath();
         enemy.Agent.isStopped = false;
         startWandered = false;
-        wanderStopTime = Time.time + enemy.Stats.wanderTime.Max;
+        _wanderTime = enemy.Stats.wanderTime.RandomValue;
+        wanderStopTime = Time.time + _wanderTime;
+        // balance wander time based on last wander time to avoid continuously short time or long time wanderings
+        if (lastWanderTime != 0)
+        {
+            if (lastWanderTime - enemy.Stats.wanderTime.Min < enemy.Stats.wanderTime.Max - lastWanderTime)
+            {
+                wanderStopTime = (wanderStopTime + enemy.Stats.wanderTime.Max) / 2;
+            }
+            else
+            {
+                wanderStopTime = (wanderStopTime + enemy.Stats.wanderTime.Min) / 2;
+            }
+        }
     }
 
     public override void Update()
@@ -41,9 +57,7 @@ public class EnemyPatrolState : EnemyState
         //    return;
         //}
 
-        if (startWandered 
-            && enemy.Agent.remainingDistance <= enemy.Agent.stoppingDistance 
-            && enemy.Agent.velocity.sqrMagnitude < 0.01f)
+        if (startWandered && !enemy.Agent.hasPath)
         {
             Debug.Log("Reached target position.");
             enemy.ChangeState(enemy.IdleState);
@@ -66,7 +80,6 @@ public class EnemyPatrolState : EnemyState
     private bool startWandered = false;
     private void wander()
     {
-        Debug.Log("Wandering...");
         startWandered = true;
         // set wander timer
         wanderStopTime = Time.time + enemy.Stats.wanderTime.RandomValue;
@@ -86,7 +99,7 @@ public class EnemyPatrolState : EnemyState
         // set the agent's destination to the target position
         enemy.Agent.SetDestination(targetPosition);
         enemy.LookPosition = (targetPosition - enemy.transform.position).normalized;
-        Debug.Log($"Wandering to {targetPosition}");
+        Debug.Log($"Wandering to {targetPosition}, stopping in {_wanderTime} seconds.");
         enemy.Animator.SetBool("IsWalking", true);
     }
 

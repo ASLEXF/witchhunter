@@ -28,7 +28,7 @@ public abstract class EnemyState
 
     protected void StartHesitate(float duration)
     {
-        Debug.Log($"Enemy is hesitating for {duration} seconds.");
+        Debug.Log($"Enemy hesitates for {duration} seconds.");
         hesitateDuration = duration;
         hesitateTimer = 0f;
         IsHesitating = duration > 0f;
