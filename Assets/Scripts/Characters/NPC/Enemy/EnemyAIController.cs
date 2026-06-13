@@ -72,6 +72,7 @@ public class EnemyAIController : MonoBehaviour
     private void Update()
     {
         currentState?.Update();
+        UpdateEnemyDirection();
     }
 
     private void InitializeNavMeshAgent()
@@ -119,5 +120,19 @@ public class EnemyAIController : MonoBehaviour
     {
         //return hp <= 0f;
         return false;
+    }
+
+    private void UpdateEnemyDirection()
+    {
+        // update sprite direction, future improvement: use 4 directional sprites
+        GameObject triggers = GameObject.Find("Triggers");
+        if (Agent.velocity.x > 0.1f)
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else if (Agent.velocity.x < -0.1f)
+        {
+            gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
     }
 }
