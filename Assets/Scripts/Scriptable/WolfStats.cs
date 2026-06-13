@@ -46,6 +46,9 @@ public class WolfStats : ScriptableObject
     public MinMaxFloat wanderTime = new MinMaxFloat {Min = 2f, Max = 6f};
     public MinMaxFloat wanderRadius = new MinMaxFloat {Min = 3f, Max = 7f};
 
+    [Header("Behavior Preferences - Chase")]
+    public float repathDistance = 0.5f;
+
     [Header("Behavior Preferences - Normal")]
     [Range(0, 1)] public float normal_moveClose = 0.9f;
     [Range(0, 1)] public float normal_moveAway = 0;

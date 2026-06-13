@@ -23,10 +23,10 @@ public class EnemyPatrolState : EnemyState
         {
             originalPosition = enemy.transform.position;
         }
-        
+        // reset path
         enemy.Agent.ResetPath();
         enemy.Agent.isStopped = false;
-        startWandered = false;
+        // set wander timer
         _wanderTime = enemy.Stats.wanderTime.RandomValue;
         wanderStopTime = Time.time + _wanderTime;
         // balance wander time based on last wander time to avoid continuously short time or long time wanderings
@@ -46,31 +46,32 @@ public class EnemyPatrolState : EnemyState
     public override void Update()
     {
         base.Update();
+        if (enemy.IsDead())
+        {
+            enemy.ChangeState(enemy.DeadState);
+            return;
+        }
         if (IsHesitating)
         {
             return;
         }
-
-        //if (enemy.seePlayer)
-        //{
-        //    enemy.ChangeState(enemy.ChaseState);
-        //    return;
-        //}
-
+        if (enemy.SeePlayer)
+        {
+            enemy.ChangeState(enemy.ChaseState);
+            return;
+        }
         if (startWandered && !enemy.Agent.hasPath)
         {
             Debug.Log("Reached target position.");
             enemy.ChangeState(enemy.IdleState);
             return;
         }
-
         if (Time.time >= wanderStopTime)
         {
             Debug.Log("Wander time expired.");
             enemy.ChangeState(enemy.IdleState);
             return;
         }
-
         if (!enemy.Agent.hasPath)
         {
             wander();
@@ -98,14 +99,17 @@ public class EnemyPatrolState : EnemyState
         }
         // set the agent's destination to the target position
         enemy.Agent.SetDestination(targetPosition);
+        // set look direction towards the target position
         enemy.LookPosition = (targetPosition - enemy.transform.position).normalized;
-        Debug.Log($"Wandering to {targetPosition}, stopping in {_wanderTime} seconds.");
+        // set walking animation
         enemy.Animator.SetBool("IsWalking", true);
+        Debug.Log($"Wandering to {targetPosition}, stopping in {_wanderTime} seconds.");
     }
 
     public override void Exit()
     {
         base.Exit();
+        startWandered = false;
         //Debug.Log("Exit Patrol");
     }
 }

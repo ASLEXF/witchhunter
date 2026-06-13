@@ -18,8 +18,7 @@ public class VisualRange : MonoBehaviour
     private int lineNum;
     private float angleSpeed;
 
-    Vector2 facePosition;  // rotate
-    Vector2 posToPlayer;  // rotate
+    Vector2 lookDirection;  // rotate
 
     List<Vector2> points = new List<Vector2>();
 
@@ -58,12 +57,14 @@ public class VisualRange : MonoBehaviour
 
     private void syncValues()
     {
-        if (enemyController.IsWandering)
+        if (enemyController.SeePlayer)
         {
-            facePosition = Vector2Utility.RotateTowards(facePosition, enemyController.Agent.velocity.normalized, angleSpeed * Mathf.Deg2Rad * Time.deltaTime);
+            lookDirection = enemyController.LookPosition;
         }
-        //posToPlayer = controller?.PosToPlayer ?? Vector2.zero;
-        posToPlayer = enemyController.LookPosition;
+        else if (enemyController.IsWandering)
+        {
+            lookDirection = Vector2Utility.RotateTowards(lookDirection, enemyController.Agent.velocity.normalized, angleSpeed * Mathf.Deg2Rad * Time.deltaTime);
+        }
     }
 
     private void addPoints()
@@ -108,7 +109,7 @@ public class VisualRange : MonoBehaviour
         }
         else
         {
-            direction = (new Matrix2x2(Mathf.Atan2(facePosition.y, facePosition.x)) * new Vector2(1, Mathf.Tan(angle / 180.0f * Mathf.PI))).normalized;
+            direction = (new Matrix2x2(Mathf.Atan2(lookDirection.y, lookDirection.x)) * new Vector2(1, Mathf.Tan(angle / 180.0f * Mathf.PI))).normalized;
         }
 
         Vector2 point = new Vector2();

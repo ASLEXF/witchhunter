@@ -15,25 +15,37 @@ public class EnemyAIController : MonoBehaviour
     public Vector2 TargetPosition; // the latest player position
 
     // sight
-    public bool SeePlayer { get; private set; } = false;
+    public bool SeePlayer = false;
     public Vector2 LookPosition;
 
     // status
+    [SerializeField]
+    private bool isWandering = false;
     public bool IsWandering 
     {
-        get
+        get 
         { return currentState == PatrolState && currentState.IsHesitating == false; }
         private set { }
+    } 
+    [SerializeField]
+    private bool isAlerted = false;
+    public bool IsAlerted
+    {
+        get { return isAlerted; }
+        private set
+        {
+            isAlerted = value;
+        }
     }
-    public bool IsAlerted { get; private set; } = false;
 
-    // distances
-    public bool IsMoveRange = false;
-    public bool IsLongRange = false;
-    public bool IsCloseRange = false;
-    public bool IsClosestRange = false;
+    //// distances
+    //public bool IsMoveRange = false;
+    //public bool IsLongRange = false;
+    //public bool IsCloseRange = false;
+    //public bool IsClosestRange = false;
 
     // states
+    [SerializeField] private string currentStateName;
     private EnemyState currentState;
     public EnemyIdleState IdleState { get; private set; }
     public EnemyPatrolState PatrolState { get; private set; }
@@ -92,6 +104,8 @@ public class EnemyAIController : MonoBehaviour
         currentState?.Exit();
         currentState = newState;
         currentState.Enter();
+
+        currentStateName = currentState.GetType().Name;
     }
 
     public void CanSeePlayer(bool canSee = true, Vector2 playerPosition = default)
@@ -103,7 +117,7 @@ public class EnemyAIController : MonoBehaviour
         {
             currentState?.StopHesitate();
             TargetPosition = playerPosition;
-            LookPosition = playerPosition;
+            LookPosition = playerPosition - (Vector2)transform.position;
         }
     }
 

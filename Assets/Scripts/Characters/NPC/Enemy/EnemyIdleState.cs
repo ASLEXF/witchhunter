@@ -16,21 +16,25 @@ public class EnemyIdleState : EnemyState
     public override void Update()
     {
         base.Update();
+        if (enemy.IsDead())
+        {
+            enemy.ChangeState(enemy.DeadState);
+            return;
+        }
         if (IsHesitating)
         {
             return;
         }
-        //if (enemy.seePlayer)
-        //{
-        //    enemy.ChangeState(enemy.ChaseState);
-        //    return;
-        //}
-
-        //if (enemy.isAlerted)
-        //{
-        //    enemy.ChangeState(enemy.ChaseState);
-        //    return;
-        //}
+        if (enemy.SeePlayer)
+        {
+            enemy.ChangeState(enemy.ChaseState);
+            return;
+        }
+        if (enemy.IsAlerted)
+        {
+            enemy.ChangeState(enemy.ChaseState);
+            return;
+        }
         enemy.ChangeState(enemy.PatrolState);
     }
 
