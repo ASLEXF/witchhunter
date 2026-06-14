@@ -12,37 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a18d113684dc3e419588d84973f89ac, type: 3}
   m_Name: Wolf Stats
   m_EditorClassIdentifier: 
-  biteDamage: 1
-  bitePostion: {x: -0.317, y: 0.263}
-  clawDamage: 1
-  clawPosition: {x: 0, y: 0}
   walkSpeed: 3
   runSpeed: 6
   MaxSpeed: 14
   Acceleration: 12
-  decisionInterval: 0.5
+  sightAngle: 90
+  sightDistance: 12
+  sightLineNum: 24
+  sightAngleSpeed: 90
+  decisionInterval:
+    Min: 0.3
+    Max: 1.2
+  patrolType: 0
   approachMethod: 0
   trackTime: 6
-  wanderTime: 2
-  wanderRadius: 5
-  minDisatnce: 0.2
-  normal_moveClose: 0.9
-  normal_moveAway: 0
-  normal_attack: 0
-  normal_wait: 0.100000024
-  moveRange_moveClose: 0.4
-  moveRange_moveAway: 0.1
-  moveRange_attack: 0.3
-  moveRange_wait: 0.19999999
-  longRange_moveClose: 0.4
-  longRange_moveAway: 0.2
-  longRange_attack: 0.3
-  longRange_wait: 0.09999998
-  closeRange_moveClose: 0.1
-  closeRange_moveAway: 0.1
-  closeRange_attack: 0.8
-  closeRange_wait: -0.000000014901161
-  closestRange_moveClose: 0
-  closestRange_moveAway: 0.3
-  closestRange_attack: 0.7
-  closestRange_wait: 0
+  wanderTime:
+    Min: 2
+    Max: 6
+  wanderRadius:
+    Min: 3
+    Max: 7
+  repathDistance: 0.2
+  normal:
+    moveClose: 0.9
+    moveAway: 0
+    attack: 0
+    wait: 0.1
+  moveRange:
+    moveClose: 0.39999998
+    moveAway: 0.1
+    attack: 0.29999998
+    wait: 0.20000003
+  longRange:
+    moveClose: 0.4
+    moveAway: 0.2
+    attack: 0.3
+    wait: 0.1
+  closeRange:
+    moveClose: 0.1
+    moveAway: 0.1
+    attack: 0.8
+    wait: 0
+  closestRange:
+    moveClose: 0
+    moveAway: 0.3
+    attack: 0.7
+    wait: 0
+  biteDamage: 1
+  bitePostion: {x: -0.317, y: 0.263}
+  clawDamage: 1
+  clawPosition: {x: 0, y: 0}

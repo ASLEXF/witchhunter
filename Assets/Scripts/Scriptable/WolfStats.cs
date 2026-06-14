@@ -49,35 +49,42 @@ public class WolfStats : ScriptableObject
     [Header("Behavior Preferences - Chase")]
     public float repathDistance = 0.5f;
 
-    [Header("Behavior Preferences - Normal")]
-    [Range(0, 1)] public float normal_moveClose = 0.9f;
-    [Range(0, 1)] public float normal_moveAway = 0;
-    [Range(0, 1)] public float normal_attack = 0;
-    [Range(0, 1)] public float normal_wait = 0.1f;
-
-    [Header("Behavior Preferences - Move Range")]
-    [Range(0, 1)] public float moveRange_moveClose = 0.4f;
-    [Range(0, 1)] public float moveRange_moveAway = 0.1f;
-    [Range(0, 1)] public float moveRange_attack = 0.3f;
-    [Range(0, 1)] public float moveRange_wait = 0.2f;
-
-    [Header("Behavior Preferences - Long Range")]
-    [Range(0, 1)] public float longRange_moveClose = 0.4f;
-    [Range(0, 1)] public float longRange_moveAway = 0.2f;
-    [Range(0, 1)] public float longRange_attack = 0.3f;
-    [Range(0, 1)] public float longRange_wait = 0.1f;
-
-    [Header("Behavior Preferences - Close Range")]
-    [Range(0, 1)] public float closeRange_moveClose = 0.1f;
-    [Range(0, 1)] public float closeRange_moveAway = 0.1f;
-    [Range(0, 1)] public float closeRange_attack = 0.8f;
-    [Range(0, 1)] public float closeRange_wait = 0;
-
-    [Header("Behavior Preferences - Closest Range")]
-    [Range(0, 1)] public float closestRange_moveClose = 0;
-    [Range(0, 1)] public float closestRange_moveAway = 0.3f;
-    [Range(0, 1)] public float closestRange_attack = 0.7f;
-    [Range(0, 1)] public float closestRange_wait = 0;
+    [Header("Behavior Posibilities")]
+    [SerializeField] public ActionProbabilityGroup combatRange = new ()
+    {
+        moveClose = 0.9f,
+        moveAway = 0f,
+        attack = 0f,
+        wait = 0.1f
+    };
+    [SerializeField] public ActionProbabilityGroup moveRange = new ()
+    {
+        moveClose = 0.4f,
+        moveAway = 0.1f,
+        attack = 0.3f,
+        wait = 0.2f
+    };
+    [SerializeField] public ActionProbabilityGroup longRange = new ()
+    {
+        moveClose = 0.4f,
+        moveAway = 0.2f,
+        attack = 0.3f,
+        wait = 0.1f
+    };
+    [SerializeField] public ActionProbabilityGroup closeRange = new ()
+    {
+        moveClose = 0.1f,
+        moveAway = 0.1f,
+        attack = 0.8f,
+        wait = 0f
+    };
+    [SerializeField] public ActionProbabilityGroup closestRange = new ()
+    {
+        moveClose = 0,
+        moveAway = 0.3f,
+        attack = 0.7f,
+        wait = 0
+    };
 
     [Header("Attack - Bite")]
     public int biteDamage = 1;
@@ -92,21 +99,5 @@ public class WolfStats : ScriptableObject
         decisionInterval.CheckValidity(nameof(decisionInterval), this);
         wanderTime.CheckValidity(nameof(wanderTime), this);
         wanderRadius.CheckValidity(nameof(wanderRadius), this);
-        normalize(ref normal_moveClose, ref normal_moveAway, ref normal_attack, ref normal_wait);
-        normalize(ref moveRange_moveClose, ref moveRange_moveAway, ref moveRange_attack, ref moveRange_wait);
-        normalize(ref longRange_moveClose, ref longRange_moveAway, ref longRange_attack, ref longRange_wait);
-        normalize(ref closeRange_moveClose, ref closeRange_moveAway, ref closeRange_attack, ref closeRange_wait);
-        normalize(ref closestRange_moveClose, ref closestRange_moveAway, ref closestRange_attack, ref closestRange_wait);
-    }
-
-    private void normalize(ref float moveClose, ref float moveAway, ref float attack, ref float wait)
-    {
-        float sum = moveClose + moveAway + attack + wait;
-        moveClose = moveClose / sum > 1 ? 1 : moveClose / sum;
-        moveAway = moveAway / sum > 1 - moveClose ? 1 - moveClose : moveAway / sum;
-        attack = attack / sum > 1 - moveClose - moveAway ? 1 - moveClose - moveAway : attack / sum;
-        wait = 1.0f - moveClose - moveAway - attack;
-
-        Assert.IsTrue(Mathf.Approximately(moveClose + moveAway + attack + wait, 1.0f));
     }
 }
