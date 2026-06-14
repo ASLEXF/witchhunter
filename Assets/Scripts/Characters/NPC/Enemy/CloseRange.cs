@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class CloseRange : MonoBehaviour
 {
+    EnemyAIController controller;
+
+    private void Awake()
+    {
+        controller = transform.parent.parent.GetComponent<EnemyAIController>();
+    }
+
     private void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -13,7 +20,7 @@ public class CloseRange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            transform.parent.GetComponentInParent<NPCController>().isCloseRange = true;
+            controller.IsCloseRange = true;
         }
     }
 
@@ -21,7 +28,7 @@ public class CloseRange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            transform.parent.GetComponentInParent<NPCController>().isCloseRange = false;
+            controller.IsCloseRange = false;
         }
     }
 }

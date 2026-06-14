@@ -156,56 +156,56 @@ public class NPCController : MonoBehaviour
 
     private void initializePrefs()
     {
-        if (isClosestRange)
-        {
-            prefs = new List<float>()
-                    {
-                        stats.closestRange_moveClose,
-                        stats.closestRange_moveClose + stats.closestRange_moveAway,
-                        stats.closestRange_moveClose + stats.closestRange_moveAway + stats.closestRange_attack,
-                        1
-                    };
-        }
-        else if (isCloseRange)
-        {
-            prefs = new List<float>()
-                    {
-                        stats.closeRange_moveClose,
-                        stats.closeRange_moveClose + stats.closeRange_moveAway,
-                        stats.closeRange_moveClose + stats.closeRange_moveAway + stats.closeRange_attack,
-                        1
-                    };
-        }
-        else if (isLongRange)
-        {
-            prefs = new List<float>()
-                    {
-                        stats.longRange_moveClose,
-                        stats.longRange_moveClose + stats.longRange_moveAway,
-                        stats.longRange_moveClose + stats.longRange_moveAway + stats.longRange_attack,
-                        1
-                    };
-        }
-        else if (isMoveRange)
-        {
-            prefs = new List<float>()
-                    {
-                        stats.moveRange_moveClose,
-                        stats.moveRange_moveClose + stats.moveRange_moveAway,
-                        stats.moveRange_moveClose + stats.moveRange_moveAway + stats.moveRange_attack,
-                        1
-                    };
-        }
-        else
-        {
-            prefs = new List<float>()
-                    {
-                        stats.normal_moveClose,
-                        stats.normal_moveClose + stats.normal_moveAway,
-                        stats.normal_moveClose + stats.normal_moveAway + stats.normal_attack,
-                        1
-                    };
-        }
+        //if (isClosestRange)
+        //{
+        //    prefs = new List<float>()
+        //            {
+        //                stats.closestRange_moveClose,
+        //                stats.closestRange_moveClose + stats.closestRange_moveAway,
+        //                stats.closestRange_moveClose + stats.closestRange_moveAway + stats.closestRange_attack,
+        //                1
+        //            };
+        //}
+        //else if (isCloseRange)
+        //{
+        //    prefs = new List<float>()
+        //            {
+        //                stats.closeRange_moveClose,
+        //                stats.closeRange_moveClose + stats.closeRange_moveAway,
+        //                stats.closeRange_moveClose + stats.closeRange_moveAway + stats.closeRange_attack,
+        //                1
+        //            };
+        //}
+        //else if (isLongRange)
+        //{
+        //    prefs = new List<float>()
+        //            {
+        //                stats.longRange_moveClose,
+        //                stats.longRange_moveClose + stats.longRange_moveAway,
+        //                stats.longRange_moveClose + stats.longRange_moveAway + stats.longRange_attack,
+        //                1
+        //            };
+        //}
+        //else if (isMoveRange)
+        //{
+        //    prefs = new List<float>()
+        //            {
+        //                stats.moveRange_moveClose,
+        //                stats.moveRange_moveClose + stats.moveRange_moveAway,
+        //                stats.moveRange_moveClose + stats.moveRange_moveAway + stats.moveRange_attack,
+        //                1
+        //            };
+        //}
+        //else
+        //{
+        //    prefs = new List<float>()
+        //            {
+        //                stats.normal_moveClose,
+        //                stats.normal_moveClose + stats.normal_moveAway,
+        //                stats.normal_moveClose + stats.normal_moveAway + stats.normal_attack,
+        //                1
+        //            };
+        //}
     }
 
     private IEnumerator approach()

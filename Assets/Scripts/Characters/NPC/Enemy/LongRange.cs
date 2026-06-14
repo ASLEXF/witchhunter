@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class LongRange : MonoBehaviour
 {
+    EnemyAIController controller;
+
+    private void Awake()
+    {
+        controller = transform.parent.parent.GetComponent< EnemyAIController>();
+    }
+
     private void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -13,7 +20,7 @@ public class LongRange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            transform.parent.GetComponentInParent<NPCController>().isLongRange = true;
+            controller.IsLongRange = true;
         }
     }
 
@@ -21,7 +28,7 @@ public class LongRange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            transform.parent.GetComponentInParent<NPCController>().isLongRange = false;
+            controller.IsLongRange = false;
         }
     }
 }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class MoveRange : MonoBehaviour
 {
-    NPCController controller;
+    EnemyAIController controller;
 
     private void Awake()
     {
-        controller = transform.parent.parent.GetComponent<NPCController>();
+        controller = transform.parent.parent.GetComponent<EnemyAIController>();
     }
 
     private void Start()
@@ -20,8 +20,7 @@ public class MoveRange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            transform.parent.GetComponentInParent<NPCController>().isMoveRange = true;
-            controller.StopAllCoroutines();
+            controller.IsMoveRange = true;
         }
     }
 
@@ -29,7 +28,7 @@ public class MoveRange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            transform.parent.GetComponentInParent<NPCController>().isMoveRange = false;
+            controller.IsMoveRange = false;
         }
     }
 }

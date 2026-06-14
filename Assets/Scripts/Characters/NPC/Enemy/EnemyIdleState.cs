@@ -21,20 +21,22 @@ public class EnemyIdleState : EnemyState
             enemy.ChangeState(enemy.DeadState);
             return;
         }
+        if (enemy.IsCloseRange 
+            || (enemy.IsCombatRange && enemy.SeePlayer))
+        {
+            enemy.ChangeState(enemy.CombatState);
+            return;
+        }
+        if (enemy.SeePlayer || enemy.IsAlerted)
+        {
+            enemy.ChangeState(enemy.ChaseState);
+            return;
+        }
         if (IsHesitating)
         {
             return;
         }
-        if (enemy.SeePlayer)
-        {
-            enemy.ChangeState(enemy.ChaseState);
-            return;
-        }
-        if (enemy.IsAlerted)
-        {
-            enemy.ChangeState(enemy.ChaseState);
-            return;
-        }
+        
         enemy.ChangeState(enemy.PatrolState);
     }
 

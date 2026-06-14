@@ -36,7 +36,7 @@ public class EnemyChaseState : EnemyState
         }
         if (enemy.IsPlayerInAttackRange())
         {
-            enemy.ChangeState(enemy.AttackState);
+            enemy.ChangeState(enemy.CombatState);
             return;
         }
         if (Vector2.Distance(enemy.TargetPosition, lastPosition) > enemy.Stats.repathDistance)

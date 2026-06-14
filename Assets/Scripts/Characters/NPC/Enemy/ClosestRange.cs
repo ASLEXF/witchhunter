@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class ClosestRange : MonoBehaviour
 {
+    EnemyAIController controller;
+
+    private void Awake()
+    {
+        controller = transform.parent.parent.GetComponent<EnemyAIController>();
+    }
+
     private void Start()
     {
         gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            transform.parent.GetComponentInParent<NPCController>().isClosestRange = true;
+            controller.IsClosestRange = true;
         }
     }
 
@@ -20,7 +28,7 @@ public class ClosestRange : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            transform.parent.GetComponentInParent<NPCController>().isClosestRange = false;
+            controller.IsClosestRange = false;
         }
     }
 }

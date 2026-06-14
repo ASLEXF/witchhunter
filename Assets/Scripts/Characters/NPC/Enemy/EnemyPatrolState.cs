@@ -51,13 +51,13 @@ public class EnemyPatrolState : EnemyState
             enemy.ChangeState(enemy.DeadState);
             return;
         }
-        if (IsHesitating)
-        {
-            return;
-        }
         if (enemy.SeePlayer)
         {
             enemy.ChangeState(enemy.ChaseState);
+            return;
+        }
+        if (IsHesitating)
+        {
             return;
         }
         if (startWandered && !enemy.Agent.hasPath)

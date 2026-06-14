@@ -38,11 +38,12 @@ public class EnemyAIController : MonoBehaviour
         }
     }
 
-    //// distances
-    //public bool IsMoveRange = false;
-    //public bool IsLongRange = false;
-    //public bool IsCloseRange = false;
-    //public bool IsClosestRange = false;
+    // player distance
+    public bool IsCombatRange = false;
+    public bool IsMoveRange = false;
+    public bool IsLongRange = false;
+    public bool IsCloseRange = false;
+    public bool IsClosestRange = false;
 
     // states
     [SerializeField] private string currentStateName;
@@ -50,7 +51,7 @@ public class EnemyAIController : MonoBehaviour
     public EnemyIdleState IdleState { get; private set; }
     public EnemyPatrolState PatrolState { get; private set; }
     public EnemyChaseState ChaseState { get; private set; }
-    public EnemyAttackState AttackState { get; private set; }
+    public EnemyCombatState CombatState { get; private set; }
     //public EnemyAttackedState AttackedState { get; private set; }
     public EnemyDeadState DeadState { get; private set; }
 
@@ -69,7 +70,7 @@ public class EnemyAIController : MonoBehaviour
         IdleState = new EnemyIdleState(this);
         PatrolState = new EnemyPatrolState(this);
         ChaseState = new EnemyChaseState(this);
-        AttackState = new EnemyAttackState(this);
+        CombatState = new EnemyCombatState(this);
         DeadState = new EnemyDeadState(this);
 
         DecisionInterval = Stats.decisionInterval.RandomValue;
