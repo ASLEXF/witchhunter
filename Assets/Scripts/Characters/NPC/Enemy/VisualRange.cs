@@ -59,11 +59,27 @@ public class VisualRange : MonoBehaviour
     {
         if (controller.SeePlayer)
         {
+            // look at player
             lookDirection = controller.LookPosition;
         }
         else if (controller.IsWandering)
         {
+            // look at moving direction
             lookDirection = Vector2Utility.RotateTowards(lookDirection, controller.Agent.velocity.normalized, angleSpeed * Mathf.Deg2Rad * Time.deltaTime);
+        }
+        else
+        {
+            // reset lookDirection to forward when idle
+            if (controller.transform.rotation == Quaternion.Euler(0, 180, 0)
+                || controller.transform.rotation == Quaternion.Euler(0, -180, 0))
+            {
+                lookDirection = Vector2Utility.RotateTowards(lookDirection, Vector2.right, angleSpeed * Mathf.Deg2Rad * Time.deltaTime);
+            }
+            else if (controller.transform.rotation == Quaternion.Euler(0, 0, 0))
+            {
+                lookDirection = Vector2Utility.RotateTowards(lookDirection, Vector2.left, angleSpeed * Mathf.Deg2Rad * Time.deltaTime);
+            }
+                
         }
     }
 
