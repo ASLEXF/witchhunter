@@ -15,7 +15,7 @@ public class EnemyPatrolState : EnemyState
 
     private float _wanderTime;
 
-    public override void Enter()
+    public override void Enter(EnemyState prevState = default)
     {
         base.Enter();
         //Debug.Log("Enemy Enter Patrol");
@@ -97,6 +97,9 @@ public class EnemyPatrolState : EnemyState
         {
             targetPosition = originalPosition; // fallback to original position if no valid position found
         }
+        // set speed
+        enemy.Agent.speed = enemy.Stats.wanderSpeed;
+        enemy.Agent.angularSpeed = enemy.Stats.wanderAngularSpeed;
         // set the agent's destination to the target position
         enemy.Agent.SetDestination(targetPosition);
         // set look direction towards the target position
@@ -110,6 +113,7 @@ public class EnemyPatrolState : EnemyState
     {
         base.Exit();
         startWandered = false;
+        enemy.Animator.SetBool("IsWalking", false);
         //Debug.Log("Exit Patrol");
     }
 }

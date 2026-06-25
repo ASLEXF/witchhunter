@@ -90,21 +90,21 @@ public class EnemyAIController : MonoBehaviour
 
     private void InitializeNavMeshAgent()
     {
-        Agent.speed = Stats.walkSpeed;
+        Agent.speed = 0;
         Agent.angularSpeed = 999;
         Agent.acceleration = Stats.Acceleration;
         Agent.updateRotation = false;
         Agent.updateUpAxis = false;
     }
 
-    public void ChangeState(EnemyState newState)
+    public void ChangeState(EnemyState newState, EnemyState prevState = default)
     {
         if (currentState == newState)
             return;
 
         currentState?.Exit();
         currentState = newState;
-        currentState.Enter();
+        currentState.Enter(prevState);
 
         currentStateName = currentState.GetType().Name;
     }
@@ -122,15 +122,6 @@ public class EnemyAIController : MonoBehaviour
         }
     }
 
-    public bool IsPlayerInAttackRange()
-    {
-        //if (player == null)
-        //    return false;
-
-        //return Vector3.Distance(transform.position, player.position) <= attackRange;
-        return false;
-    }
-
     public bool IsDead()
     {
         //return hp <= 0f;
@@ -140,14 +131,27 @@ public class EnemyAIController : MonoBehaviour
     private void UpdateEnemyDirection()
     {
         // update sprite direction, future improvement: use 4 directional sprites
-        GameObject triggers = GameObject.Find("Triggers");
-        if (Agent.velocity.x > 0.1f)
+        if (SeePlayer)
         {
-            gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+            if (LookPosition.x > 0.1f)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else if (LookPosition.x < -0.1f)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
-        else if (Agent.velocity.x < -0.1f)
+        else
         {
-            gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            if (Agent.velocity.x > 0.1f)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            else if (Agent.velocity.x < -0.1f)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
         }
     }
 }

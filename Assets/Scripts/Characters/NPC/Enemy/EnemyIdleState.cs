@@ -4,13 +4,21 @@ public class EnemyIdleState : EnemyState
 {
     public EnemyIdleState(EnemyAIController enemy) : base(enemy) { }
 
-    public override void Enter()
+    public override void Enter(EnemyState prevState = default)
     {
         base.Enter();
         //Debug.Log("Enemy Idle");
+        enemy.Agent.ResetPath();
         enemy.Agent.isStopped = true;
         enemy.Animator.SetBool("IsWalking", false);
-        StartHesitate(enemy.Stats.wanderTime.RandomValue);
+        if (prevState is EnemyPatrolState)
+        {
+            StartHesitate(enemy.Stats.decisionInterval.RandomValue);
+        }
+        else
+        {
+            StartHesitate(enemy.Stats.wanderTime.RandomValue);
+        }
     }
 
     public override void Update()

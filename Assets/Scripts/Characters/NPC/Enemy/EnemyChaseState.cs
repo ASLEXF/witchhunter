@@ -6,7 +6,7 @@ public class EnemyChaseState : EnemyState
 
     private Vector3 lastPosition;
 
-    public override void Enter()
+    public override void Enter(EnemyState prevState = default)
     {
         base.Enter();
         Debug.Log("Enemy Enter Chase");
@@ -17,7 +17,10 @@ public class EnemyChaseState : EnemyState
         // remember last position to limit unnecessary path recalculations
         lastPosition = enemy.TargetPosition;
         // set destination to player's position
+        enemy.Agent.speed = enemy.Stats.chaseSpeed;
+        enemy.Agent.angularSpeed = enemy.Stats.chaseAngularSpeed;
         enemy.Agent.SetDestination(enemy.TargetPosition);
+        enemy.Animator.SetBool("IsRunning", true);
     }
 
     public override void Update()
@@ -34,7 +37,7 @@ public class EnemyChaseState : EnemyState
             enemy.ChangeState(enemy.IdleState);
             return;
         }
-        if (enemy.IsPlayerInAttackRange())
+        if (enemy.SeePlayer && enemy.IsCombatRange || enemy.IsCloseRange)
         {
             enemy.ChangeState(enemy.CombatState);
             return;
@@ -44,12 +47,17 @@ public class EnemyChaseState : EnemyState
             Debug.Log("Repathing to target position.");
             enemy.Agent.SetDestination(enemy.TargetPosition);
             lastPosition = enemy.TargetPosition;
+            enemy.Animator.SetBool("IsRunning", true);
         }
     }
 
     public override void Exit()
     {
         base.Exit();
+        enemy.Agent.ResetPath();
+        enemy.Agent.isStopped = true;
+        enemy.Agent.velocity = Vector3.zero;
+        enemy.Animator.SetBool("IsRunning", false);
         Debug.Log("Exit Chase");
     }
 }

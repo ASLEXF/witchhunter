@@ -13,7 +13,7 @@ public abstract class EnemyState
         this.enemy = enemy;
     }
 
-    public virtual void Enter() 
+    public virtual void Enter(EnemyState prevState = default) 
     { }
 
     public virtual void Update() 
@@ -29,6 +29,12 @@ public abstract class EnemyState
     protected void StartHesitate(float duration)
     {
         Debug.Log($"Enemy hesitates for {duration} seconds.");
+        enemy.Agent.ResetPath();
+        enemy.Agent.isStopped = true;
+        enemy.Agent.velocity = Vector3.zero;
+        enemy.Animator.SetBool("IsWalking", false);
+        enemy.Animator.SetBool("IsRunning", false);
+        
         hesitateDuration = duration;
         hesitateTimer = 0f;
         IsHesitating = duration > 0f;
