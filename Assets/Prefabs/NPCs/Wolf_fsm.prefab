@@ -1010,11 +1010,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5699583861280715299}
   - {fileID: 162948709}
   - {fileID: 1173089682}
   - {fileID: 1246803849}
   - {fileID: 1651416176}
-  - {fileID: 5699583861280715299}
   m_Father: {fileID: 5167781006044164527}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4765503782767312516
@@ -1263,11 +1263,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TargetPosition: {x: 0, y: 0}
+  SeePlayer: 0
   LookPosition: {x: 0, y: 0}
+  isWandering: 0
+  isAlerted: 0
+  IsCombatRange: 0
   IsMoveRange: 0
   IsLongRange: 0
   IsCloseRange: 0
   IsClosestRange: 0
+  currentStateName: 
   Stats: {fileID: 0}
   DecisionInterval: 0
 --- !u!1 &5355427919717361788
@@ -1286,7 +1291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5699583861280715299
 Transform:
   m_ObjectHideFlags: 0

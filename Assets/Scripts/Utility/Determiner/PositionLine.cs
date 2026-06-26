@@ -110,6 +110,10 @@ public class PositionLine : Singleton<PositionLine>
 
     public Vector2 GetAttackPosition(Vector2 posToPlayer, Vector2 statsPosition)
     {
+        /*
+         * posToPlayer: the position of player relative to NPC, with NPC as origin
+         * statsPosition
+         */
         if (posToPlayer.y < slope * posToPlayer.x && posToPlayer.y <= -slope * posToPlayer.x)
         {
             return new Vector2(0, 0.5f * statsPosition.x + statsPosition.y);

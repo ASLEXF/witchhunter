@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1722732033413071503}
   - component: {fileID: 3986088179821290368}
   - component: {fileID: 495756809381880792}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,4 +190,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a47a04d488c2d844b5cbd992c05881f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item:
+    id: 0
+    itemName: 
+    description: 
+    icon: 
+    isConsumable: 0
+    isSalable: 0
+    isMaterial: 0
+    isThrowable: 0
+    prise: 0
+    weaponAttackInfo:
+      hasAttack: 0
+      damage: 0
+      comboCount: 0
+      animationTriggerName: 
+      animationIntegerName: 
+      attackCondition: 0
+    weaponChargingAttackInfo:
+      hasAttack: 0
+      damage: 0
+      comboCount: 0
+      maxChargingTime: 0
+      animationTriggerName: 
+      attackCondition: 0
+    weaponChargeAttackInfo:
+      hasAttack: 0
+      damage: 0
+      additionalDamage: 0
+      comboCount: 0
+      animationTriggerName: 
+      attackCondition: 0
   bladeStats: {fileID: 11400000, guid: c0da44772cb580b46b063457d3ac5a02, type: 2}

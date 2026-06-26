@@ -24,8 +24,6 @@ public enum ApproachMethod
 public class WolfStats : ScriptableObject
 {
     [Header("Movement")]
-    public float walkSpeed = 3;
-    public float runSpeed = 6;
     public float MaxSpeed = 14;
     public float Acceleration = 12;
     //public float GroundDeceleration = 60;
@@ -34,7 +32,7 @@ public class WolfStats : ScriptableObject
     [Range(90, 180)] public float sightAngle = 90;
     [Range(5, 25)] public float sightDistance = 12.0f;
     [Range(8, 48)] public int sightLineNum = 24;
-    [Range(60, 360)] public float sightAngleSpeed = 90;
+    [Range(60, 360)] public float sightAngleSpeed = 180;
 
     [Header("Behavior Preferences")]
     public MinMaxFloat decisionInterval = new MinMaxFloat {Min = 0.3f, Max = 1.2f};
@@ -43,11 +41,15 @@ public class WolfStats : ScriptableObject
     public float trackTime = 6;
 
     [Header("Behavior Preferences - Wander")]
+    public float wanderSpeed = 1.5f;
+    public float wanderAngularSpeed = 999;
     public MinMaxFloat wanderTime = new MinMaxFloat {Min = 2f, Max = 6f};
     public MinMaxFloat wanderRadius = new MinMaxFloat {Min = 3f, Max = 7f};
 
     [Header("Behavior Preferences - Chase")]
-    public float repathDistance = 0.5f;
+    public float chaseSpeed = 6;
+    public float chaseAngularSpeed = 600;
+    public float repathDistance = 0.1f;
 
     [Header("Behavior Posibilities")]
     [SerializeField] public ActionProbabilityGroup combatRange = new ()

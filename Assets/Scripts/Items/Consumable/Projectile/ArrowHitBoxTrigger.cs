@@ -11,13 +11,13 @@ public class ArrowHitBoxTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Arrow hit trigger: " + other.gameObject.name);
+        //Debug.Log("Arrow hit trigger: " + other.gameObject.name);
         gameObject.transform.parent.GetComponent<IProjectile>()?.Hit(other);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Arrow hit collision: " + collision.gameObject.name);
+        //Debug.Log("Arrow hit collision: " + collision.gameObject.name);
         gameObject.transform.parent.GetComponent<IProjectile>()?.Hit(collision.collider);
     }
 }

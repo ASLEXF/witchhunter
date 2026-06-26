@@ -98,7 +98,7 @@ public class NPCController : MonoBehaviour
 
     private void InitializeNavMeshAgent()
     {
-        agent.speed = stats.walkSpeed;
+        agent.speed = stats.wanderSpeed;
         agent.angularSpeed = 0;
         agent.acceleration = stats.Acceleration;
         agent.updateRotation = false;
@@ -252,7 +252,7 @@ public class NPCController : MonoBehaviour
 
         while (Time.time < startTime + stats.decisionInterval.RandomValue)
         {
-            Vector3 movement = PosToPlayer * direction * stats.runSpeed * Time.deltaTime;
+            Vector3 movement = PosToPlayer * direction * stats.chaseSpeed * Time.deltaTime;
             //Debug.Log($"{movement}");
             rb.MovePosition(transform.position + movement);
 
@@ -282,7 +282,7 @@ public class NPCController : MonoBehaviour
         Debug.Log($"{gameObject.name} wander");
         TargetPosition = Vector2.zero;
         isWandering = true;
-        agent.speed = stats.walkSpeed;
+        agent.speed = stats.wanderSpeed;
         float startTime = Time.time;
 
         Vector2 randomDirection = UnityEngine.Random.insideUnitSphere.ToVector2() * stats.wanderRadius.RandomValue;
@@ -319,7 +319,7 @@ public class NPCController : MonoBehaviour
         Debug.Log($"{gameObject.name} track");
 
         float startTime = Time.time;
-        agent.speed = stats.runSpeed;
+        agent.speed = stats.chaseSpeed;
         agent.SetDestination(targetPosition);
 
         animator.SetBool("IsWalking", true);

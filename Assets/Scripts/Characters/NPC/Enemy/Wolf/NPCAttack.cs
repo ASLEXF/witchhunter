@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NPCAttack : MonoBehaviour
 {
-    NPCController controller;
+    EnemyAIController controller;
     [SerializeField] WolfStats stats;
     [SerializeField] GameObject biteTrigger;
 
@@ -13,12 +13,12 @@ public class NPCAttack : MonoBehaviour
 
     private void Awake()
     {
-        controller = GetComponentInParent<NPCController>();
+        controller = transform.parent.GetComponent<EnemyAIController>();
     }
 
     public void EnableBiteTrigger()
     {
-        biteTrigger.transform.position = transform.position.ToVector2() + PositionLine.Instance.GetAttackPosition(controller.PosToPlayer, stats.bitePostion);
+        //biteTrigger.transform.position = (Vector2)transform.position + PositionLine.Instance.GetAttackPosition(controller.TargetPosition - (Vector2)transform.position, stats.bitePostion);
         biteTrigger.SetActive(true);
     }
 

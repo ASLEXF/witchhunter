@@ -12,28 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a18d113684dc3e419588d84973f89ac, type: 3}
   m_Name: Wolf Stats
   m_EditorClassIdentifier: 
-  walkSpeed: 3
-  runSpeed: 6
   MaxSpeed: 14
   Acceleration: 12
   sightAngle: 90
   sightDistance: 12
   sightLineNum: 24
-  sightAngleSpeed: 90
+  sightAngleSpeed: 180
   decisionInterval:
     Min: 0.3
     Max: 1.2
   patrolType: 0
   approachMethod: 0
   trackTime: 6
+  wanderSpeed: 1.5
+  wanderAngularSpeed: 999
   wanderTime:
     Min: 2
     Max: 6
   wanderRadius:
     Min: 3
     Max: 7
+  chaseSpeed: 6
+  chaseAngularSpeed: 600
   repathDistance: 0.2
-  normal:
+  combatRange:
     moveClose: 0.9
     moveAway: 0
     attack: 0
