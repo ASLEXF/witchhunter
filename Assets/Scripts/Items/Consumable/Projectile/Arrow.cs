@@ -158,7 +158,7 @@ public class Arrow : MonoBehaviour, IItem, IProjectile
         // reset from animation state
         _spriteRenderer.flipX = false;
         // Set the parent to environment to avoid being affected by player's movement
-        transform.SetParent(Environment.Instance.Projectiles.transform);
+        transform.SetParent(WitchHunter.Environment.Instance.Projectiles.transform);
         height = heightFromGround;
         // Disable item interaction
         _droppedItem.enabled = false;
@@ -187,7 +187,7 @@ public class Arrow : MonoBehaviour, IItem, IProjectile
         if (obj != null)
             transform.SetParent(obj.transform);
         else
-            transform.SetParent(Environment.Instance.Projectiles.transform);
+            transform.SetParent(WitchHunter.Environment.Instance.Projectiles.transform);
         _rb.isKinematic = true;
         // Set sorting order
         _spriteRenderer.sortingOrder = 0;

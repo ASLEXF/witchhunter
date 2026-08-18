@@ -79,6 +79,14 @@ public class GameEvents : Singleton<GameEvents>
 
     #endregion
 
+    #region Story Signal
+
+    public event Action<string> OnStorySignal;
+
+    public void StorySignal(string signalId) => OnStorySignal?.Invoke(signalId);
+
+    #endregion
+
     #region Player Status
 
     public event Action OnPlayerHealthChanged;

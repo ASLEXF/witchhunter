@@ -22,11 +22,16 @@ public class PlayerAttacked : MonoBehaviour
 
     public void GetAttacked(int damage, float force, PolygonCollider2D collider)
     {
+        GetAttacked(damage, force, collider.bounds.center);
+    }
+
+    public void GetAttacked(int damage, float force, Vector3 hitFrom)
+    {
         if (!playerHealth.isInvincible)
         {
             playerHealth.TakeDamage(damage);
 
-            Vector3 position = transform.position - collider.bounds.center;
+            Vector3 position = transform.position - hitFrom;
             position.z = 0;  // prevent wrong displacements
             _position += position.normalized * force;  // add all forces if get attacked at the same time
 

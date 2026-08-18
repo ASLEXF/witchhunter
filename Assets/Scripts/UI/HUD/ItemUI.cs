@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 [RequireComponent(typeof(Image))]
 public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointerUpHandler
@@ -23,9 +24,10 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         set { _item = value; }
     }
 
-    public int Amount
+    public TMP_Text Amount
     {
-        get { return int.Parse(_amount.text); }
+        get { return _amount; }
+        set { _amount = value; }
     }
 
     public int Index
@@ -45,13 +47,6 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         draggableItem = GetComponent<DraggableItem>();
     }
 
-    private void Start()
-    {
-        draggableItem.enabled = false;
-
-        _index = transform.GetSiblingIndex();
-    }
-
     private void OnDisable()
     {
         // Player Input: Ensure we don't permanently block attacks if the UI is hidden while clicking.
@@ -61,65 +56,45 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         }
     }
 
-    private void OnDestroy()
+    private void Start()
     {
-        if (_spriteHandle.IsValid())
-            Addressables.Release(_spriteHandle);
+        draggableItem.enabled = false;
+
+        _index = transform.GetSiblingIndex();
     }
 
     public void UpdateUI()
     {
         if (_item != null && _item.id != 0)
         {
-            if (_item is ConsumableItem c && c.amount <= 0)
+            updateSprite(_item.icon);
+            if (_item is ConsumableItem)
             {
-                UpdateAmount(0);
+                ConsumableItem comsumableItem = _item as ConsumableItem;
+                UpdateAmount(comsumableItem.amount);
             }
-            else if (_item is MaterialItem m && m.amount <= 0)
+            else if (_item is MaterialItem)
             {
-                UpdateAmount(0);
+                MaterialItem materialItem = _item as MaterialItem;
+                UpdateAmount(materialItem.amount);
             }
-            else if (_item is ProjectileItem p && p.amount <= 0)
+            else if (_item == PlayerHand.Instance.WeaponL)
             {
-                UpdateAmount(0);
+                _amount.text = "L";
+            }
+            else if (_item == PlayerHand.Instance.WeaponR)
+            {
+                _amount.text = "R";
             }
             else
             {
-                updateSprite(_item.icon);
-                if (_item is ConsumableItem comsumableItem)
-                {
-                    UpdateAmount(comsumableItem.amount);
-                }
-                else if (_item is MaterialItem materialItem)
-                {
-                    UpdateAmount(materialItem.amount);
-                }
-                else if (_item is ProjectileItem projectileItem)
-                {
-                    UpdateAmount(projectileItem.amount);
-                }
-                else if (_item == PlayerHand.Instance.WeaponL)
-                {
-                    _amount.text = "L";
-                }
-                else if (_item == PlayerHand.Instance.WeaponR)
-                {
-                    _amount.text = "R";
-                }
-                else if (_item == PlayerHand.Instance.Projectile)
-                {
-                    _amount.text = "E";
-                }
-                else
-                {
-                    _amount.text = "";
-                }
-                draggableItem.enabled = true;
+                _amount.text = "";
             }
+            draggableItem.enabled = true;
         }
         else
         {
-            updateSprite("Icons/SquareWithBorder.png");
+            updateSprite("Assets/Addressables/Icons/SquareWithBorder.png");
             _item = null;
             _amount.text = "";
             draggableItem.enabled = false;
@@ -127,15 +102,12 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         updateKey();
     }
 
-    private AsyncOperationHandle<Sprite> _spriteHandle;
-
     private void updateSprite(string icon)
     {
         if (icon != null && icon != "")
         {
             Addressables.LoadAssetAsync<Sprite>(icon).Completed += handle =>
             {
-                _spriteHandle = handle;
                 if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
                     image.sprite = handle.Result;
@@ -161,10 +133,9 @@ public class ItemUI : MonoBehaviour, IDropHandler, IPointerDownHandler, IPointer
         }
         else
         {
-            updateSprite("Icons/SquareWithBorder.png");
+            updateSprite("Assets/Addressables/Icons/SquareWithBorder.png");
             _item = null;
             _amount.text = "";
-            draggableItem.enabled = false;
         }
     }
 

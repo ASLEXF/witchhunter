@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Environment : Singleton<Environment>
+namespace WitchHunter
 {
-    GameObject projectiles;
-
-    public GameObject Projectiles
+    public class Environment : Singleton<Environment>
     {
-        get { return projectiles; }
-    }
+        GameObject projectiles;
 
-    protected override void Awake()
-    {
-        base.Awake();
+        public GameObject Projectiles
+        {
+            get { return projectiles; }
+        }
 
-        projectiles = new GameObject("Projectiles");
-        projectiles.transform.SetParent(gameObject.transform);
-    }
+        protected override void Awake()
+        {
+            base.Awake();
 
-    public void AddProjectile(GameObject projectile)
-    {
-        projectile.transform.SetParent(projectiles.transform);
+            projectiles = new GameObject("Projectiles");
+            projectiles.transform.SetParent(gameObject.transform);
+        }
+
+        public void AddProjectile(GameObject projectile)
+        {
+            projectile.transform.SetParent(projectiles.transform);
+        }
     }
 }

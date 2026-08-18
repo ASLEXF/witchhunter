@@ -137,7 +137,7 @@ public class BoneArrow : MonoBehaviour, IItem
             force = new Vector2(0, 1);
         }
 
-        transform.SetParent(Environment.Instance.gameObject.transform);
+        transform.SetParent(WitchHunter.Environment.Instance.gameObject.transform);
         height = heightFromGround;
 
         spriteRenderer.enabled = true;
@@ -154,7 +154,7 @@ public class BoneArrow : MonoBehaviour, IItem
         if (obj != null)
             transform.SetParent(obj.transform);
         else
-            transform.SetParent(Environment.Instance.gameObject.transform);
+            transform.SetParent(WitchHunter.Environment.Instance.gameObject.transform);
         rb.isKinematic = true;
 
         // Disable collider and physics

@@ -2293,8 +2293,8 @@
     "m_ObjectId": "292a4ac19ffc43fb93014c6843ae6669",
     "m_Title": "Clean Up Colors",
     "m_Position": {
-        "x": 379.0,
-        "y": -881.0
+        "x": 378.400146484375,
+        "y": -882.4000244140625
     }
 }
 
@@ -5010,8 +5010,8 @@
     "m_ObjectId": "ba02427b67114003bfcdab0f3820f1c3",
     "m_Title": "Diagonal DIrections",
     "m_Position": {
-        "x": -1171.0,
-        "y": 273.0
+        "x": -1172.0001220703125,
+        "y": 272.0
     }
 }
 
@@ -5708,8 +5708,8 @@
     "m_ObjectId": "dd507edd0cc14ec4aad1129ea2f91955",
     "m_Title": "Main Directions",
     "m_Position": {
-        "x": -1169.0,
-        "y": -515.0
+        "x": -1169.60009765625,
+        "y": -515.9999389648438
     }
 }
 
